@@ -1,8 +1,9 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 
-<h2>List View</h2>
+<h2>Next View</h2>
 <f:if condition="{events}">
 	<f:then>
+		<p>These are the next events that take place.</p>
 		<cal:variable.init>
 			<f:for each="{events}" as="event">
 				<cal:calendar.onNewDay event="{event}">

@@ -9,8 +9,9 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/main', 'Simple calendar using Extbase');
 
-//$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'pi_flexform';
-//t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_pi1', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_list.xml');
+$TCA['tt_content']['types']['list']['subtypes_addlist']['czsimplecal_pi1'] = 'pi_flexform';
+$TCA['tt_content']['types']['list']['subtypes_excludelist']['czsimplecal_pi1'] = 'layout,select_key';
+t3lib_extMgm::addPiFlexFormValue('czsimplecal_pi1', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform.xml');
 
 
 t3lib_extMgm::addLLrefForTCAdescr('tx_czsimplecal_domain_model_event','EXT:cz_simple_cal/Resources/Private/Language/locallang_csh_tx_czsimplecal_domain_model_event.xml');
@@ -18,9 +19,10 @@ t3lib_extMgm::allowTableOnStandardPages('tx_czsimplecal_domain_model_event');
 $TCA['tx_czsimplecal_domain_model_event'] = array (
 	'ctrl' => array (
 		'title'             => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event',
-		'label' 			=> 'title',
+		'label'             => 'title',
 		'tstamp' 			=> 'tstamp',
 		'crdate' 			=> 'crdate',
+		'default_sortby'    => 'ORDER BY start_day DESC, start_time DESC',
 		'versioningWS' 		=> 2,
 		'versioning_followPages'	=> TRUE,
 		'origUid' 			=> 't3_origuid',
@@ -31,6 +33,7 @@ $TCA['tx_czsimplecal_domain_model_event'] = array (
 		'enablecolumns' 	=> array(
 			'disabled' => 'hidden'
 			),
+		'dividers2tabs' => 1,
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Event.php',
 		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_czsimplecal_domain_model_event.gif'
 	)
@@ -39,7 +42,8 @@ $TCA['tx_czsimplecal_domain_model_event'] = array (
 $TCA['tx_czsimplecal_domain_model_eventindex'] = array (
 	'ctrl' => array (
 		'title'             => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event',
-		'label' 			=> 'uid',
+		'label' 			=> '',
+		'hideTable'         => true,
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/EventIndex.php',
 		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_czsimplecal_domain_model_event_index.gif'
 	)

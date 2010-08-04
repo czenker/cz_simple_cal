@@ -29,7 +29,24 @@
  *
  * Output:
  * 2009-02-13
+ * 
+ * 
+ * <code title="Defaults with string">
+ * <cal:format.dateTime timestamp="2009-02-13 20:31:30GMT" />
+ * </code>
  *
+ * Output:
+ * 2009-02-13
+ * 
+ *
+ * <code title="Defaults with DateTime object">
+ * <cal:format.dateTime timestamp="dateTimeObject" />
+ * </code>
+ *
+ * Output:
+ * 2009-02-13
+ * 
+ * 
  * <code title="Custom date format">
  * <cal:format.dateTime format="%a, %e. %B %G" timestamp="1234567890" />
  * </code>
@@ -38,21 +55,26 @@
  * Fre, 13. Februar 2009
  * (for german localization)
  *
+ *
  * <code title="relative date">
  * <cal:format.dateTime timestamp="1234567890" get="+1 day"/>
  * </code>
  *
  * Output:
  * 2009-02-14
+ * 
  *
- * <code title="relative date with substitution">
- * <cal:format.dateTime timestamp="1234567890" get="%B %G next month -1 second"/>
+ * <code title="relative date">
+ * <cal:format.dateTime timestamp="1234567890" get="first of this month"/>
  * </code>
  *
  * Output:
- * 2009-02-28
+ * 2009-02-01
  * 
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @see http://www.php.net/manual/en/function.strftime.php
+ * @see http://www.php.net/manual/en/function.strtotime.php
+ * @see http://www.php.net/manual/en/datetime.formats.relative.php
  * @author Christian Zenker <christian.zenker@599media.de>
  */
 class Tx_CzSimpleCal_ViewHelpers_Format_DateTimeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
@@ -60,73 +82,52 @@ class Tx_CzSimpleCal_ViewHelpers_Format_DateTimeViewHelper extends Tx_Fluid_Core
 	/**
 	 * Render the supplied unix timestamp in a localized human-readable string.
 	 *
-	 * @param integer $timestamp unix timestamp
-	 * @param string $get get some related date (see class doc)
+	 * @param integer|string|DateTime $timestamp unix timestamp
 	 * @param string $format Format String to be parsed by strftime
+	 * @param string $get get some related date (see class doc)
 	 * @return string Formatted date
-	 * @see http://www.php.net/manual/en/function.strftime.php
-	 * @see http://www.php.net/manual/en/function.strtotime.php
 	 * @author Christian Zenker <christian.zenker@599media.de>
 	 */
-	public function render($timestamp = NULL, $get = '', $format = '%Y-%m-%d') {
+	public function render($timestamp = NULL, $format = '%Y-%m-%d', $get = '') {
 		
-		if(is_null($timestamp)) {
-			$timestamp = time();
-		}
-		
-		if(!empty($get)) {
-			
-			$get = $this->parseGet($get, $timestamp);
-			
-			$timestamp = strtotime($get, $timestamp);
-			if($timestamp === false) {
-				throw new InvalidArgumentException(sprintf('Don\'t know, what you mean by "%s".', $get));
-			}
+		$timestamp = $this->normalizeTimestamp($timestamp);
+		if($get) {
+			$timestamp = $this->modifyDate($timestamp, $get);
 		}
 		
 		return strftime($format, $timestamp);
 	}
 	
 	/**
-	 * translation table from strftime() to date() format
+	 * handle all the different input formats and return a real timestamp
 	 * 
-	 * @var array
-	 * @author <baptiste dot place at utopiaweb dot fr>
-	 * @see http://www.php.net/manual/en/function.strftime.php#96424
+	 * @param $timestamp
+	 * @return integer
 	 */
-	protected static $strftimeToDate = array(
-		// Day - no strf eq : S 
-        '%d' => 'd', '%a' => 'D', '%e' => 'j', '%A' => 'l', '%u' => 'N', '%w' => 'w', '%j' => 'z', 
-        // Week - no date eq : %U, %W 
-        '%V' => 'W',  
-        // Month - no strf eq : n, t 
-        '%B' => 'F', '%m' => 'm', '%b' => 'M', 
-        // Year - no strf eq : L; no date eq : %C, %g 
-        '%G' => 'o', '%Y' => 'Y', '%y' => 'y', 
-        // Time - no strf eq : B, G, u; no date eq : %r, %R, %T, %X 
-        '%P' => 'a', '%p' => 'A', '%l' => 'g', '%I' => 'h', '%H' => 'H', '%M' => 'i', '%S' => '%s', 
-        // Timezone - no strf eq : e, I, P, Z 
-        '%z' => 'O', '%Z' => 'T', 
-        // Full Date / Time - no strf eq : c, r; no date eq : %c, %D, %F, %x  
-        '%s' => 'U'
-		
-	);
+	protected function normalizeTimestamp($timestamp) {
+		if(is_null($timestamp)) {
+			$timestamp = time();
+		} elseif(is_numeric($timestamp)) {
+			$timestamp = intval($timestamp);
+		} elseif(is_string($timestamp)) {
+			$timestamp = strtotime($timestamp);
+		} elseif($timestamp instanceof DateTime) {
+			$timestamp = $timestamp->format('U');
+		} else {
+			throw new InvalidArgumentException(sprintf('timestamp might be an integer, a string or a DateTimeObject only.'));
+		}
+		return $timestamp;
+	}
 	
 	/**
-	 * translate strftime()-syntax to date()-syntax and substitude
+	 * do the modification do a relative date
 	 * 
-	 * @param string $get
+	 * @param $timestamp
+	 * @param $get
 	 * @return string
 	 */
-	protected function parseGet($get, $timestamp) {
-		//escape all alpha numeric signs, as they are almost all reserved by date()
-		$get = preg_replace('/(?<!%)[[:alpha:]]/', '\\\\$0', $get);
-		
-		//substitude strftime()-markers with date()-markers
-		$get = strtr($get, self::$strftimeToDate);
-		
-		//parse it
-		return date($get, $timestamp);
+	protected function modifyDate($timestamp, $get) {
+		return Tx_CzSimpleCal_Utility_StrToTime::strtotime($get, $timestamp);
 	}
 }
 ?>

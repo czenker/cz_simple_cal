@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the Simple calendar using Extbase extension in the FLEXFORM</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="sheet.general">Default</label>
+			
+			<label index="field.useView">selected view</label>
+			<label index="field.useView.default">(use default)</label>
+			<label index="field.useView.list">List some events</label>
+			<label index="field.useView.show">Show single event</label>
+			
+			<label index="field.action.startDate">Start Date</label>
+			<label index="field.action.startDate.default">(use default)</label>
+			<label index="field.action.startDate.thisYear">this Year</label>
+			<label index="field.action.startDate.thisMonth">this Month</label>
+			<label index="field.action.startDate.thisWeek">this Week</label>
+			<label index="field.action.startDate.yesterday">Yesterday</label>
+			<label index="field.action.startDate.today">Today</label>
+			<label index="field.action.startDate.now">Now</label>
+			<label index="field.action.startDate.tomorrow">Tomorrow</label>
+			<label index="field.action.startDate.nextMonth">next Month</label>
+			
+			<label index="field.action.endDate">End Date</label>
+			<label index="field.action.endDate.default">(use default)</label>
+			<label index="field.action.endDate.today">end of Today</label>
+			<label index="field.action.endDate.24hours">in 24 hours</label>
+			<label index="field.action.endDate.tomorrow">end of Tomorrow</label>
+			<label index="field.action.endDate.thisWeek">end of this Week</label>
+			<label index="field.action.endDate.thisMonth">end of this Month</label>
+			<label index="field.action.endDate.nextMonth">end of next Month</label>
+			<label index="field.action.endDate.thisYear">end of this Year</label>
+			
+			<label index="field.action.maxEvents">maximum number of events</label>
+			
+			<label index="field.action.orderBy">Order field</label>
+			<label index="field.action.orderBy.default">(use default)</label>
+			<label index="field.action.orderBy.start">start date</label>
+			<label index="field.action.orderBy.end">end date</label>
+
+			<label index="field.action.order">Order</label>
+			<label index="field.action.order.default">(use default)</label>
+			<label index="field.action.order.asc">ascending</label>
+			<label index="field.action.order.desc">descending</label>
+		</languageKey>
+	</data>
+</T3locallang>

@@ -1,4 +1,50 @@
 plugin.tx_czsimplecal {
+
+	#@description: the pid the records are stored in
+	persistence.storagePid = 
+	
 	settings {
+		
+		actions {
+			list {
+				defaultPid = {$plugin.tx_czsimplecal.pids.default}
+				startDate  = today
+				endDate    = today +1 month
+								
+				maxEvents = 9999
+				orderBy   = start  
+				order     = ASC
+			}
+			
+			show {
+				defaultPid = {$plugin.tx_czsimplecal.pids.default}
+			}
+			
+			next {
+				defaultPid = {$plugin.tx_czsimplecal.pids.default}
+				
+				useAction = list
+				
+				startDate  = today
+				endDate    = today +1 month
+								
+				maxEvents = 3
+				orderBy   = start  
+				order     = ASC
+			}
+			
+			minimonth {
+				defaultPid = {$plugin.tx_czsimplecal.pids.default}
+				
+				useAction = countEvents
+				
+				startDate  = 2010-07-01
+				endDate    = 2010-07-31 23:59:59
+			}
+		}
 	}
+}
+
+tt_content.list.20.czsimplecal_pi1 {
+	action = list
 }

@@ -1,0 +1,7 @@
+plugin.tx_czsimplecal {
+	
+	pids {
+		default = 
+	}
+	
+}

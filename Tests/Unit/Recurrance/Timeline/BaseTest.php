@@ -1,13 +1,13 @@
 <?php 
 require_once 'PHPUnit/Framework.php';
-require_once dirname(__FILE__).'/../../../Classes/Recurrance/Timeline/Base.php';
+require_once dirname(__FILE__).'/../../../../Classes/Recurrance/Timeline/Base.php';
  
 /**
  * testing the features of Tx_CzSimpleCal_Recurrance_Timeline_Base
  * 
  * @author Christian Zenker <christian.zenker@599media.de>
  */
-class RecurranceTimlineBaseTest extends PHPUnit_Framework_TestCase {
+class RecurranceTimlineBaseTest extends Tx_Extbase_BaseTestCase {
 	
 	
 	protected $timeline = null;
@@ -53,49 +53,6 @@ class RecurranceTimlineBaseTest extends PHPUnit_Framework_TestCase {
 		
 		$this->timeline->rewind();
 		self::assertEquals($first, $this->timeline->current(), 'calling reset() resets the pointer to the first element.');
-	}
-	
-	/**
-	 * test if the class implements the ArrayAccess interface
-	 * @depends testBasic
-	 */
-	public function testArrayAccess() {
-		$first = array(
-			'start' => strtotime('2009-02-13 23:31:30GMT'),
-			'end' => strtotime('2009-02-13 23:31:31GMT')
-		);
-		
-		$second = array(
-			'start' => strtotime('2009-02-13 23:31:32GMT'),
-			'end' => strtotime('2009-02-13 23:31:33GMT')
-		);
-		
-		$this->timeline->add($first);
-		
-		self::assertTrue($this->timeline instanceof ArrayAccess, 'the class implements the ArrayAccess-Interface');
-		
-		try {
-			$this->timeline[] = $second;
-			self::fail('setting of values is forbidden.');
-		}
-		catch (BadMethodCallException $e) {
-			self::assertTrue(true, 'setting of values is forbidden.');
-		}
-		
-		$this->timeline->add($second);
-		
-		
-		
-		self::assertEquals($first, $this->timeline[$first['start']], 'getting of values works.');
-		
-		isset($this->timeline[$first['start']]);
-		self::assertTrue(isset($this->timeline[$first['start']]), 'isset() returns true if offset exists.');
-		self::assertFalse(isset($this->timeline[$first['start']-1]), 'isset() returns false if offset does not exist.');
-		
-		unset($this->timeline[$first['start']]);
-		isset($this->timeline[$first['start']]);
-		self::assertFalse(isset($this->timeline[$first['start']]), 'unset() unsets the value');
-		
 	}
 	
 	/**

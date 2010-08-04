@@ -7,7 +7,7 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 		'showRecordFieldList' => 'title,start_day,start_time,end_day,end_time,teaser,description,recurrance_type,recurrance_until,recurrance_times,location_name,organizer_name,category,exceptions'
 	),
 	'types' => array(
-		'1' => array('showitem' => 'title,start_day,start_time,end_day,end_time,teaser,description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css],recurrance_type,recurrance_until,recurrance_times,location_name,organizer_name,category,exceptions')
+		'1' => array('showitem' => '--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_general,title,start_day,start_time,end_day,end_time,category,teaser,description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css],--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_recurrance,recurrance_type,recurrance_until,recurrance_times,exceptions,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_location,location_name,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_organizer,organizer_name')
 	),
 	'palettes' => array(
 		'1' => array('showitem' => '')
@@ -232,7 +232,7 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 			'exclude' => 0,
 			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.category',
 			'config'  => array(
-				'type' => 'inline',
+				'type' => 'select',
 				'foreign_table' => 'tx_czsimplecal_domain_model_category',
 				'MM' => 'tx_czsimplecal_event_category_mm',
 				'maxitems' => 99999

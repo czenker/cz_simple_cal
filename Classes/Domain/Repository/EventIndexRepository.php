@@ -36,5 +36,101 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		$query->setOrderings(array('start' => 'ASC'));
 		return $query->execute();
 	}
+	
+	/**
+	 * find all events matching some settings
+	 * 
+	 * for all options for the settings see setupSettings()
+	 * 
+	 * @see setupSettings()
+	 * @param $settings
+	 * @return array
+	 */
+	public function findAllWithSettings($settings = array()) {
+		$query = $this->setupSettings($settings);
+		
+		return $query->execute();
+	}
+	
+	public function countAllWithSettings($settings = array()) {
+		$query = $this->setupSettings($settings);
+		
+		return $query->count();
+	}
+	
+	/**
+	 * setup settings for an query
+	 * 
+	 * possible restrictions are:
+	 * 
+	 *  * startDate integer timestamp of the start
+	 *  * endDate   integer timestamp of the end
+	 *  * limit     integer how many events to select at max
+	 *  * order     string  the mode to sort by (could be 'asc' or 'desc')
+	 *  * orderBy   string  the field to sort by (could be 'start' or 'end')
+	 * 
+	 * @param $settings
+	 * @ugly extbase query needs a better fluent interface for query creation
+	 * @return array
+	 */
+	protected function setupSettings($settings = array(), $query = null) {
+		if(is_null($query)) {
+			$query = $this->createQuery();
+		}
+		
+		// startDate
+		if(isset($settings['startDate'])) {
+			$constraint = $query->greaterThanOrEqual('start', $settings['startDate']);
+		}
+		// endDate
+		if(isset($settings['endDate'])) {
+			$temp_constraint = $query->lessThanOrEqual('end', $settings['endDate']);
+			 
+			if(isset($constraint)) {
+				$constraint = $query->logicalAnd($constraint, $temp_constraint);
+			} else {
+				$constraint = $temp_constraint;
+			}
+		}
+		
+		// all constraints should be gathered here
+		
+		// set the WHERE part
+		if(isset($constraint)) {
+			$query->matching($constraint);
+		}
+		
+		// limit
+		if(isset($settings['limit'])) {
+			$query->setLimit(intval($settings['limit']));
+		}
+		
+		// order and orderBy
+		if(isset($settings['order']) || isset($settings['orderBy'])) {
+			if(!isset($settings['orderBy'])) {
+				$orderBy = 'start';
+			} elseif($settings['orderBy'] === 'start' || $settings['orderBy'] === 'startDate') {
+				$orderBy = 'start';
+			} elseif($settings['orderBy'] === 'end' || $settings['orderBy'] === 'endDate') {
+				$orderBy = 'end';
+			} else {
+				throw new InvalidArgumentException('"orderBy" should be one of "start" or "end".');
+			}
+			
+			if(!isset($settings['order'])) {
+				$order = Tx_Extbase_Persistence_Query::ORDER_ASCENDING;
+			} elseif(strtolower($settings['order']) === 'asc') {
+				$order = Tx_Extbase_Persistence_Query::ORDER_ASCENDING;
+			} elseif(strtolower($settings['order']) === 'desc') {
+				$order = Tx_Extbase_Persistence_Query::ORDER_DESCENDING;
+			} else {
+				throw new InvalidArgumentException('"order" should be one of "asc" or "desc".');
+			}
+			
+			$query->setOrderings(array($orderBy => $order));
+		}
+		
+		return $query;
+	}
 }
 ?>

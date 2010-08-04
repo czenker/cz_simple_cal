@@ -25,6 +25,11 @@
 			<label index="tx_czsimplecal_domain_model_event.category">Category</label>
 			<label index="tx_czsimplecal_domain_model_event.exceptions">Exceptions</label>
 			
+			<label index="tx_czsimplecal_domain_model_event.tab_general">Event</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_recurrance">Recurrance</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_location">Location</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_organizer">Organizer</label>
+			
 			<label index="tx_czsimplecal_domain_model_exception">Exception</label>
 			<label index="tx_czsimplecal_domain_model_exception.title">Title</label>
 			<label index="tx_czsimplecal_domain_model_exception.day">Exception Day</label>
