@@ -60,6 +60,21 @@ $TCA['tx_czsimplecal_domain_model_exception'] = array (
 	)
 );
 
+t3lib_extMgm::addLLrefForTCAdescr('tx_czsimplecal_domain_model_exceptiongroup','EXT:cz_simple_cal/Resources/Private/Language/locallang_csh_tx_czsimplecal_domain_model_exceptiongroup.xml');
+t3lib_extMgm::allowTableOnStandardPages('tx_czsimplecal_domain_model_exceptiongroup');
+$TCA['tx_czsimplecal_domain_model_exceptiongroup'] = array (
+	'ctrl' => array (
+		'title'             => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exceptiongroup',
+		'label' 			=> 'title',
+		'delete' 			=> 'deleted',
+		'enablecolumns' 	=> array(
+			'disabled' => 'hidden'
+			),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/ExceptionGroup.php',
+		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_czsimplecal_domain_model_exceptiongroup.gif'
+	)
+);
+
 t3lib_extMgm::addLLrefForTCAdescr('tx_czsimplecal_domain_model_category','EXT:cz_simple_cal/Resources/Private/Language/locallang_csh_tx_czsimplecal_domain_model_category.xml');
 t3lib_extMgm::allowTableOnStandardPages('tx_czsimplecal_domain_model_category');
 $TCA['tx_czsimplecal_domain_model_category'] = array (

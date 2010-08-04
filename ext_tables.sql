@@ -1,5 +1,9 @@
 # TYPO3 does not see a difference between NULL and 0 - so we will use -1 as NULL
 
+
+###
+# Domain model "Event"
+###
 CREATE TABLE tx_czsimplecal_domain_model_event (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
@@ -44,6 +48,9 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	KEY parent (pid)
 );
 
+###
+# Domain model "EventIndex"
+###
 CREATE TABLE tx_czsimplecal_domain_model_eventindex (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
@@ -56,6 +63,9 @@ CREATE TABLE tx_czsimplecal_domain_model_eventindex (
 	KEY parent (pid)
 );
 
+###
+# Domain model "Exception"
+###
 CREATE TABLE tx_czsimplecal_domain_model_exception (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
@@ -75,6 +85,48 @@ CREATE TABLE tx_czsimplecal_domain_model_exception (
 	KEY parent (pid)
 );
 
+###
+# Domain model "ExceptionGroup"
+###
+CREATE TABLE tx_czsimplecal_domain_model_exceptiongroup (
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	
+	
+	title tinytext,
+	exceptions int(11) unsigned DEFAULT '0' NOT NULL,
+	
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);
+
+###
+# Relation Table "ExceptionGroup" to "Exception"
+###
+CREATE TABLE tx_czsimplecal_exceptiongroup_exception_mm (
+	uid int(10) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	tablenames varchar(255) DEFAULT '' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	
+	tstamp int(10) unsigned DEFAULT '0' NOT NULL,
+	crdate int(10) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(3) unsigned DEFAULT '0' NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);
+
+###
+# Relation Table "Event" to "Exception" and "ExceptionGroup"
+###
 CREATE TABLE tx_czsimplecal_event_exception_mm (
 	uid int(10) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
@@ -93,6 +145,10 @@ CREATE TABLE tx_czsimplecal_event_exception_mm (
 	KEY parent (pid)
 );
 
+
+###
+# Domain model "Category"
+###
 CREATE TABLE tx_czsimplecal_domain_model_category (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
@@ -123,6 +179,9 @@ CREATE TABLE tx_czsimplecal_domain_model_category (
 	KEY parent (pid)
 );
 
+###
+# Relation Table "Event" to "Category"
+###
 CREATE TABLE tx_czsimplecal_event_category_mm (
 	uid int(10) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,

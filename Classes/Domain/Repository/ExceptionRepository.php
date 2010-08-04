@@ -38,18 +38,42 @@ class Tx_CzSimpleCal_Domain_Repository_ExceptionRepository extends Tx_Extbase_Pe
 	 * @return array
 	 */
 	public function findAllForEventId($uid) {
+		
 		$query = $this->createQuery();
 		
 		//@ugly: extbase has no support for JOINs? -> so do it the ugly way
 		$query->statement('
-			SELECT * 
+			SELECT tx_czsimplecal_domain_model_exception.* 
 			FROM tx_czsimplecal_domain_model_exception
-			JOIN tx_czsimplecal_event_exception_mm 
-			WHERE tx_czsimplecal_domain_model_exception.uid = tx_czsimplecal_event_exception_mm.uid_foreign 
+			JOIN tx_czsimplecal_event_exception_mm ON tx_czsimplecal_domain_model_exception.uid = tx_czsimplecal_event_exception_mm.uid_foreign
+			WHERE
+				tx_czsimplecal_event_exception_mm.tablenames = "tx_czsimplecal_domain_model_exception"
 				AND tx_czsimplecal_event_exception_mm.uid_local = ?
 		', array($uid));
-		return $query->execute();
+		$exceptions = $query->execute();
+		
+		
+		// second: get all exceptions that are linked via ExceptionGroups
+		$query = $this->createQuery();
+		
+		//@ugly: extbase has no support for JOINs? -> so do it the ugly way
+		$query->statement('
+			SELECT tx_czsimplecal_domain_model_exception.* 
+			FROM tx_czsimplecal_domain_model_exception
+			JOIN tx_czsimplecal_exceptiongroup_exception_mm ON tx_czsimplecal_exceptiongroup_exception_mm.uid_foreign = tx_czsimplecal_domain_model_exception.uid
+			JOIN tx_czsimplecal_event_exception_mm ON tx_czsimplecal_event_exception_mm.uid_foreign = tx_czsimplecal_exceptiongroup_exception_mm.uid_local
+			WHERE
+				tx_czsimplecal_event_exception_mm.tablenames = "tx_czsimplecal_domain_model_exceptiongroup"
+				AND tx_czsimplecal_event_exception_mm.uid_local = ?
+		', array($uid));
+		$exceptions2 = $query->execute();
+		
+		// merge it return it
+		//TODO: check for duplicates
+		return array_merge(
+			$exceptions,
+			$exceptions2
+		);
 	}
-	
 }
 ?>

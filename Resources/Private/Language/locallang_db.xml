@@ -35,6 +35,10 @@
 			<label index="tx_czsimplecal_domain_model_exception.recurrance_until">Repeat until</label>
 			<label index="tx_czsimplecal_domain_model_exception.recurrance_times">Repeat times</label>
 			
+			<label index="tx_czsimplecal_domain_model_exceptiongroup">Exception Group</label>
+			<label index="tx_czsimplecal_domain_model_exceptiongroup.title">Title</label>
+			<label index="tx_czsimplecal_domain_model_exceptiongroup.exceptions">Exceptions</label>
+			
 			<label index="tx_czsimplecal_domain_model_category">Category</label>
 			<label index="tx_czsimplecal_domain_model_category.title">Title</label>
 		</languageKey>
