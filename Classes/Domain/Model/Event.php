@@ -133,9 +133,9 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	/**
 	 * exceptions for this event
 	 * 
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Exception>
+	 * @var array<Tx_CzSimpleCal_Domain_Model_Exception>
 	 */
-	protected $exceptions = null;
+	protected $exceptions_ = null;
 	
 	
 	
@@ -483,7 +483,13 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Exception> exception
 	 */
 	public function getExceptions() {
-		return $this->exceptions;
+		if(is_null($this->exceptions_)) {
+			$exceptionRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_ExceptionRepository');
+			
+			$this->exceptions_ = $exceptionRepository->findAllForEventId($this->uid);
+		}
+		
+		return $this->exceptions_;
 	}
 	
 	public function getRecurranceType() {
@@ -546,8 +552,5 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	public function getPid() {
 		return $this->pid;
 	}
-	
-	
-	
 }
 ?>
