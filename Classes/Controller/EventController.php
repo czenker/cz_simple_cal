@@ -86,7 +86,6 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 		}
 		$actions = t3lib_div::trimExplode(',', $this->settings['allowedActions'], true);
 		reset($actions);
-		var_dump(current($actions));
 		$this->forward(current($actions));
 	}
 	

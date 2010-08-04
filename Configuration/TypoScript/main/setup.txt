@@ -6,7 +6,7 @@ plugin.tx_czsimplecal {
 	settings {
 	
 		# first one is the default action
-		allowedActions = list,minimonth,event,recent
+		allowedActions = list,minimonth,event
 		
 		actions {
 			list {
