@@ -77,20 +77,6 @@ plugin.tx_czsimplecal {
 				orderBy = start
 				order   = ASC
 			}
-			
-			recent {
-				defaultPid = {$plugin.tx_czsimplecal.pids.default}
-				
-				useAction = list
-				
-				startDate = now -1 month
-				endDate   = now
-				
-				maxEvents = 1
-				orderBy = end
-				order   = DESC
-			}
-			
 		}
 	}
 }
