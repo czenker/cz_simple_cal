@@ -1,0 +1,22 @@
+{namespace cal=Tx_CzSimpleCal_ViewHelpers}
+
+<h2>List View</h2>
+<f:if condition="{events}">
+	<f:then>
+		<cal:variable.init>
+			
+			<f:for each="{events}" as="event">
+			
+				<cal:calendar.onNewDay event="{event}">
+					<h4 class="underline"><cal:format.dateTime format="%a, %e. %B %G" timestamp="{event.start}"/></h4>
+				</cal:calendar.onNewDay>
+				
+				<f:render partial="Event/event-for-list.html" arguments="{event: event}"></f:render>
+			</f:for>
+		
+		</cal:variable.init>
+	</f:then>
+	<f:else>
+		<p>No events have been found.</p>
+	</f:else>
+</f:if>

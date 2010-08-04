@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'cz_simple_cal'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_czsimplecal_domain_model_event">Event</label>
+			<label index="tx_czsimplecal_domain_model_event.title">Title</label>
+			<label index="tx_czsimplecal_domain_model_event.start_day">Start Day</label>
+			<label index="tx_czsimplecal_domain_model_event.start_time">Start Time</label>
+			<label index="tx_czsimplecal_domain_model_event.end_day">End Day</label>
+			<label index="tx_czsimplecal_domain_model_event.end_time">End Time</label>
+			<label index="tx_czsimplecal_domain_model_event.teaser">Teaser</label>
+			<label index="tx_czsimplecal_domain_model_event.description">Description</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type">Recurrance</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type.none">(none)</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type.daily">daily</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type.weekly">weekly</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_until">Repeat until</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_times">Repeat times</label>
+			<label index="tx_czsimplecal_domain_model_event.location_name">Location Name</label>
+			<label index="tx_czsimplecal_domain_model_event.organizer_name">Organizer Name</label>
+			<label index="tx_czsimplecal_domain_model_event.category">Category</label>
+			<label index="tx_czsimplecal_domain_model_category">Category</label>
+			<label index="tx_czsimplecal_domain_model_category.title">Title</label>
+		</languageKey>
+	</data>
+</T3locallang>

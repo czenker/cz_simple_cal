@@ -1,0 +1,4 @@
+plugin.tx_czsimplecal {
+	settings {
+	}
+}

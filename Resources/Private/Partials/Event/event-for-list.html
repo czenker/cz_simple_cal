@@ -1,0 +1,8 @@
+{namespace cal=Tx_CzSimpleCal_ViewHelpers}
+<div class="cal-list-item">
+	<div class="cal-date"><span class="cal-date"><cal:format.dateTime format="%H:%M %Z" timestamp="{event.start}"/></span></div>
+	<div class="cal-content">
+		<h5>{event.title}</h5>
+		<f:format:html>{event.description}</f:format:html>
+	</div>
+</div>

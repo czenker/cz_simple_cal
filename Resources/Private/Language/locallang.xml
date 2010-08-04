@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the Simple calendar using Extbase extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_czsimplecal_domain_model_event">an event in an calendar</label>
+			<label index="tx_czsimplecal_domain_model_event.title">The title of this event</label>
+			<label index="tx_czsimplecal_domain_model_event.start_day">the day that event starts</label>
+			<label index="tx_czsimplecal_domain_model_event.start_time">the time this event starts (leave blank for an allday event)</label>
+			<label index="tx_czsimplecal_domain_model_event.end_day">the day this event ends (leave blank for an event on one day)</label>
+			<label index="tx_czsimplecal_domain_model_event.end_time">the time this event ends</label>
+			<label index="tx_czsimplecal_domain_model_event.teaser">a short teaser for this event</label>
+			<label index="tx_czsimplecal_domain_model_event.description">a long description for this event</label>
+			<label index="tx_czsimplecal_domain_model_event.location_name">the name of the location this event takes place in</label>
+			<label index="tx_czsimplecal_domain_model_event.organizer_name">the name of the institution or person the event is organized by</label>
+			<label index="tx_czsimplecal_domain_model_event.category">category</label>
+			<label index="tx_czsimplecal_domain_model_category">a category of an event</label>
+			<label index="tx_czsimplecal_domain_model_category.title">a title for this category</label>
+		</languageKey>
+	</data>
+</T3locallang>

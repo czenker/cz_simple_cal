@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>Ontext Sensitive Help (CSH) for table tx_czsimplecal_domain_model_event</description>
+        <type>CSH</type>
+        <csh_table>tx_czsimplecal_domain_model_event</csh_table>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+			<label index="title.description">The title of this event</label>
+			<label index="start_day.description">the day that event starts</label>
+			<label index="start_time.description">the time this event starts (leave blank for an allday event)</label>
+			<label index="end_day.description">the day this event ends (leave blank for an event on one day)</label>
+			<label index="end_time.description">the time this event ends</label>
+			<label index="teaser.description">a short teaser for this event</label>
+			<label index="description.description">a long description for this event</label>
+			<label index="location_name.description">the name of the location this event takes place in</label>
+			<label index="organizer_name.description">the name of the institution or person the event is organized by</label>
+			<label index="category.description">category</label>
+		</languageKey>
+    </data>
+</T3locallang>

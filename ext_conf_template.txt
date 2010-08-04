@@ -1,0 +1,2 @@
+# cat=basic/enable/320; type=text; label= Final end of recurring events: When using recurring events this is the last date a recurring event will take place. Format is YYYY-MM-DD. Need to re-index recurring events, if changed (but this is not yet implemented :) ) 
+recurrenceEnd = 2020-12-31
