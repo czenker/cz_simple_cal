@@ -44,7 +44,7 @@ class Tx_CzSimpleCal_Hook_Datamap {
 	 */
 	public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, $tce) {
 		
-		if($table == 'tx_czsimplecal_domain_model_event') {
+		if($table == 'tx_czsimplecal_domain_model_event' || $table == 'tx_czsimplecal_domain_model_exception') {
 			// store the timezone to the database
 			$fieldArray['timezone'] = date('T');
 		}

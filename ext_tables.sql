@@ -19,6 +19,7 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	location_name tinytext DEFAULT '',
 	organizer_name tinytext DEFAULT '',
 	category int(11) unsigned DEFAULT '0' NOT NULL,
+	exceptions int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -51,6 +52,43 @@ CREATE TABLE tx_czsimplecal_domain_model_eventindex (
 	end      int(11) NOT NULL,	
 	event    int(11) NOT NULL,
 	
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);
+
+CREATE TABLE tx_czsimplecal_domain_model_exception (
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	
+	
+	title tinytext,
+	day int(11),
+	timezone varchar(20) DEFAULT 'GMT',
+	recurrance_type varchar(30) DEFAULT 'none',
+	recurrance_until int(11) DEFAULT -1,
+	recurrance_times int(11) DEFAULT 0,
+
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);
+
+CREATE TABLE tx_czsimplecal_event_exception_mm (
+	uid int(10) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	tablenames varchar(255) DEFAULT '' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	
+	tstamp int(10) unsigned DEFAULT '0' NOT NULL,
+	crdate int(10) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(3) unsigned DEFAULT '0' NOT NULL,
+
 	PRIMARY KEY (uid),
 	KEY parent (pid)
 );

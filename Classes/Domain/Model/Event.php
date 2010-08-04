@@ -31,7 +31,7 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEntity implements Tx_CzSimpleCal_Domain_Interface_HasTimespan {
 	
 	
 	/**
@@ -130,23 +130,30 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	 */
 	protected $category;
 	
+	/**
+	 * exceptions for this event
+	 * 
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Exception>
+	 */
+	protected $exceptions = null;
+	
 	
 	
 	
 	
 	
 	/**
-	 * @var DateTime
+	 * @var Tx_CzSimpleCal_Utility_DateTime
 	 */
 	protected $startDateTime = null;
 	
 	/**
-	 * @var DateTime
+	 * @var Tx_CzSimpleCal_Utility_DateTime
 	 */
 	protected $endDateTime = null;
 	
 	/**
-	 * @var DateTime
+	 * @var Tx_CzSimpleCal_Utility_DateTime
 	 */
 	protected $recurranceUntilDateTime = null;
 	
@@ -215,7 +222,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	/**
 	 * get a DateTime object of the start
 	 * 
-	 * @return DateTime
+	 * @return Tx_CzSimpleCal_Utility_DateTime
 	 */
 	public function getDateTimeObjectStart() {
 		if(is_null($this->startDateTime)) {
@@ -265,7 +272,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	/**
 	 * get a DateTime object of the end
 	 * 
-	 * @return DateTime
+	 * @return Tx_CzSimpleCal_Utility_DateTime
 	 */
 	public function getDateTimeObjectEnd() {
 		if(is_null($this->endDateTime)) {
@@ -470,6 +477,15 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 		$this->category->detach($category);
 	}
 	
+	/**
+	 * Getter for exceptions
+	 *
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Exception> exception
+	 */
+	public function getExceptions() {
+		return $this->exceptions;
+	}
+	
 	public function getRecurranceType() {
 		return $this->recurranceType; 
 	}
@@ -509,7 +525,8 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	
 	
 	public function getRecurrances() {
-		return Tx_CzSimpleCal_Recurrance_Factory::buildRecurranceForEvent($this);
+		$factory = new Tx_CzSimpleCal_Recurrance_Factory();
+		return $factory->buildRecurranceForEvent($this);
 	}
 	
 	/**
@@ -529,6 +546,8 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	public function getPid() {
 		return $this->pid;
 	}
+	
+	
 	
 }
 ?>

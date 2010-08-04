@@ -1,0 +1,111 @@
+<?php
+if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
+
+$TCA['tx_czsimplecal_domain_model_exception'] = array(
+	'ctrl' => $TCA['tx_czsimplecal_domain_model_exception']['ctrl'],
+	'interface' => array(
+		'showRecordFieldList' => 'title,day,recurrance_type,recurrance_until'
+	),
+	'types' => array(
+		'1' => array('showitem' => 'title,day,recurrance_type,recurrance_until')
+	),
+	'palettes' => array(
+		'1' => array('showitem' => '')
+	),
+	'columns' => array(
+		'hidden' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+			'config'  => array(
+				'type' => 'check'
+			)
+		),
+		'pid' => array(
+			'exclude' => 0,
+			'label' => '',
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'pages',
+				'minitems' => 1,
+				'maxitems' => 1
+			)
+		),
+		'title' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.title',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim,required'
+			)
+		),
+		'day' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.day',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 12,
+				'max' => 20,
+				'eval' => 'date,required',
+			)
+		),
+		'timezone' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.timezone',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 40,
+				'max' => 40,
+				'eval' => 'string',
+				'default' => 'GMT'
+			)
+		),
+		'recurrance_type' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_type',
+			'config'  => array(
+				'type' => 'select',
+				'items' => array(
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_type.none',
+						'none'
+					),
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_type.daily',
+						'daily'
+					),
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_type.weekly',
+						'weekly'
+					),
+					
+				),
+			)
+		),
+		'recurrance_until' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_until',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 12,
+				'max' => 20,
+				'eval' => 'date',
+				'checkbox' => '-1',
+				'default' => '-1'
+			)
+		),
+//		'recurrance_times' => array(
+//			'exclude' => 1,
+//			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_times',
+//			'config'  => array(
+//				'type' => 'input',
+//				'size' => 4,
+//				'max' => 4,
+//				'eval' => 'int',
+//				'checkbox' => '0',
+//				'default' => '0'
+//			)
+//		),
+	),
+);
+?>

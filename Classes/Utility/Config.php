@@ -25,4 +25,17 @@ class Tx_CzSimpleCal_Utility_Config {
 		return array_key_exists($name, self::$data);
 	}
 	
+	protected function set($name, $value = null) {
+		if(is_string($name)) {
+			$this->data[$name] = $value;
+		} elseif(is_array($name)) {
+			$this->data = array_merge(
+				is_null($this->data) ? array() : $this->data,
+				$name
+			);
+		} else {
+			throw new InvalidArgumentException('The value "name" must be a string or array.');
+		}
+	}
+	
 }

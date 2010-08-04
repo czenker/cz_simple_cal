@@ -4,10 +4,10 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $TCA['tx_czsimplecal_domain_model_event'] = array(
 	'ctrl' => $TCA['tx_czsimplecal_domain_model_event']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'title,start_day,start_time,end_day,end_time,teaser,description,recurrance_type,recurrance_until,recurrance_times,location_name,organizer_name,category'
+		'showRecordFieldList' => 'title,start_day,start_time,end_day,end_time,teaser,description,recurrance_type,recurrance_until,recurrance_times,location_name,organizer_name,category,exceptions'
 	),
 	'types' => array(
-		'1' => array('showitem' => 'title,start_day,start_time,end_day,end_time,teaser,description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css],recurrance_type,recurrance_until,recurrance_times,location_name,organizer_name,category')
+		'1' => array('showitem' => 'title,start_day,start_time,end_day,end_time,teaser,description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css],recurrance_type,recurrance_until,recurrance_times,location_name,organizer_name,category,exceptions')
 	),
 	'palettes' => array(
 		'1' => array('showitem' => '')
@@ -236,6 +236,20 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 				'foreign_table' => 'tx_czsimplecal_domain_model_category',
 				'MM' => 'tx_czsimplecal_event_category_mm',
 				'maxitems' => 99999
+			)
+		),
+		'exceptions' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.exceptions',
+			'config'  => array(
+				'type' => 'select',
+//				'internal_type' => 'db',
+//				'allowed' => 'tx_czsimplecal_domain_model_exception',
+				'foreign_table' => 'tx_czsimplecal_domain_model_exception',
+				'MM' => 'tx_czsimplecal_event_exception_mm',
+				'maxitems' => 99999,
+				'size' => 5,
+				'autoSizeMax' => 20
 			)
 		),
 	),

@@ -23,6 +23,18 @@
 			<label index="tx_czsimplecal_domain_model_event.location_name">Location Name</label>
 			<label index="tx_czsimplecal_domain_model_event.organizer_name">Organizer Name</label>
 			<label index="tx_czsimplecal_domain_model_event.category">Category</label>
+			<label index="tx_czsimplecal_domain_model_event.exceptions">Exceptions</label>
+			
+			<label index="tx_czsimplecal_domain_model_exception">Exception</label>
+			<label index="tx_czsimplecal_domain_model_exception.title">Title</label>
+			<label index="tx_czsimplecal_domain_model_exception.day">Exception Day</label>
+			<label index="tx_czsimplecal_domain_model_exception.recurrance_type">Recurrance</label>
+			<label index="tx_czsimplecal_domain_model_exception.recurrance_type.none">(none)</label>
+			<label index="tx_czsimplecal_domain_model_exception.recurrance_type.daily">daily</label>
+			<label index="tx_czsimplecal_domain_model_exception.recurrance_type.weekly">weekly</label>
+			<label index="tx_czsimplecal_domain_model_exception.recurrance_until">Repeat until</label>
+			<label index="tx_czsimplecal_domain_model_exception.recurrance_times">Repeat times</label>
+			
 			<label index="tx_czsimplecal_domain_model_category">Category</label>
 			<label index="tx_czsimplecal_domain_model_category.title">Title</label>
 		</languageKey>

@@ -1,11 +1,11 @@
 <?php 
 
 /**
- * no recurrance at all - only this single event
+ * weekly recurrance
  * 
  * @author Christian Zenker <christian.zenker@599media.de>
  */
-class Tx_CzSimpleCal_Recurrance_Weekly extends Tx_CzSimpleCal_Recurrance_Base {
+class Tx_CzSimpleCal_Recurrance_Type_Weekly extends Tx_CzSimpleCal_Recurrance_Type_Base {
 	
 	protected function doBuild() {
 		
@@ -19,16 +19,10 @@ class Tx_CzSimpleCal_Recurrance_Weekly extends Tx_CzSimpleCal_Recurrance_Base {
 				break;
 			}
 			
-			$data = array(
+			$this->timeline->add(array(
 				'start' => $start->getTimestamp(),
 				'end'   => $end->getTimestamp()
-			);
-			
-			t3lib_div::devLog('recurrance', 'cz_simple_cal', 2, $data);
-			
-			$this->collection->add(
-				$data
-			);
+			));
 			
 			$start->modify('+1 week');
 			$end->modify('+1 week');
