@@ -175,6 +175,10 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 						'none'
 					),
 					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.daily',
+						'daily'
+					),
+					array(
 						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.weekly',
 						'weekly'
 					),

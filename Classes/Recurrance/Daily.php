@@ -1,11 +1,11 @@
 <?php 
 
 /**
- * no recurrance at all - only this single event
+ * daily recurrance
  * 
  * @author Christian Zenker <christian.zenker@599media.de>
  */
-class Tx_CzSimpleCal_Recurrance_Weekly extends Tx_CzSimpleCal_Recurrance_Base {
+class Tx_CzSimpleCal_Recurrance_Daily extends Tx_CzSimpleCal_Recurrance_Base {
 	
 	protected function doBuild() {
 		
@@ -30,9 +30,8 @@ class Tx_CzSimpleCal_Recurrance_Weekly extends Tx_CzSimpleCal_Recurrance_Base {
 				$data
 			);
 			
-			$start->modify('+1 week');
-			$end->modify('+1 week');
-			
+			$start->modify('+1 day');
+			$end->modify('+1 day');
 		}
 	}
 	
