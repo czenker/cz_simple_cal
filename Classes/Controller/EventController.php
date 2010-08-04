@@ -95,13 +95,12 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 	
 	public function countEventsAction() {
 		$this->view->assign(
-			'events',
+			'data',
 			$this->eventIndexRepository->countAllWithSettings(array(
 				'startDate' => $this->getStartDate(),
 				'endDate'   => $this->getEndDate(),
 				'limit'     => array_key_exists('maxEvents', $this->actionSettings) ? $this->actionSettings['maxEvents'] : null,
-				'order'     => array_key_exists('order', $this->actionSettings) ? $this->actionSettings['order'] : null,
-				'orderBy'   => array_key_exists('orderBy', $this->actionSettings) ? $this->actionSettings['orderBy'] : null,
+				'groupBy'     => array_key_exists('groupBy', $this->actionSettings) ? $this->actionSettings['groupBy'] : null
 			))
 		);
 	}
@@ -143,8 +142,13 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 	 */
 	protected function getStartDate() {
 		if(array_key_exists('startDate', $this->actionSettings)) {
-			$date = new Tx_CzSimpleCal_Utility_DateTime($this->actionSettings['startDate']);
-			return $date->format('U');
+			if(isset($this->actionSettings['useGetDate']) && $this->request->hasArgument('getDate')) {
+				$date = new Tx_CzSimpleCal_Utility_DateTime($this->request->getArgument('getDate'));
+				$date->modify($this->actionSettings['startDate']);
+			} else {
+				$date = new Tx_CzSimpleCal_Utility_DateTime($this->actionSettings['startDate']);
+			}
+			return $date;
 		} else {
 			return null;
 		}
@@ -158,40 +162,17 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 	 */
 	protected function getEndDate() {
 		if(array_key_exists('endDate', $this->actionSettings)) {
-			$date = new Tx_CzSimpleCal_Utility_DateTime($this->actionSettings['endDate']);
-			return $date->format('U');
+			if(isset($this->actionSettings['useGetDate']) && $this->request->hasArgument('getDate')) {
+				$date = new Tx_CzSimpleCal_Utility_DateTime($this->request->getArgument('getDate'));
+				$date->modify($this->actionSettings['endDate']);
+			} else {
+				$date = new Tx_CzSimpleCal_Utility_DateTime($this->actionSettings['endDate']);
+			}
+			return $date;
 		} else {
 			return null;
 		}
 	}
-	
-	
-	/**
-	 * checks if an action is allowed to be viewed
-	 * 
-	 * @return null
-	 */
-	protected function redirectIfViewIsNotAllowed() {
-		$allowedViews = t3lib_div::trimExplode(',', $this->settings['allowedViews'], true);
-		if(!in_array($this->viewName, $allowedViews)) {
-			$this->throwStatus(404, 'Not Found');
-		}
-	}
-	
-	/**
-	 * throws an 503 status if some required field in the settings is missing
-	 * 
-	 * @param $field
-	 * @return null
-	 */
-	protected function throw503OnMissingField($field) {
-		$this->throwStatus(503, 'Service Unavailable', sprintf(
-			'There was no "%s" set for %s. Please include the static template or write your own.',
-			$field, 
-			$this->extensionName
-		));
-	}
-
 	
 /*
  * The following few methods are overrides of extbase methods.

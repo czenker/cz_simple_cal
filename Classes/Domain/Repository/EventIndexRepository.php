@@ -52,10 +52,53 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		return $query->execute();
 	}
 	
+	/**
+	 * find all events matching some settings and count them
+	 * 
+	 * @param $settings
+	 * @ugly doing dozens of database requests
+	 * @return unknown_type
+	 */
 	public function countAllWithSettings($settings = array()) {
-		$query = $this->setupSettings($settings);
+		if(!isset($settings['groupBy'])) {
+			return $this->setupSettings($settings)->count();
+		} else {
+			$output = array();
+			if($settings['groupBy'] === 'day') {
+				$step = '+1 day';
+			} elseif($settings['groupBy'] === 'week') {
+				$step = '+1 week';
+			} elseif($settings['groupBy'] === 'month') {
+				$step = '+1 month';
+			} else {
+				$step = '+1 year';
+			}
+			
+			$startDate = clone $settings['startDate'];
+			$endDate = $settings['endDate']->getTimestamp();
+			
+			while ($startDate->getTimestamp() < $endDate) {
+				$tempEndDate = clone $startDate;
+				$tempEndDate->modify($step.' -1 second');
+				
+				$output[] = array(
+					'date' => $startDate->format('Y-m-d H:i:s'),
+					'count' => $this->countAllWithSettings(array_merge(
+						$settings,
+						array(
+							'startDate' => $startDate,
+							'endDate' => $tempEndDate,
+							'groupBy' => null 
+						)
+					))
+				);
+				
+				$startDate->modify($step);
+			}
+			
+			return $output;
+		}
 		
-		return $query->count();
 	}
 	
 	/**
@@ -71,7 +114,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 	 * 
 	 * @param $settings
 	 * @ugly extbase query needs a better fluent interface for query creation
-	 * @return array
+	 * @return Tx_Extbase_Persistence_Query
 	 */
 	protected function setupSettings($settings = array(), $query = null) {
 		if(is_null($query)) {
@@ -80,11 +123,11 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		
 		// startDate
 		if(isset($settings['startDate'])) {
-			$constraint = $query->greaterThanOrEqual('start', $settings['startDate']);
+			$constraint = $query->greaterThanOrEqual('start', $settings['startDate']->getTimestamp());
 		}
 		// endDate
 		if(isset($settings['endDate'])) {
-			$temp_constraint = $query->lessThanOrEqual('end', $settings['endDate']);
+			$temp_constraint = $query->lessThanOrEqual('end', $settings['endDate']->getTimestamp());
 			 
 			if(isset($constraint)) {
 				$constraint = $query->logicalAnd($constraint, $temp_constraint);

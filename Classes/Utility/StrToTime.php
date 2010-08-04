@@ -36,12 +36,12 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 		'last day of last month' => '%Y-%m-01 -1 day',
 		'last day of next month' => '%Y-%m-01 +2 months -1 day',
 		
-		'first day of this week' => '%Y-W%V',
-		'first day of last week' => '%Y-W%V -1 week',
-		'first day of next week' => '%Y-W%V +1 week',
-		'last day of this week' => '%Y-W%V +1 week -1 day',
-		'last day of last week' => '%Y-W%V -1 day',
-		'last day of next week' => '%Y-W%V +2 week -1 day',
+		'first day of this week' => '%Y-W%V-1',
+		'first day of last week' => '%Y-W%V-1 -1 week',
+		'first day of next week' => '%Y-W%V-1 +1 week',
+		'last day of this week' => '%Y-W%V-7',
+		'last day of last week' => '%Y-W%V-7 -1 week',
+		'last day of next week' => '%Y-W%V-7 +1 week',
 	
 		'first day of this year' => '%Y-01-01',
 		'first day of last year' => '%Y-01-01 -1 year',
@@ -51,6 +51,8 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 		'last day of next year' => '%Y-01-01 +2 years -1 day'
 	);
 	
+	protected static $sections = null;
+	
 	/**
 	 * enhanced strtotime()
 	 * 
@@ -59,10 +61,30 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 	 * @return integer
 	 */
 	public static function strtotime($time, $now = null) {
+		if(is_null($time)) {
+			return null;
+		}
 		if(is_null($now)) {
 			$now = time();
 		}
-		$time = strftime(strtr($time, self::$translateTable), $now);
-		return strtotime($time, $now);
+		if(is_null(self::$sections)) {
+			self::buildSections();
+		}
+		
+		$time = strtr($time, self::$sections);
+		
+		foreach(t3lib_div::trimExplode('|', $time, true) as $time) {
+			$now = strtotime(strftime(strtr($time, self::$translateTable), $now), $now);
+		}
+		
+		return $now;
+	}
+	
+	protected static function buildSections() {
+		self::$sections = array();
+		
+		foreach(self::$translateTable as $from=>$to) {
+			self::$sections[$from] = $to.'|';
+		}
 	}
 }

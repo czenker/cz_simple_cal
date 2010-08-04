@@ -94,7 +94,6 @@ class Tx_CzSimpleCal_ViewHelpers_Format_DateTimeViewHelper extends Tx_Fluid_Core
 		if($get) {
 			$timestamp = $this->modifyDate($timestamp, $get);
 		}
-		
 		return strftime($format, $timestamp);
 	}
 	

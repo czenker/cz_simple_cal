@@ -19,6 +19,14 @@
 			<label index="tx_czsimplecal_domain_model_event.category">category</label>
 			<label index="tx_czsimplecal_domain_model_category">a category of an event</label>
 			<label index="tx_czsimplecal_domain_model_category.title">a title for this category</label>
+			
+			
+			<label index="format.monthAndYear">%B %Y</label>
+			
+			<label index="numEvents">[0]No events|[1] 1 event|[2,+Inf] ###number### events</label>
+			
+			
+			
 		</languageKey>
 	</data>
 </T3locallang>

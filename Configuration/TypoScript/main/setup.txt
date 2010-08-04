@@ -38,8 +38,41 @@ plugin.tx_czsimplecal {
 				
 				useAction = countEvents
 				
-				startDate  = 2010-07-01
-				endDate    = 2010-07-31 23:59:59
+				useGetDate = 1
+				
+				startDate  = first day of this month first day of this week
+				endDate    = last day of this month first day of next week -1 second
+				groupBy    = day
+			}
+			
+			week {
+				defaultPid = {$plugin.tx_czsimplecal.pids.default}
+				
+				useAction = list
+				
+				startDate = first day of this week
+				endDate   = last day of this week 23:59:59
+				
+				useGetDate = 1
+				
+				maxEvents = 999
+				orderBy = start
+				order   = ASC
+			}
+			
+			day {
+				defaultPid = {$plugin.tx_czsimplecal.pids.default}
+				
+				useAction = list
+				
+				startDate = today
+				endDate   = today 23:59:59
+				
+				useGetDate = 1
+				
+				maxEvents = 999
+				orderBy = start
+				order   = ASC
 			}
 		}
 	}

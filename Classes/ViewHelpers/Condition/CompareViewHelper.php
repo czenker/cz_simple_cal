@@ -59,7 +59,7 @@
  * 
  *
  * <code title="comparing object method results">
- *     <f:if condition="{x:condition.compare(value1: person.age, value2: 18, operation="&lt;")}">You are too young</f:if>
+ *     <f:if condition="{x:condition.compare(value1: person.age, value2: 18, operation='&lt;')}">You are too young</f:if>
  * </code>   
  *  Condition would evaluate to false as "===" does a type check.
  * 

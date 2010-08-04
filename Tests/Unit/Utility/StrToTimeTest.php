@@ -116,7 +116,12 @@ class StrToTimeTest extends tx_phpunit_testcase
     		array('first day of next year', strtotime('2010-01-01 00:00:00GMT')),
     		array('last day of this year', strtotime('2009-12-31 00:00:00GMT')),
     		array('last day of last year', strtotime('2008-12-31 00:00:00GMT')),
-    		array('last day of next year', strtotime('2010-12-31 00:00:00GMT'))
+    		array('last day of next year', strtotime('2010-12-31 00:00:00GMT')),
+    		
+    		// test for compound dates
+    		array('first day of this month first day of this week', strtotime('2009-01-26 00:00:00GMT')),
+    		
+    		
     	);
     }   
 }
