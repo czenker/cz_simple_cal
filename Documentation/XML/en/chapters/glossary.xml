@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glossary version="5.0" xmlns="http://docbook.org/ns/docbook"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:ns6="http://www.w3.org/1999/xlink"
+	xmlns:ns5="http://www.w3.org/2000/svg" xmlns:ns4="http://www.w3.org/1999/xhtml"
+	xmlns:ns3="http://www.w3.org/1998/Math/MathML" xmlns:ns="http://docbook.org/ns/docbook">
+
+	<title>Glossary</title>
+
+	<glossentry>
+		<glossterm xml:id="glossary.date">Date</glossterm>
+		<glossdef>
+			<para>
+			A date usually means the combination of <link linkend="glossary.day">day</link> and <link linkend="glossary.time">time</link>.</para>
+			<glossseealso otherterm="glossary.day">Day</glossseealso>
+			<glossseealso otherterm="glossary.time">Time</glossseealso>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.day">Day</glossterm>
+		<glossdef>
+			<para>
+			When speaking of a <emphasis>day</emphasis> usually no time is meant. For example 1st January 2010 would be a day.</para>
+			<glossseealso otherterm="glossary.date">Date</glossseealso>
+			<glossseealso otherterm="glossary.time">Time</glossseealso>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.time">Time</glossterm>
+		<glossdef>
+			<para>
+			When speaking of a <emphasis>time</emphasis> usually no day is meant. For example 12:34:56 would be a time.</para>
+			<glossseealso otherterm="glossary.date">Date</glossseealso>
+			<glossseealso otherterm="glossary.day">Day</glossseealso>
+		</glossdef>
+	</glossentry>
+
+	<glossentry>
+		<glossterm xml:id="glossary.event-domain-model">Event (Domain Object)</glossterm>
+		<glossdef>
+			<para>
+			The Domain Object <literal>Event</literal> represents a series of events that share some common information
+			like the name or a description. Events might be recurrant or have exceptions in this recurrances.</para>
+			<glossseealso otherterm="glossary.eventindex">EventIndex</glossseealso>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.event-controller">Event (Controller)</glossterm>
+		<glossdef>
+			<para>
+			The most important controller for the Events. Technically it is no controller for the <link linkend="glossary.event-domain-model"><literal>Event</literal></link>
+			but for the <link linkend="glossary.eventindex"><literal>EventIndex</literal></link>
+			</para>
+		</glossdef>
+	</glossentry>
+
+	<glossentry>
+		<glossterm xml:id="glossary.eventindex">EventIndex (Domain Object)</glossterm>
+		<glossdef>
+			<para>
+			In contrast to the <link linkend="glossary.event-domain-object">Event</link> an <literal>EventIndex</literal> 
+			is a representation of a concrete occurance of the event. So an <literal>Event</literal> the recurrs every week will have a 
+			<literal>EventIndex</literal> representation fore every week.
+			Even not recurring Events have an <literal>EventIndex</literal> representation. Queries on several events are
+			almost exclusivly done on these domain objects.
+			</para>  
+			<glossseealso otherterm="glossary.event-domain-object">Event</glossseealso>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.exception">Exception (Domain Object)</glossterm>
+		<glossdef>
+			<para>
+			An <literal>Exception</literal> is an "<literal>Event</literal>" that symbolizes that an Event is not taking place when 
+			the exception is active. It might be recurring, but Exceptions is not stored are not stored as Indices in the database
+			as it is done with Events.
+			</para>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.exceptiongroup">ExceptionGroup (Domain Object)</glossterm>
+		<glossdef>
+			<para>
+			A collection of <literal>Exceptions</literal> that belong together somehow.
+			</para>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.getdate">GetDate</glossterm>
+		<glossdef>
+			<para>
+			GetDate is a concept taken from the TYPO3 extension <productname>cal</productname>. GetDate makes some actions configurable
+			using GET-parameters. All relative dates of the action are calculated based on that date. 
+			</para>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.timespan">Timespan</glossterm>
+		<glossdef>
+			<para>
+			A timespan has a start and an end date and covers everything in between. There are no gaps in a timespan.
+			</para>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.timeline">Timeline</glossterm>
+		<glossdef>
+			<para>
+			A timeline is a collection of timespans. The contained timespans might overlap or build gaps.
+			</para>
+			<glossseealso otherterm="glossary.timespan">Timespan</glossseealso>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.fake-action">Fake Action</glossterm>
+		<glossdef>
+			<para>
+			One of the concepts of this calendar is to generate actions dynamically based on TypoScript configuration. Actions that
+			have no method in the corresponding controller are called "fake actions".
+			</para>
+			<glossseealso otherterm="glossary.real-action">Real Action</glossseealso>
+		</glossdef>
+	</glossentry>
+	
+	<glossentry>
+		<glossterm xml:id="glossary.real-action">Real Action</glossterm>
+		<glossdef>
+			<para>
+			In comparisson to fake actions the real actions have a method in the corresponding controller. These are the actions
+			as they are conceptually intended by extbase.
+			</para>
+			<glossseealso otherterm="glossary.fake-action">Fake Action</glossseealso>
+		</glossdef>
+	</glossentry>
+
+
+</glossary>

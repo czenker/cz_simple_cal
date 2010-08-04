@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="chapter.concepts"
+	version="5.0" xmlns="http://docbook.org/ns/docbook"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:ns6="http://www.w3.org/1999/xlink"
+	xmlns:ns5="http://www.w3.org/2000/svg" xmlns:ns4="http://www.w3.org/1999/xhtml"
+	xmlns:ns3="http://www.w3.org/1998/Math/MathML" xmlns:ns="http://docbook.org/ns/docbook">
+
+	<title>Concepts</title>
+		<para>This section tries to explain some of the basic concepts behind the calendar.</para>
+		
+		<section xml:id="chapter.concepts.eventindex">
+			<title>Event Index</title>
+			<para>
+				<productname>Calendar Base</productname> introduced something called <literal>New Recurring Event Model</literal>.
+				This concept was borrowed and applied to all events by default. The index is automatically updated if you modify
+				an event. So depending on how many recurrances and exceptions you've set up, storing might take a while longer.
+			</para>
+			<note>
+				The extension is smart enough to notify if you changed some values that actually require indexing to run again.
+				So if you only change the title or a description, no indexing is done.
+			</note>
+			<caution>
+				<para>Until now there is no Indexer to re-index all your events. If you happen to mess up your index somehow
+				(for example by changing an exception you have assigned to an event) you'll have to edit and save every event again.
+				And due to the note above, you'll actually have to change something significant like the start time.
+				</para>
+			</caution>
+			
+			<para>
+				Due to the indexing of events you usually deal with <link linkend="glossary.eventindex">EventIndices</link> in your
+				templates. But the objects are smart enough to tunnel unknown methods to the <link linkend="glossary.eventindex">Event</link>
+				they belong to. So you can work with <literal>EventIndices</literal> as if they were Events.   
+			</para>
+		</section>
+		
+		<section xml:id="chapter.concepts.fake-actions">
+			<title>Fake Actions</title>
+			<para>
+				To make the extension as flexible as possible you can add <link linkend="glossary.fake-actions">fake actions</link>
+				to the controller in your TypoScript.
+			</para>
+			<para>
+				At the moment the only <link linkend="glossary.real-actions">real actions</link> are <literal>listAction</literal>, <literal>showAction</literal> and
+				<literal>countEventsAction</literal>. <literal>DispatchAction</literal> serves as a fallback and default action.
+			</para>
+			<para>See <link linkend="chapter.howto.add-fake-action">HowTo: Add a fake action</link> to learn - guess what - how to add a fake action.</para>
+		</section>
+
+	
+</chapter>
+
+
+

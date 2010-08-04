@@ -4,7 +4,7 @@
  * This class exists so that the Event Controller won't initialize 
  * an empty view.
  * 
- * That would be as the action name won't match the views name.
+ * If this was done the dispatch action will not be called.
  * 
  * @author Christian Zenker <christian.zenker@599media.de>
  */

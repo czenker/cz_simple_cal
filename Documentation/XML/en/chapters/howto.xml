@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="chapter.howto"
+	version="5.0" xmlns="http://docbook.org/ns/docbook"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:ns6="http://www.w3.org/1999/xlink"
+	xmlns:ns5="http://www.w3.org/2000/svg" xmlns:ns4="http://www.w3.org/1999/xhtml"
+	xmlns:ns3="http://www.w3.org/1998/Math/MathML" xmlns:ns="http://docbook.org/ns/docbook">
+
+	<title>HowTo's</title>
+
+	<section xml:id="chapter.howto.add-fake-action">
+		<title>Add a fake action</title>
+		
+		<para>
+			Adding a fake action is pretty simple and can be done only using TypoScript. Let's say we want to add a view that
+			displays the event that has recently finished. We'll call this action <literal>recent</literal>.
+		</para>
+		
+		<procedure>
+			<step>
+				<title>Choose a fitting real action</title>
+				<para>
+					In our example case this would be the <literal>listAction</literal>. <literal>ShowAction</literal> won't fit as 
+					you don't know the id of the event to display in advance. Instead, we'll limit the list to display only one 
+					event.
+				</para>
+			</step>
+			<step>
+				<title>Extend the TypoScript configuration</title>
+				
+				<note><para>All given TypoScript paths are relative to <code>plugin.tx_czsimplecal</code>. I am to lazy to
+					add this to the path each time, and so should you. Use the curly brackets: <code>plugin.tx_czsimplecal{ //... }</code>
+				</para></note>
+				
+				<para>
+					The TypoScript settings already hold some action configurations. So we'll just copy the configuration for the 
+					<literal>listAction</literal> in <code>settings.actions.list</code> to <code>settings.actions.recent</code>.
+				</para>
+				
+				<para>The configureable options should be pretty obvious. But first we'll add <code>useAction = list</code> to the 
+				actions configuration. This way the fake <literal>recentAction</literal> knows which real action to call.
+				Now we can change the other configuration like this:
+				</para>
+				
+				<programlisting>recent {
+    // ...
+    startDate  = now -1 month
+    endDate    = now
+
+    maxEvents = 1
+    orderBy   = end  
+    order     = DESC
+}</programlisting>
+				<para>Guess what each of the configuration values is doing. ;)</para>
+			</step>
+			
+			<step>
+				<title>Add the action to the allowed actions</title>
+				<para>Just add the name of the action to the <code>allowedViews</code> in the root of the extensions settings.</para>
+			</step>
+			
+			<step>
+				<title>Create a view</title>
+				<para>
+					Well, thats even simpler: Just copy the <literal>list.html</literal> template and rename it to
+					<literal>recent.html</literal>. Do changes on the file if you like.
+				</para>
+			</step>
+		
+		</procedure>
+		
+		
+	</section>
+	
+</chapter>
