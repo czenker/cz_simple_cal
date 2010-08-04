@@ -57,8 +57,14 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 	 * @return void
 	 */
 	protected function initializeAction() {
+		$this->initializeSettings();
+		
 		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
 		$this->eventIndexRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository');
+	}
+	
+	protected function initializeView($view) {
+		$view->assign('actionSettings', $this->actionSettings);
 	}
 	
 	/**
@@ -67,12 +73,20 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 	 * @return null
 	 */
 	public function dispatchAction() {
-		call_user_func(array($this, $this->actionName));
-		
-		$this->view->assign('viewSettings', $this->viewSettings);
-		$this->view->assign('actionSettings', $this->actionSettings);
-		
-		return $this->view->render($this->viewName);
+		if(!isset($this->settings['allowedActions'])) {
+			t3lib_div::sysLog(
+				sprintf(
+					'There were no allowedActions set on pageId %d, so there was nothing to display for the calendar.',
+					$GLOBALS['TSFE']->id
+				),
+				'cz_simple_cal', 
+				2
+			);
+			return '';
+		}
+		$actions = t3lib_div::trimExplode(',', $this->settings['allowedActions'], true);
+		reset($actions);
+		$this->forward(current($actions));
 	}
 	
 	/**
@@ -110,21 +124,7 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 	 * 
 	 * @return null
 	 */
-	public function showAction() {
-		if(isset($this->actionSettings['allowGPOverrideOfUid']) && $this->request->hasArgument('event')) {
-			$uid = $this->request->getArgument('event');
-		} elseif(isset($this->actionSettings['event'])) {
-			$uid = $this->actionSettings['event']; 
-		} else {
-			$uid = null;
-		}
-		$uid = intval($uid);
-		
-		if($uid == 0) {
-			$this->throwStatus(404, 'Not found', 'There was no event given that could be shown.');
-		}
-		
-		$event = $this->eventIndexRepository->findOneByUid($uid);
+	public function showAction(Tx_CzSimpleCal_Domain_Model_EventIndex $event) {
 		
 		if(empty($event)) {
 			$this->throwStatus(404, 'Not found', 'The requested event could not be found.');
@@ -174,6 +174,28 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 		}
 	}
 	
+	protected function initializeSettings() {
+		if(isset($this->settings['override'])) {
+			// this will override values if they are not empty and they already exist (so no adding of keys)
+			$this->settings = t3lib_div::array_merge_recursive_overrule($this->settings, $this->settings['override'], true, false);
+		}
+	}
+	
+	/**
+	 * set up all settings correctly allowing overrides from flexforms 
+	 * 
+	 * @param string $actionMethodName
+	 * @return null
+	 */
+	protected function initializeActionSettings($actionMethodName) {
+		$this->actionSettings = &$this->settings['actions'][$actionMethodName];
+		
+		if(isset($this->settings['override']['action'])) {
+			// this will override values if they are not empty and they already exist (so no adding of keys)
+			$this->actionSettings = t3lib_div::array_merge_recursive_overrule($this->actionSettings, $this->settings['override']['action'], true, false);
+		}
+	}
+	
 /*
  * The following few methods are overrides of extbase methods.
  * They allow to to add new actions dynamically.
@@ -211,6 +233,8 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 			$actionMethodName = $this->request->getArgument('action') . 'Action';
 		}
 		
+		
+		$this->initializeSettings();
 		$this->checkActionConfiguration($actionMethodName);
 		
 		return $actionMethodName;
@@ -221,7 +245,7 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 	 * check if action is configured
 	 * 
 	 * this is an added method.
-	 * It checks if a method is configured in TypoScript and has an equivalent in the "real" actions of this class
+	 * It checks if an action method is configured in TypoScript and has an equivalent in the "real" actions of this class
 	 * 
 	 * @param $actionMethodName
 	 * @return boolean
@@ -229,18 +253,24 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 	protected function checkActionConfiguration($actionMethodName) {
 		// strip the "...Action" from the name
 		$actionMethodName = substr($actionMethodName, 0, -6);
-		
-		if($actionMethodName !== 'dispatch') {
-			if(!array_key_exists('actions', $this->settings) || !array_key_exists($actionMethodName, $this->settings['actions'])) {
-				throw new Tx_Extbase_MVC_Exception_NoSuchAction('An action "' . $actionMethodName . '" does not exist in controller "' . get_class($this) . '".', 1186669086);
-			}
+		if($actionMethodName === 'dispatch') {
+			// dispatcher will redirect anyways -> so no further need of checking
+			return;
 		}
 		
-		$this->actionSettings = &$this->settings['actions'][$actionMethodName];
+		// throw error if action is not allowed in settings
+		if(!in_array($actionMethodName, t3lib_div::trimExplode(',', $this->settings['allowedActions'], true))) {
+			throw new Tx_Extbase_MVC_Exception_NoSuchAction('An action "' . $actionMethodName . '" does not exist in controller "' . get_class($this) . '".', 1186669086);
+		}
 		
+		// throw error if action is not configured
+		if(!array_key_exists('actions', $this->settings) || !array_key_exists($actionMethodName, $this->settings['actions'])) {
+			throw new Tx_Extbase_MVC_Exception_NoSuchAction('An action "' . $actionMethodName . '" does not exist in controller "' . get_class($this) . '".', 1186669086);
+		}
 		
-		if(array_key_exists('useAction', $this->actionSettings)) {
-			$this->useActionName = $this->actionSettings['useAction'].'Action';
+		// check if a fake action should be used
+		if(array_key_exists('useAction', $this->settings['actions'][$actionMethodName])) {
+			$this->useActionName = $this->settings['actions'][$actionMethodName]['useAction'].'Action';
 			
 			if(!is_callable(array($this, $this->useActionName))) {
 				throw new Tx_Extbase_MVC_Exception_NoSuchAction(sprintf(
@@ -251,6 +281,8 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 				));
 			}	
 		}
+		
+		$this->initializeActionSettings($actionMethodName);
 		return true;
 	}
 	
@@ -344,6 +376,8 @@ class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controlle
 	public function __call($methodName, $arguments) {
 		if($methodName === $this->actionMethodName) {
 			return call_user_func_array(array($this, $this->useActionName), $arguments);
+		} else {
+			throw new BadMethodCallException(sprintf('%s does not implement the called %s method.', get_class($this), $methodName));
 		}
 	}
 }

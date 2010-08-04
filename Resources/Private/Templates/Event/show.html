@@ -1,7 +1,7 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 
 <h2>{event.title}</h2>
-<cal:variable.init>
-	<f:format:html>{event.description}</f:format:html>
-	<cal:link.view view="list">back to the list view</cal:link.view>
-</cal:variable.init>
+<cal:format.dateTime timestamp="{event.dateTimeObjectStart}" />
+<f:format.html>{event.description}</f:format.html>
+
+<f:link.action action="list">back to the list view</f:link.action>

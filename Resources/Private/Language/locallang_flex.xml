@@ -9,9 +9,12 @@
 			<label index="sheet.general">Default</label>
 			
 			<label index="field.useView">selected view</label>
-			<label index="field.useView.default">(use default)</label>
-			<label index="field.useView.list">List some events</label>
-			<label index="field.useView.show">Show single event</label>
+			<label index="field.useView.list">List some events (LIST)</label>
+			<label index="field.useView.show">Show single event (SINGLE)</label>
+			<label index="field.useView.day">day view (DAY)</label>
+			<label index="field.useView.week">week view (WEEK)</label>
+			<label index="field.useView.month">month view (MONTH)</label>
+			<label index="field.useView.minimonth">minimonth view (MONTH)</label>
 			
 			<label index="field.action.startDate">Start Date</label>
 			<label index="field.action.startDate.default">(use default)</label>
@@ -43,8 +46,8 @@
 
 			<label index="field.action.order">Order</label>
 			<label index="field.action.order.default">(use default)</label>
-			<label index="field.action.order.asc">ascending</label>
-			<label index="field.action.order.desc">descending</label>
+			<label index="field.action.order.ascending">ascending</label>
+			<label index="field.action.order.descending">descending</label>
 		</languageKey>
 	</data>
 </T3locallang>

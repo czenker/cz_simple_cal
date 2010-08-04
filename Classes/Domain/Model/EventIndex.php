@@ -36,6 +36,7 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	/**
 	 * the timestamp from the beginning of that event
 	 * 
+	 * @ugly integer is used as we'd like an instance of the Utility_DayTime, but extbase would only return a DateTime Object in the extbase version shipped with TYPO3 4.4
 	 * @var integer
 	 */
 	protected $start;
@@ -43,9 +44,24 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	/**
 	 * the timestamp from the end of that event
 	 * 
+	 * @ugly integer is used as we'd like an instance of the Utility_DayTime, but extbase would only return a DateTime Object in the extbase version shipped with TYPO3 4.4
 	 * @var integer
 	 */
 	protected $end;
+	
+	/**
+	 * the start date as DateTime object
+	 * 
+	 * @var Tx_CzSimpleCal_Utility_DateTime
+	 */
+	protected $dateTimeObjectStart = null;
+	
+	/**
+	 * the end date as DateTime object
+	 * 
+	 * @var Tx_CzSimpleCal_Utility_DateTime
+	 */
+	protected $dateTimeObjectEnd = null;
 	
 	/**
 	 * the pid of the record
@@ -67,6 +83,7 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	 */
 	public function setStart($start) {
 		$this->start = $start;
+		$this->dateTimeObjectStart = null;
 	}
 	
 	/**
@@ -78,12 +95,25 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	}
 	
 	/**
+	 * get the start of this event as a dateTimeObject
+	 * 
+	 * @return Tx_CzSimpleCal_Utility_DateTime
+	 */
+	public function getDateTimeObjectStart() {
+		if(is_null($this->dateTimeObjectStart)) {
+			$this->dateTimeObjectStart = new Tx_CzSimpleCal_Utility_DateTime($this->start);
+		}
+		return $this->dateTimeObjectStart;
+	}
+	
+	/**
 	 * set the timestamp from the end of that event
 	 * @param integer $end
 	 * @return null
 	 */
 	public function setEnd($end) {
 		$this->end = $end;
+		$this->dateTimeObjectEnd = null;
 	}
 	
 	/**
@@ -92,6 +122,18 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	 */
 	public function getEnd() {
 		return $this->end;
+	}
+	
+	/**
+	 * get the end of this event as a dateTimeObject
+	 * 
+	 * @return Tx_CzSimpleCal_Utility_DateTime
+	 */
+	public function getDateTimeObjectEnd() {
+		if(is_null($this->dateTimeObjectEnd)) {
+			$this->dateTimeObjectEnd = new Tx_CzSimpleCal_Utility_DateTime($this->end);
+		}
+		return $this->dateTimeObjectEnd;
 	}
 	
 	/**
@@ -129,7 +171,6 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	 * @return Tx_CzSimpleCal_Domain_Model_EventIndex
 	 */
 	public static function fromArray($data) {
-		t3lib_div::devLog('Hello World', 'cz_simple_cal', 2, $data);
 		$obj = new Tx_CzSimpleCal_Domain_Model_EventIndex();
 		
 		foreach($data as $name => $value) {

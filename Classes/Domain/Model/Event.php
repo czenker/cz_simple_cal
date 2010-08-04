@@ -334,12 +334,6 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 				'23:59:59'
 			)
 		);
-		
-		t3lib_div::devLog('DateTimeObjects', 'cz_simple_cal', 1, array(
-			'start' => $this->startDateTime->format('Y-m-d H:i:sT'),
-			'end' => $this->endDateTime->format('Y-m-d H:i:sT'),
-			'until' => $this->recurranceUntilDateTime->format('Y-m-d H:i:sT')
-		));
 	}
 	
 	/**
@@ -540,8 +534,26 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	 * 
 	 * @return boolean
 	 */
-	public function isAlldayEvent() {
+	public function getIsAlldayEvent() {
 		return $this->startTime < 0;
+	}
+	
+	/**
+	 * check if this event has an endtime set
+	 * 
+	 * @return boolean
+	 */
+	public function getHasEndTime() {
+		return $this->endTime > -1;
+	}
+	
+	/**
+	 * check if this event is on one day only
+	 * 
+	 * @return boolean
+	 */
+	public function getIsOneDayEvent() {
+		return $this->endDate < 0 || $this->endDate === $this->startDate;
 	}
 	
 	/**

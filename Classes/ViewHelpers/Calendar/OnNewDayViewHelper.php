@@ -29,7 +29,6 @@ class Tx_CzSimpleCal_ViewHelpers_Calendar_OnNewDayViewHelper extends Tx_Fluid_Co
 			 $container->get($name) :
 			 0
 		;
-		
 		$thisDay = strtotime('midnight', $event->getStart());
 		
 		if($thisDay == $lastDay) {

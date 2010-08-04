@@ -4,6 +4,9 @@ plugin.tx_czsimplecal {
 	persistence.storagePid = 
 	
 	settings {
+	
+		# first one is the default action
+		allowedActions = list,minimonth, event
 		
 		actions {
 			list {
@@ -12,7 +15,7 @@ plugin.tx_czsimplecal {
 				endDate    = today +1 month
 								
 				maxEvents = 9999
-				orderBy   = start  
+				orderBy   = start
 				order     = ASC
 			}
 			
@@ -76,8 +79,4 @@ plugin.tx_czsimplecal {
 			}
 		}
 	}
-}
-
-tt_content.list.20.czsimplecal_pi1 {
-	action = list
 }
