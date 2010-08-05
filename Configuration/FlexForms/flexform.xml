@@ -48,6 +48,21 @@
             </TCEforms>
           </settings.override.allowedActions>
           
+          <settings.override.action.filterCategories>
+            <TCEforms>
+              <label>LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.action.filterCategories</label>
+              <config>
+                <type>select</type>
+                <foreign_table>tx_czsimplecal_domain_model_category</foreign_table>
+                <minitems>0</minitems>
+				<maxitems>500</maxitems>
+				<size>6</size>
+				<selectedListStyle>min-width:150px</selectedListStyle>
+				<itemListStyle>min-width:150px</itemListStyle>
+              </config>
+            </TCEforms>
+          </settings.override.action.filterCategories>
+          
               
           <settings.override.action.startDate>
             <TCEforms>

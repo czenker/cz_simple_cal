@@ -37,6 +37,8 @@
 			<label index="field.action.endDate.nextMonth">end of next Month</label>
 			<label index="field.action.endDate.thisYear">end of this Year</label>
 			
+			<label index="field.action.filterCategories">only show these categories</label>
+			
 			<label index="field.action.maxEvents">maximum number of events</label>
 			
 			<label index="field.action.orderBy">Order field</label>

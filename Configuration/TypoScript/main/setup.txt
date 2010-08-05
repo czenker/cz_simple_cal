@@ -17,6 +17,7 @@ plugin.tx_czsimplecal {
 				maxEvents = 9999
 				orderBy   = start
 				order     = ASC
+				filterCategories = 
 			}
 			
 			show {

@@ -29,7 +29,7 @@ class Tx_CzSimpleCal_Recurrance_Timeline_Base implements Iterator, Countable {
 	 * used in conjunction with $sortNeeded.
 	 * This value stores the start of the last known event. This way it can check
 	 * if all entries were submittet in ascending order
-	 * @var unknown_type
+	 * @var integer
 	 */
 	protected $lastValue = 0;
 	
@@ -37,7 +37,7 @@ class Tx_CzSimpleCal_Recurrance_Timeline_Base implements Iterator, Countable {
 	 * don't output the next but the current value of data if the next is requested
 	 * @ugly
 	 * @see Tx_CzSimpleCal_Recurrance_Timeline_Base::next()
-	 * @var unknown_type
+	 * @var boolean
 	 */
 	protected $nextAsCurrent = false;
 	

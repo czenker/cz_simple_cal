@@ -57,7 +57,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 	 * 
 	 * @param $settings
 	 * @ugly doing dozens of database requests
-	 * @return unknown_type
+	 * @return array
 	 */
 	public function countAllWithSettings($settings = array()) {
 		if(!isset($settings['groupBy'])) {
@@ -129,6 +129,17 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		if(isset($settings['endDate'])) {
 			$temp_constraint = $query->lessThanOrEqual('end', $settings['endDate']->getTimestamp());
 			 
+			if(isset($constraint)) {
+				$constraint = $query->logicalAnd($constraint, $temp_constraint);
+			} else {
+				$constraint = $temp_constraint;
+			}
+		}
+		
+		// filterCategories
+		if(isset($settings['filterCategories'])) {
+			$temp_constraint = $query->in('event.category', $settings['filterCategories']);
+			
 			if(isset($constraint)) {
 				$constraint = $query->logicalAnd($constraint, $temp_constraint);
 			} else {

@@ -235,7 +235,9 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 				'type' => 'select',
 				'foreign_table' => 'tx_czsimplecal_domain_model_category',
 				'MM' => 'tx_czsimplecal_event_category_mm',
-				'maxitems' => 99999
+				'size' => 2,
+				'maxSize' => 20,
+				'maxitems' => 1
 			)
 		),
 		'exceptions' => array(
