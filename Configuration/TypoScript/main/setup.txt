@@ -12,7 +12,7 @@ plugin.tx_czsimplecal {
 			list {
 				defaultPid = {$plugin.tx_czsimplecal.pids.default}
 				startDate  = today
-				endDate    = today +1 month
+				endDate    = today +1 year
 								
 				maxEvents = 9999
 				orderBy   = start

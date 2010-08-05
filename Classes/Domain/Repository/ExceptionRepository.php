@@ -35,15 +35,15 @@ class Tx_CzSimpleCal_Domain_Repository_ExceptionRepository extends Tx_Extbase_Pe
 	 * find all exceptions for an event
 	 * 
 	 * @param integer $uid event_id
+	 * @ugly support for joins in extbase misses some features. It seems as if MM_opposite_field won't get any attention when building queries.
 	 * @return array
 	 */
 	public function findAllForEventId($uid) {
 		
 		$query = $this->createQuery();
 		
-		//@ugly: extbase has no support for JOINs? -> so do it the ugly way
 		$query->statement('
-			SELECT tx_czsimplecal_domain_model_exception.* 
+			SELECT DISTINCT tx_czsimplecal_domain_model_exception.* 
 			FROM tx_czsimplecal_domain_model_exception
 			JOIN tx_czsimplecal_event_exception_mm ON tx_czsimplecal_domain_model_exception.uid = tx_czsimplecal_event_exception_mm.uid_foreign
 			WHERE
@@ -56,9 +56,8 @@ class Tx_CzSimpleCal_Domain_Repository_ExceptionRepository extends Tx_Extbase_Pe
 		// second: get all exceptions that are linked via ExceptionGroups
 		$query = $this->createQuery();
 		
-		//@ugly: extbase has no support for JOINs? -> so do it the ugly way
 		$query->statement('
-			SELECT tx_czsimplecal_domain_model_exception.* 
+			SELECT DISTINCT tx_czsimplecal_domain_model_exception.* 
 			FROM tx_czsimplecal_domain_model_exception
 			JOIN tx_czsimplecal_exceptiongroup_exception_mm ON tx_czsimplecal_exceptiongroup_exception_mm.uid_foreign = tx_czsimplecal_domain_model_exception.uid
 			JOIN tx_czsimplecal_event_exception_mm ON tx_czsimplecal_event_exception_mm.uid_foreign = tx_czsimplecal_exceptiongroup_exception_mm.uid_local

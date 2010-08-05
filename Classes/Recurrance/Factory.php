@@ -80,13 +80,9 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 	 * @return Tx_CzSimpleCal_Recurrance_Timeline_Exception
 	 */
 	protected function buildExceptionTimeline() {
-		
-		$fp = fopen('/var/www/dom/events','a');
 		$exceptionTimeline = new Tx_CzSimpleCal_Recurrance_Timeline_Exception();
 		
 		foreach($this->event->getExceptions() as $exception) {
-			
-			fwrite($fp, print_r($exception, true));
 			
 			$type = $exception->getRecurranceType();
 			if(empty($type)) {
@@ -108,9 +104,6 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 			
 			$exceptionTimeline = $class->build($exception, $exceptionTimeline);
 		}
-		
-		fwrite($fp, print_r($exceptionTimeline, true));
-		fclose($fp);
 		return $exceptionTimeline;
 	}
 	
@@ -134,9 +127,6 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 	 * @return Tx_CzSimpleCal_Recurrance_Timeline_Events
 	 */
 	protected function dropExceptionalEvents($events, $exceptions) {
-		
-		$fp = fopen('/var/www/dom/dropping', 'a');
-		
 		$debugEvents = array();
 		$debugExceptions = array();
 		
@@ -154,42 +144,29 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 			);
 		}
 		
-		fwrite($fp, print_r($debugEvents, true));
-		fwrite($fp, print_r($debugExceptions, true));
 		
 		foreach($events as $eventKey=>$event) {
-			fwrite($fp, sprintf("\ncurrent event is %s->%s.\n", date('Y-m-d H:i:s', $event['start']), date('Y-m-d H:i:s', $event['end'])));
 			
 			if(!$exceptions->hasData()) {
-				fwrite($fp, "exceptions array is empty.\n");
 				break;
 			}
 			
 			$exceptions->rewind();
 			foreach($exceptions as $exceptionKey=>$exception) {
 				
-				fwrite($fp, sprintf("current exception is %s->%s.\n", date('Y-m-d H:i:s', $exception['start']), date('Y-m-d H:i:s', $exception['end'])));
-				
 				if($exception['end'] < $eventKey /*eventKey = $event['start']*/) {
-					fwrite($fp, sprintf("end of exception is before start of event: (%s, %s).\n", date('Y-m-d H:i:s', $exception['end']), date('Y-m-d H:i:s', $eventKey)));
 					//if: end of exception is before start of event -> delete it as it won't affect any more of the events
 					$exceptions->unsetCurrent();
 				} elseif($event['end'] < $exceptionKey ) {
-					fwrite($fp, sprintf("end of event is before start of exception: (%s, %s).\n", date('Y-m-d H:i:s', $event['end']), date('Y-m-d H:i:s', $exceptionKey)));
 					//if: end of event is before start of exception -> none of the following exception will affect this event
 					break;
 				} else {
-					fwrite($fp, sprintf("Unsetting event (%s->%s) because of (%s->%s).\n", date('Y-m-d H:i:s', $event['start']), date('Y-m-d H:i:s', $event['end']), date('Y-m-d H:i:s', $exception['start']), date('Y-m-d H:i:s', $exception['end'])));
 					// else: match -> delete this event
 					$events->unsetCurrent();
 					break;
 				}
 			}
 		}
-		
-		fwrite($fp, "finished.\n");
-		fclose($fp);
-		
 		return $events;
 		
 	}

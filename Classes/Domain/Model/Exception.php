@@ -75,6 +75,16 @@ class Tx_CzSimpleCal_Domain_Model_Exception extends Tx_Extbase_DomainObject_Abst
 	protected $timezone;
 	
 	
+	/**
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Event>
+	 */
+	protected $events;
+	
+	/**
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_ExceptionGroup>
+	 */
+	protected $exceptionGroups;
+	
 	
 	protected $startDateTime = null;
 	protected $endDateTime = null;

@@ -106,6 +106,32 @@ $TCA['tx_czsimplecal_domain_model_exception'] = array(
 //				'default' => '0'
 //			)
 //		),
+		'events' => array(
+			'label' => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.events',
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_czsimplecal_domain_model_event',
+				'MM' => 'tx_czsimplecal_event_exception_mm',
+				'MM_opposite_field' => 'exceptions',
+				'maxitems' => 99999,
+				'size' => 5,
+				'autoSizeMax' => 20
+			)
+		),
+		
+		'exception_groups' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.exception_events',
+			'config'  => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_czsimplecal_domain_model_exceptiongroup',
+				'MM' => 'tx_czsimplecal_exceptiongroup_exception_mm',
+				'MM_opposite_field' => 'exceptions',
+				'maxitems' => 99999,
+				'size' => 5,
+				'autoSizeMax' => 20
+			)
+		),
 	),
 );
 ?>

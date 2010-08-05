@@ -43,6 +43,20 @@ $TCA['tx_czsimplecal_domain_model_exceptiongroup'] = array(
 				'autoSizeMax' => 20
 			)
 		),
+		
+		'events' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exceptiongroup.events',
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_czsimplecal_domain_model_event',
+				'MM' => 'tx_czsimplecal_event_exception_mm',
+				'MM_opposite_field' => 'exceptions',
+				'maxitems' => 99999,
+				'size' => 5,
+				'autoSizeMax' => 20
+			)
+		),
 	),
 );
 ?>

@@ -39,6 +39,8 @@
 			<label index="tx_czsimplecal_domain_model_exception.recurrance_type.weekly">weekly</label>
 			<label index="tx_czsimplecal_domain_model_exception.recurrance_until">Repeat until</label>
 			<label index="tx_czsimplecal_domain_model_exception.recurrance_times">Repeat times</label>
+			<label index="tx_czsimplecal_domain_model_exception.events">Events</label>
+			<label index="tx_czsimplecal_domain_model_exception.exception_groups">Exception Groups</label>
 			
 			<label index="tx_czsimplecal_domain_model_exceptiongroup">Exception Group</label>
 			<label index="tx_czsimplecal_domain_model_exceptiongroup.title">Title</label>
