@@ -1,16 +1,15 @@
 <?php 
 
-class Tx_CzSimpleCal_Indexer_Event extends Tx_CzSimpleCal_Indexer_Base {
+/**
+ * a class that handles indexing of events
+ * 
+ * @author Christian Zenker <christian.zenker@599media.de>
+ */
+class Tx_CzSimpleCal_Indexer_Event {
 	
 	static private
 		$eventTable = 'tx_czsimplecal_domain_model_event',
 		$eventIndexTable = 'tx_czsimplecal_domain_model_eventindex'
-	;
-	
-	protected
-		$id = null,
-		$fieldsArray = null,
-		$update = null
 	;
 	
 	/**
@@ -24,97 +23,111 @@ class Tx_CzSimpleCal_Indexer_Event extends Tx_CzSimpleCal_Indexer_Base {
 	protected $eventIndexRepository = null;
 	
 	/**
-	 * @var Tx_CzSimpleCal_Domain_Model_Event
+	 * constructor
 	 */
-	protected $model = null;
-	
-	
-	/**
-	 * main function that is called by the hook
-	 * 
-	 * @see Classes/Indexer/Tx_CzSimpleCal_Indexer_Base#index($id, $fieldsArray, $update)
-	 */
-	public function index($id, $fieldsArray, $update = true) {
-		$this->id = intval($id);
-		$this->fieldsArray = $fieldsArray;
-		$this->update = $update;
+	public function __construct() {
+		t3lib_div::makeInstance('Tx_Extbase_Dispatcher');
 		
-		if(!$update || $this->eventWasChanged()) {
-			// re-index if event is new or it was changed in a way that requires re-indexing
-			
-			$this->doIndex();
-		}
+		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
+		$this->eventIndexRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository');
 	}
 	
 	/**
-	 * checks if the event was changed in a way, that re-indexing is required
+	 * destructor
 	 * 
-	 * @return boolean
+	 * this will persist all changes
 	 */
-	protected function eventWasChanged() {
-		return $this->haveFieldsChanged(array(
-			'recurrance_type',
-			'recurrance_until',
-			'recurrance_times',
-			'start_date',
-			'start_time',
-			'end_date',
-			'end_time',
-			'pid'
-		));
+	public function __destruct() {
+		Tx_Extbase_Dispatcher::getPersistenceManager()->persistAll();
 	}
 	
 	/**
-	 * do the actual indexing
+	 * create an eventIndex
 	 * 
-	 * @return void
+	 * @param integer|Tx_CzSimpleCal_Domain_Model_Event $event
 	 */
-	protected function doIndex() {
-		$this->init();
-		
-		if($this->update) {
-			// delete all indexed events
-			$GLOBALS['TYPO3_DB']->exec_DELETEquery(
-				self::$eventIndexTable,
-				'event = '.$this->id
-			);
+	public function create($event) {
+		if(is_integer($event)) {
+			$event = $this->fetchEventObject($event);
 		}
 		
+		$this->doCreate($event);
+	}
+	
+	/**
+	 * update an eventIndex
+	 * 
+	 * @param integer|Tx_CzSimpleCal_Domain_Model_Event $event
+	 */
+	public function update($event) {
+		if(is_integer($event)) {
+			$event = $this->fetchEventObject($event);
+		}
+		
+		$this->doDelete($event);
+		$this->doCreate($event);
+		
+	}
+	
+	/**
+	 * delete the eventIndex 
+	 * 
+	 * @param integer|Tx_CzSimpleCal_Domain_Model_Event $event
+	 */
+	public function delete($event) {
+		if(is_integer($event)) {
+			$event = $this->fetchEventObject($event);
+		}
+		
+		$this->doDelete($event);
+	}
+	
+	/**
+	 * delete an event
+	 * 
+	 * @param Tx_CzSimpleCal_Domain_Model_Event $event
+	 */
+	protected function doDelete($event) {
+		$GLOBALS['TYPO3_DB']->exec_DELETEquery(
+			self::$eventIndexTable,
+			'event = '.$event->getUid()
+		);
+	}
+	
+	/**
+	 * create the indexes
+	 * 
+	 * @param Tx_CzSimpleCal_Domain_Model_Event $event
+	 */
+	protected function doCreate($event) {
+		if(!$event->isEnabled()) {
+			return;
+		}
 		// get all recurrances...
-		foreach($this->model->getRecurrances() as $recurrance) {
+		foreach($event->getRecurrances() as $recurrance) {
 			// ...and store them to the repository
 			$instance = Tx_CzSimpleCal_Domain_Model_EventIndex::fromArray(
 				$recurrance
 			);
 			
-			
 			$this->eventIndexRepository->add(
 				$instance
 			);
-			
 		}
-		
-		Tx_Extbase_Dispatcher::getPersistenceManager()->persistAll();
-		
 	}
 	
 	/**
-	 * initialize repositories and models
+	 * get an event object by its uid
 	 * 
-	 * @return void
+	 * @param integer $id
+	 * @throws InvalidArgumentException
+	 * @return Tx_CzSimpleCal_Domain_Model_Event
 	 */
-	protected function init() {
-		/**
-		 * @var Tx_Extbase_Dispatcher
-		 */
-		t3lib_div::makeInstance('Tx_Extbase_Dispatcher');
-		
-		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
-		$this->eventIndexRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository');
-		$this->model = $this->eventRepository->findOneByUidEverywhere($this->id);
-		
-		if(is_null($this->model)) {
-			throw new RuntimeException(sprintf('The %s with the uid %d could not be found.', self::$eventTable, $this->id));
+	protected function fetchEventObject($id) {
+		$event = $this->eventRepository->findOneByUidEverywhere($id);
+		if(empty($event)) {
+			throw new InvalidArgumentException(sprintf('An event with uid %d could not be found.', $id));
 		}
-	}	
+		return $event;
+	}
 }

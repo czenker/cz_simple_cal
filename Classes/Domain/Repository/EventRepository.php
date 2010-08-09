@@ -52,5 +52,16 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 		
 	}
 	
+	public function findAllEverywhere() {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->
+			setRespectStoragePage(false)->
+			setRespectEnableFields(false)->
+			setRespectSysLanguage(false)
+		;
+		
+		return $query->execute();
+	}
+	
 }
 ?>
