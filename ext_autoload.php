@@ -4,14 +4,11 @@
 
 $extensionClassesPath = t3lib_extMgm::extPath('cz_simple_cal') . 'Classes/';
 return array(
-	'tx_czsimplecal_controller_categorycontroller' => $extensionClassesPath . 'Controller/CategoryController.php',
-	'tx_czsimplecal_controller_eventcontroller' => $extensionClassesPath . 'Controller/EventController.php',
-	'tx_czsimplecal_domain_model_category' => $extensionClassesPath . 'Domain/Model/Category.php',
-	'tx_czsimplecal_domain_model_event' => $extensionClassesPath . 'Domain/Model/Event.php',
-	'tx_czsimplecal_domain_repository_categoryrepository' => $extensionClassesPath . 'Domain/Repository/CategoryRepository.php',
-	'tx_czsimplecal_domain_repository_eventrepository' => $extensionClassesPath . 'Domain/Repository/EventRepository.php',
+	//needed by the scheduler
+	'tx_czsimplecal_scheduler_index' => $extensionClassesPath . 'Scheduler/Index.php',
+	//need for hooks
 	'tx_czsimplecal_indexer_event' => $extensionClassesPath . 'Indexer/Event.php',
-	'tx_czsimplecal_indexer_exception' => $extensionClassesPath . 'Indexer/Exception.php',
-	'tx_czsimplecal_indexer_base' => $extensionClassesPath . 'Indexer/Base.php',
+	'tx_czsimplecal_hook_datamap' => $extensionClassesPath . 'Hook/Datamap.php',
+	'tx_czsimplecal_hook_cmdmap' => $extensionClassesPath . 'Hook/Cmdmap.php',
 );
 ?>

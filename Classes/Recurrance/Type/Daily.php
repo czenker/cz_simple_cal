@@ -13,12 +13,6 @@ class Tx_CzSimpleCal_Recurrance_Type_Daily extends Tx_CzSimpleCal_Recurrance_Typ
 		$end = clone $this->event->getDateTimeObjectEnd();
 		$until = $this->event->getDateTimeObjectRecurranceUntil();
 		
-		t3lib_div::devLog('recurrance_daily', 'cz_simple_cal', 0, array(
-			'start' => $start->format('Y-m-d H:i:se'),
-			'end' => $end->format('Y-m-d H:i:se'),
-			'until' => $until->format('Y-m-d H:i:se')
-		));
-		
 		while(true) {
 			
 			if($until < $start) {

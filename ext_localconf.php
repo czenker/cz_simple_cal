@@ -12,6 +12,9 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	)
 );
 
-//$extutil = new Tx_Extbase_Utility_Extension();
-//file_put_contents('/var/www/dom/foobar',$extutil->createAutoloadRegistryForExtension($_EXTKEY, t3lib_extMgm::extPath($_EXTKEY)));
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['Tx_CzSimpleCal_Scheduler_Index'] = array(
+    'extension'        => $_EXTKEY,
+    'title'            => 'Index all events',
+    'description'      => 'Indexing all events of czSimpleCal'
+);
 ?>

@@ -33,6 +33,23 @@
  */
 class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEntity implements Tx_CzSimpleCal_Domain_Interface_HasTimespan {
 	
+	/**
+	 * an array of fields that if changed require a reindexing of all the events
+	 * 
+	 * @var array
+	 */
+	protected static $fieldsRequiringReindexing = array(
+		'recurrance_type',
+		'recurrance_until',
+		'recurrance_times',
+		'start_date',
+		'start_time',
+		'end_date',
+		'end_time',
+		'pid',
+		'hidden', 
+		'deleted'
+	);
 	
 	/**
 	 * the page-id this domain model resides on
@@ -136,6 +153,20 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	 * @var array<Tx_CzSimpleCal_Domain_Model_Exception>
 	 */
 	protected $exceptions_ = null;
+	
+	/**
+	 * is this record hidden
+	 * 
+	 * @var boolean
+	 */
+	protected $hidden;
+	
+	/**
+	 * is this record deleted
+	 * 
+	 * @var boolean
+	 */
+	protected $deleted;
 	
 	
 	
@@ -563,6 +594,24 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	 */
 	public function getPid() {
 		return $this->pid;
+	}
+	
+	/**
+	 * check if this record is enabled
+	 * 
+	 * @return boolean
+	 */
+	public function isEnabled() {
+		return $this->hidden == 0 && $this->deleted == 0;
+	}
+	
+	/**
+	 * an array of fields that if changed require a reindexing of all the events
+	 * 
+	 * @return array
+	 */
+	public static function getFieldsRequiringReindexing() {
+		return self::$fieldsRequiringReindexing;
 	}
 }
 ?>
