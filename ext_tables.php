@@ -27,6 +27,7 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 
 // default typoscript
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/main', 'Simple calendar using Extbase');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/ics', 'ICS configuration');
 
 // init flexform for plugin
 $TCA['tt_content']['types']['list']['subtypes_addlist']['czsimplecal_pi1'] = 'pi_flexform';

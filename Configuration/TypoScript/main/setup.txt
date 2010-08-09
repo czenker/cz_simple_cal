@@ -1,14 +1,14 @@
 plugin.tx_czsimplecal {
 
 	#@description: the pid the records are stored in
-	persistence.storagePid = 
+	persistence.storagePid = {$plugin.tx_czsimplecal.pidList}
 	
 	settings {
 	
 		# first one is the default action
 		allowedActions = list,minimonth,day,week,show
 		
-		Event {
+		EventIndex {
 			actions {
 				list {
 					defaultPid = {$plugin.tx_czsimplecal.pids.default}

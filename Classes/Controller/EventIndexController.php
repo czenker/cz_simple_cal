@@ -57,6 +57,7 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	 * @return void
 	 */
 	protected function initializeAction() {
+		
 		$this->initializeSettings();
 		
 		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
@@ -190,7 +191,7 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	 * @return null
 	 */
 	protected function initializeActionSettings($actionMethodName) {
-		$this->actionSettings = &$this->settings['Event']['actions'][$actionMethodName];
+		$this->actionSettings = &$this->settings['EventIndex']['actions'][$actionMethodName];
 		
 		if(isset($this->settings['override']['action'])) {
 			// this will override values if they are not empty and they already exist (so no adding of keys)
@@ -266,13 +267,13 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 		}
 		
 		// throw error if action is not configured
-		if(!array_key_exists('actions', $this->settings) || !array_key_exists($actionMethodName, $this->settings['actions'])) {
+		if(!array_key_exists('EventIndex', $this->settings) || !array_key_exists('actions', $this->settings['EventIndex']) || !array_key_exists($actionMethodName, $this->settings['EventIndex']['actions'])) {
 			throw new Tx_Extbase_MVC_Exception_NoSuchAction('An action "' . $actionMethodName . '" does not exist in controller "' . get_class($this) . '".', 1186669086);
 		}
 		
 		// check if a fake action should be used
-		if(array_key_exists('useAction', $this->settings['actions'][$actionMethodName])) {
-			$this->useActionName = $this->settings['actions'][$actionMethodName]['useAction'].'Action';
+		if(array_key_exists('useAction', $this->settings['EventIndex']['actions'][$actionMethodName])) {
+			$this->useActionName = $this->settings['EventIndex']['actions'][$actionMethodName]['useAction'].'Action';
 			
 			if(!is_callable(array($this, $this->useActionName))) {
 				throw new Tx_Extbase_MVC_Exception_NoSuchAction(sprintf(

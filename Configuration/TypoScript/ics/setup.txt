@@ -1,0 +1,33 @@
+ics = PAGE
+ics {
+	typeNum = 150
+	10 < tt_content.list.20.czsimplecal_pi1
+	10 {
+		
+		format = ics
+		
+		settings {
+			
+			allowedViews = list
+			
+			EventIndex.actions {
+				list > 
+				list {
+					startDate  = today
+					endDate    = today +6 months
+
+					maxEvents = 9999
+					orderBy   = start
+					order     = ASC 
+				}
+			}
+		}
+	}
+	config {
+		disableAllHeaderCode = 1
+		additionalHeaders = Content-type:text/calendar
+		xhtml_cleaning = 0
+		admPanel = 0
+		debug = 0
+	}
+}

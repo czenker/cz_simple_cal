@@ -1,0 +1,6 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:http://www.example.com/calendarapplication/
+METHOD:PUBLISH
+<f:for each="{events}" as="event"><f:render partial="EventIndex/event-for-list.ics" arguments="{event: event, settings:settings}"></f:render></f:for>
+END:VCALENDAR

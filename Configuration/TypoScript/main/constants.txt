@@ -1,5 +1,7 @@
 plugin.tx_czsimplecal {
 	
+	pidList = 
+	
 	pids {
 		default = 
 	}

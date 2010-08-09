@@ -159,7 +159,7 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 		$this->event = $event;
 	}
 	
-	public function getEvent($event) {
+	public function getEvent() {
 		return $this->event;
 	}
 	
