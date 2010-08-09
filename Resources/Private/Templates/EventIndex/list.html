@@ -1,6 +1,7 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
-
+<cal:useMicroformat format="hcalendar" />
 <h2>List View</h2>
+<div class="vcalendar vcalendar-list">
 <f:if condition="{events}">
 	<f:then>
 		<f:for each="{events}" as="event">
@@ -15,3 +16,4 @@
 		<p>No events have been found.</p>
 	</f:else>
 </f:if>
+</div>

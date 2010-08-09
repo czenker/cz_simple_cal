@@ -6,7 +6,7 @@ plugin.tx_czsimplecal {
 	settings {
 	
 		# first one is the default action
-		allowedActions = list,minimonth,day,week,show
+		allowedActions = list,minimonth,day,week,show,next
 		
 		EventIndex {
 			actions {

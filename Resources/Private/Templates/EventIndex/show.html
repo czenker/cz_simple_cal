@@ -1,6 +1,12 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
+<cal:useMicroformat format="hcalendar" />
+<div class="vevent vcalendar-event">
 
-<h2>{event.title}</h2>
-<f:format.html>{event.description}</f:format.html>
+<h2 class="summary">{event.title}</h2>
+<div class="description"><f:format.html>{event.description}</f:format.html></div>
+
+
+
 
 <f:link.action action="list">back to the list view</f:link.action>
+</div>

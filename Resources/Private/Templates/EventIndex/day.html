@@ -1,6 +1,7 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
-
+<cal:useMicroformat format="hcalendar" />
 <h2>Day View</h2>
+<div class="vcalendar vcalendar-day">
 <f:if condition="{events}">
 	<f:then>
 		<cal:variable.init>
@@ -18,3 +19,4 @@
 		<p>No events have been found.</p>
 	</f:else>
 </f:if>
+</div>
