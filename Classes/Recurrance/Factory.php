@@ -17,11 +17,12 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 	/**
 	 * build the recurrance for an event
 	 * 
-	 * @param $event
+	 * @param Tx_CzSimpleCal_Domain_Model_Event $event
 	 * @return Tx_CzSimpleCal_Domain_Model_Event
 	 */
 	public function buildRecurranceForEvent($event) {
 		if(!$event instanceof Tx_CzSimpleCal_Domain_Model_Event) {
+			// no type hinting to make it more reusable
 			throw new InvalidArgumentException(sprintf('$event must be of class Tx_CzSimpleCal_Domain_Model_Event in %s::%s', get_class($this), __METHOD__));
 		}
 		
@@ -30,7 +31,7 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 		/**
 		 * a class holding all possible events ordered by their starttime ascending
 		 * 
-		 * @var Tx_CzSimpleCal_Domain_Collection_EventIndex
+		 * @var Tx_CzSimpleCal_Recurrance_Timeline_Event
 		 */
 		$events = $this->buildEventTimeline();
 		
@@ -40,8 +41,6 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 		$exceptions = $this->buildExceptionTimeline();
 		
 		return $this->dropExceptionalEvents($events, $exceptions);
-		
-		
 	}
 	
 	/**
@@ -100,7 +99,6 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 			if(!$class instanceof Tx_CzSimpleCal_Recurrance_Type_Base) {
 				throw new BadMethodCallException(sprintf('The class %s does not implement Tx_CzSimpleCal_Recurrance_Type_Base.', get_class($class)));
 			}
-			t3lib_div::devLog('recurrance', 'cz_simple_cal', 0, array('class' => $className));
 			
 			$exceptionTimeline = $class->build($exception, $exceptionTimeline);
 		}
@@ -115,8 +113,8 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 	 * Basically the idea here is to check every event if it overlaps an exception.
 	 * 
 	 * To make this algorithm a bit more efficant, these prerequisits are met:
-	 *  - the events are ordered by their start-date,
-	 *  - the exceptions by their start-date
+	 *  - the events are ordered by their start-date (no duplicate start dates),
+	 *  - the exceptions by their start-date (no duplicate start dates)
 	 * 
 	 * So if we find, that the end-date of an exception is before the current start-date
 	 * it is before the start-date of ALL remaining events and we'll just drop it.
@@ -127,23 +125,6 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 	 * @return Tx_CzSimpleCal_Recurrance_Timeline_Events
 	 */
 	protected function dropExceptionalEvents($events, $exceptions) {
-		$debugEvents = array();
-		$debugExceptions = array();
-		
-		foreach($events as $event) {
-			$debugEvents[] = array(
-				'start' => date('Y-m-d H:i:s', $event['start']),
-				'end' => date('Y-m-d H:i:s', $event['end'])
-			);
-		}
-		
-		foreach($exceptions as $exception) {
-			$debugExceptions[] = array(
-				'start' => date('Y-m-d H:i:s', $exception['start']),
-				'end' => date('Y-m-d H:i:s', $exception['end'])
-			);
-		}
-		
 		
 		foreach($events as $eventKey=>$event) {
 			
@@ -151,14 +132,17 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 				break;
 			}
 			
-			$exceptions->rewind();
+//			$exceptions->rewind();
 			foreach($exceptions as $exceptionKey=>$exception) {
 				
-				if($exception['end'] < $eventKey /*eventKey = $event['start']*/) {
+				if($exception['end'] <= $eventKey /*eventKey = $event['start']*/) {
 					//if: end of exception is before start of event -> delete it as it won't affect any more of the events
 					$exceptions->unsetCurrent();
-				} elseif($event['end'] < $exceptionKey ) {
-					//if: end of event is before start of exception -> none of the following exception will affect this event
+				} elseif($event['end'] < $exceptionKey /*exceptionKey = $exception['start']*/ ||
+						($event['end'] == $exceptionKey && $event['start'] != $event['end'] )) {
+					//if: end of event is before start of exception or 
+					//    end of event matches start of exception and the event is not zero length
+					//    -> none of the following exception will affect this event
 					break;
 				} else {
 					// else: match -> delete this event

@@ -81,5 +81,24 @@ class RecurranceTimlineBaseTest extends Tx_Extbase_BaseTestCase {
 		self::assertEquals($early, $this->timeline->current(), 'when adding events in the wrong order they are ordered ascending anyways.');
 	}
 	
+	public function testAddingTimespansWithSameStartThrowsError() {
+		
+		$this->timeline->add(array(
+			'start' => strtotime('2009-02-13 23:31:30GMT'),
+			'end' => strtotime('2009-02-13 23:31:31GMT')
+		));
+		try {
+			$this->timeline->add(array(
+				'start' => strtotime('2009-02-13 23:31:30GMT'),
+				'end' => strtotime('2009-02-14 23:31:31GMT')
+			));
+			
+			self::assertTrue(false, 'adding two equal events throws an error.');
+		} catch(UnexpectedValueException $e) {
+			self::assertTrue(true, 'adding two equal events throws an error.');
+		}
+			
+	}
+	
 	
 }

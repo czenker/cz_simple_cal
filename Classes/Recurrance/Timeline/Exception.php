@@ -15,10 +15,9 @@ class Tx_CzSimpleCal_Recurrance_Timeline_Exception extends Tx_CzSimpleCal_Recurr
 		try {
 			parent::add($data);
 		}
-		catch(LogicException $e) {
+		catch(UnexpectedValueException $e) {
 			// catched if an exception with this start-date already exists
 			$key = $data['start'];
-			
 			if($this->data[$key]['end'] < $data['end']) {
 				// if the set exception is shorter -> override it
 				$this->data[$key] = $data;
