@@ -33,10 +33,10 @@
 			<tbody>
 				<f:for each="{data}" as="day">
 					<f:if condition="{cal:format.dateTime(timestamp: day.date, format: '%u')} == 1">
-						<tr><f:render partial="Event/minimonth/woy.html" arguments="{day: day, settings:settings, actionSettings: actionSettings, monthNumber: monthNumber}"></f:render>
+						<tr><f:render partial="EventIndex/minimonth/woy.html" arguments="{day: day, settings:settings, actionSettings: actionSettings, monthNumber: monthNumber}"></f:render>
 					</f:if>
 					
-					<f:render partial="Event/minimonth/day.html" arguments="{day: day, settings:settings, actionSettings: actionSettings, monthNumber: monthNumber}"></f:render>
+					<f:render partial="EventIndex/minimonth/day.html" arguments="{day: day, settings:settings, actionSettings: actionSettings, monthNumber: monthNumber}"></f:render>
 					
 					<f:if condition="{cal:format.dateTime(timestamp: day.date, format: '%u')} == 7"></tr></f:if>
 				</f:for>

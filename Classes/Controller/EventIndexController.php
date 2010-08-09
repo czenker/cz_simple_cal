@@ -25,14 +25,14 @@
 ***************************************************************/
 
 /**
- * Controller for the Event object
+ * Controller for the EventIndex object
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 
-class Tx_CzSimpleCal_Controller_EventController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Controller_ActionController {
 	/**
 	 * an array of settings of the specific action used
 	 * 
