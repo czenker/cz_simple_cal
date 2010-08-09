@@ -58,6 +58,13 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 				'type' => 'check'
 			)
 		),
+		'deleted' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.deleted',
+			'config'  => array(
+				'type' => 'check'
+			)
+		),
 		'pid' => array(
 			'exclude' => 0,
 			'label' => '',
