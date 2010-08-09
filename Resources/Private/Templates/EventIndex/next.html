@@ -1,15 +1,16 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 
-<h2>Week View</h2>
+<h2>Next View</h2>
 <f:if condition="{events}">
 	<f:then>
+		<p>These are the next events that take place.</p>
 		<cal:variable.init>
 			<f:for each="{events}" as="event">
 				<cal:calendar.onNewDay event="{event}">
 					<h4 class="underline"><cal:format.dateTime format="%a, %e. %B %G" timestamp="{event.start}"/></h4>
 				</cal:calendar.onNewDay>
 				
-				<f:render partial="Event/event-for-list.html" arguments="{event: event, settings:settings}"></f:render>
+				<f:render partial="EventIndex/event-for-list.html" arguments="{event: event, settings:settings}"></f:render>
 			</f:for>
 		
 		</cal:variable.init>

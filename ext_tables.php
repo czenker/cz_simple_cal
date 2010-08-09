@@ -7,6 +7,25 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'Simple calendar using Extbase'
 );
 
+//if(TYPO3_MODE === 'BE') {
+//	Tx_Extbase_Utility_Extension::registerModule(
+//		$_EXTKEY,
+//		'web',
+//		'tx_czsimplecal_m1',
+//		'',
+//		array(
+//			'Event' => 'backendIndex'
+//		),
+//		array(
+//			'access' => 'user,group',
+//			'icon' => 'EXT:cz_simple_cal/ext_icon.gif',
+//			'labels' => 'LLL:EXT:'.$_EXTKEY.'/Resources/Private/Language/locallang_mod.xml'
+//		)
+//	);
+//	
+//}
+
+
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/main', 'Simple calendar using Extbase');
 
 $TCA['tt_content']['types']['list']['subtypes_addlist']['czsimplecal_pi1'] = 'pi_flexform';
