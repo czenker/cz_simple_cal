@@ -35,7 +35,7 @@
 				
 				<para>
 					The TypoScript settings already hold some action configurations. So we'll just copy the configuration for the 
-					<literal>listAction</literal> in <code>settings.actions.list</code> to <code>settings.actions.recent</code>.
+					<literal>listAction</literal> in <code>settings.Event.actions.list</code> to <code>settings.Event.actions.recent</code>.
 				</para>
 				
 				<para>The configureable options should be pretty obvious. But first we'll add <code>useAction = list</code> to the 

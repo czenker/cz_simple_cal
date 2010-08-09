@@ -190,7 +190,7 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	 * @return null
 	 */
 	protected function initializeActionSettings($actionMethodName) {
-		$this->actionSettings = &$this->settings['actions'][$actionMethodName];
+		$this->actionSettings = &$this->settings['Event']['actions'][$actionMethodName];
 		
 		if(isset($this->settings['override']['action'])) {
 			// this will override values if they are not empty and they already exist (so no adding of keys)

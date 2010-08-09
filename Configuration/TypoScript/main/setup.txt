@@ -8,75 +8,77 @@ plugin.tx_czsimplecal {
 		# first one is the default action
 		allowedActions = list,minimonth,day,week,show
 		
-		actions {
-			list {
-				defaultPid = {$plugin.tx_czsimplecal.pids.default}
-				startDate  = today
-				endDate    = today +1 year
-								
-				maxEvents = 9999
-				orderBy   = start
-				order     = ASC
-				filterCategories = 
-			}
-			
-			show {
-				defaultPid = {$plugin.tx_czsimplecal.pids.default}
-			}
-			
-			next {
-				defaultPid = {$plugin.tx_czsimplecal.pids.default}
+		Event {
+			actions {
+				list {
+					defaultPid = {$plugin.tx_czsimplecal.pids.default}
+					startDate  = today
+					endDate    = today +1 year
+
+					maxEvents = 9999
+					orderBy   = start
+					order     = ASC
+					filterCategories = 
+				}
 				
-				useAction = list
+				show {
+					defaultPid = {$plugin.tx_czsimplecal.pids.default}
+				}
 				
-				startDate  = today
-				endDate    = today +1 month
-								
-				maxEvents = 3
-				orderBy   = start  
-				order     = ASC
-			}
-			
-			minimonth {
-				defaultPid = {$plugin.tx_czsimplecal.pids.default}
+				next {
+					defaultPid = {$plugin.tx_czsimplecal.pids.default}
+					
+					useAction = list
+					
+					startDate  = today
+					endDate    = today +1 month
+									
+					maxEvents = 3
+					orderBy   = start  
+					order     = ASC
+				}
 				
-				useAction = countEvents
+				minimonth {
+					defaultPid = {$plugin.tx_czsimplecal.pids.default}
+					
+					useAction = countEvents
+					
+					useGetDate = 1
+					
+					startDate  = first day of this month first day of this week
+					endDate    = last day of this month first day of next week -1 second
+					groupBy    = day
+				}
 				
-				useGetDate = 1
+				week {
+					defaultPid = {$plugin.tx_czsimplecal.pids.default}
+					
+					useAction = list
+					
+					startDate = first day of this week
+					endDate   = last day of this week 23:59:59
+					
+					useGetDate = 1
+					
+					maxEvents = 999
+					orderBy = start
+					order   = ASC
+				}
 				
-				startDate  = first day of this month first day of this week
-				endDate    = last day of this month first day of next week -1 second
-				groupBy    = day
-			}
-			
-			week {
-				defaultPid = {$plugin.tx_czsimplecal.pids.default}
-				
-				useAction = list
-				
-				startDate = first day of this week
-				endDate   = last day of this week 23:59:59
-				
-				useGetDate = 1
-				
-				maxEvents = 999
-				orderBy = start
-				order   = ASC
-			}
-			
-			day {
-				defaultPid = {$plugin.tx_czsimplecal.pids.default}
-				
-				useAction = list
-				
-				startDate = today
-				endDate   = today 23:59:59
-				
-				useGetDate = 1
-				
-				maxEvents = 999
-				orderBy = start
-				order   = ASC
+				day {
+					defaultPid = {$plugin.tx_czsimplecal.pids.default}
+					
+					useAction = list
+					
+					startDate = today
+					endDate   = today 23:59:59
+					
+					useGetDate = 1
+					
+					maxEvents = 999
+					orderBy = start
+					order   = ASC
+				}
 			}
 		}
 	}
