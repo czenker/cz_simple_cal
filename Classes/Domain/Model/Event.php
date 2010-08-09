@@ -602,7 +602,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	 * @return boolean
 	 */
 	public function isEnabled() {
-		return $this->hidden == 0 && $this->deleted == 0;
+		return !$this->hidden && !$this->deleted;
 	}
 	
 	/**
