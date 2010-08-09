@@ -22,7 +22,7 @@ class Tx_CzSimpleCal_Recurrance_Timeline_Event extends Tx_CzSimpleCal_Recurrance
 	/**
 	 * set the id of the Event this collection belongs to
 	 * 
-	 * @param $id
+	 * @param Tx_CzSimpleCal_Domain_Model_Event $event
 	 * @return Tx_CzSimpleCal_Domain_Collection_EventIndex
 	 */
 	public function setEvent($event) {

@@ -102,6 +102,10 @@ class Tx_CzSimpleCal_Recurrance_Timeline_Base implements Iterator, Countable {
 		if($data['start'] > $data['end']) {
 			throw new UnexpectedValueException(sprintf('"start" should not be later than "end". (%d, %d)', $data['start'], $data['end']));
 		}
+		
+		if(array_key_exists($data['start'], $this->data)) {
+			throw new UnexpectedValueException(sprintf('A timespan with start %d already exists.', $data['start']));
+		}
 
 		return true;
 	}

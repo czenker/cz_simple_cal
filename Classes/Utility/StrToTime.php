@@ -19,7 +19,7 @@
 
 
 /**
- * A class to enhance strtotime to have some more features that are available in PHP 5.3
+ * A class to enhance strtotime to use some more features that are available in PHP 5.3 in PHP 5.2
  * 
  * I decided not to support the full extend of PHP 5.3 functionality, but only the 
  * features that are needed most often.
@@ -28,63 +28,141 @@
  */
 class Tx_CzSimpleCal_Utility_StrToTime {
 	
-	public static $translateTable = array(
-		'first day of this month' => '%Y-%m-01',
-		'first day of last month' => '%Y-%m-01 -1 month',
-		'first day of next month' => '%Y-%m-01 +1 month',
-		'last day of this month' => '%Y-%m-01 +1 month -1 day',
-		'last day of last month' => '%Y-%m-01 -1 day',
-		'last day of next month' => '%Y-%m-01 +2 months -1 day',
+	/**
+	 * a simple translation table for some non PHP 5.2 conform strings
+	 * 
+	 * @var array
+	 */
+	public static $translateTable52 = array(
+		'first day of this month' => '%Y-%m-01 %H:%M:%S|',
+		'first day of last month' => '%Y-%m-01 %H:%M:%S -1 month|',
+		'first day of next month' => '%Y-%m-01 %H:%M:%S +1 month|',
+		'last day of this month' => '%Y-%m-01 %H:%M:%S +1 month -1 day|',
+		'last day of last month' => '%Y-%m-01 %H:%M:%S -1 day|',
+		'last day of next month' => '%Y-%m-01 %H:%M:%S +2 months -1 day|',
 		
-		'first day of this week' => '%Y-W%V-1',
-		'first day of last week' => '%Y-W%V-1 -1 week',
-		'first day of next week' => '%Y-W%V-1 +1 week',
-		'last day of this week' => '%Y-W%V-7',
-		'last day of last week' => '%Y-W%V-7 -1 week',
-		'last day of next week' => '%Y-W%V-7 +1 week',
-	
-		'first day of this year' => '%Y-01-01',
-		'first day of last year' => '%Y-01-01 -1 year',
-		'first day of next year' => '%Y-01-01 +1 year',
-		'last day of this year' => '%Y-01-01 +1 year -1 day',
-		'last day of last year' => '%Y-01-01 -1 day',
-		'last day of next year' => '%Y-01-01 +2 years -1 day'
+//		'monday this week' => '%Y-W%V-1|',
+//		'monday last week' => '%Y-W%V-1 -1 week|',
+//		'monday next week' => '%Y-W%V-1 +1 week|',
+//		'sunday this week' => '%Y-W%V-7|',
+//		'sunday last week' => '%Y-W%V-7 -1 week|',
+//		'sunday next week' => '%Y-W%V-7 +1 week|',
 	);
 	
-	protected static $sections = null;
+	/**
+	 * translates 3-lettered lowercased strings of a weekday to an integer
+	 * 
+	 * @var array
+	 */
+	public static $weekdayToInt = array(
+		'mon' => 1,
+		'tue' => 2,
+		'wed' => 3,
+		'thu' => 4,
+		'fri' => 5,
+		'sat' => 6,
+		'sun' => 7
+	);
 	
 	/**
-	 * enhanced strtotime()
+	 * the enhanced strtotime()
 	 * 
-	 * @param $time
-	 * @param $now
-	 * @return integer
+	 * * adds PHP 5.3 functionality to PHP 5.2
+	 * * allows chaining of different phrases by using the pipe-symbol ("|")
+	 * 
+	 * @param string $time
+	 * @param integer $now
 	 */
 	public static function strtotime($time, $now = null) {
-		if(is_null($time)) {
-			return null;
-		}
 		if(is_null($now)) {
 			$now = time();
 		}
-		if(is_null(self::$sections)) {
-			self::buildSections();
-		}
 		
-		$time = strtr($time, self::$sections);
+		$time = self::doSubstitutions($time);
 		
 		foreach(t3lib_div::trimExplode('|', $time, true) as $time) {
-			$now = strtotime(strftime(strtr($time, self::$translateTable), $now), $now);
+			$now = strtotime(strftime($time, $now), $now);
 		}
 		
 		return $now;
 	}
 	
-	protected static function buildSections() {
-		self::$sections = array();
-		
-		foreach(self::$translateTable as $from=>$to) {
-			self::$sections[$from] = $to.'|';
+	public static function doSubstitutions($time) {
+		if(!self::isPHP53used()) {
+			$time = self::doPHP52Substitutions($time);
 		}
+		
+		return self::doCommonSubstitutions($time);
 	}
+	
+	/**
+	 * substitude PHP 5.3 phrases with PHP 5.2 compatible ones
+	 * 
+	 * @param string $time
+	 * @param integer $now
+	 */
+	public static function doPHP52Substitutions($time) {
+		return strtr($time, self::$translateTable52);
+	}
+	
+	/**
+	 * fix the fact that weeks in php start with sundays, but ISO weeks start with mondays
+	 * 
+	 * this would yield an inconsistency between PHP 5.2 and 5.3, as there would be no
+	 * way to generate times of in the week format where sunday is the first day of the week
+	 * 
+	 * @param string $time
+	 */
+	public static function doCommonSubstitutions($time) {
+		return preg_replace_callback(
+			'/(mon(?:day)?|tue(?:sday)?|wed(?:nesday)?|thu(?:rsday)?|fri(?:day)?|sat(?:urday)?|sun(?:day)?) (last|this|next) week/i',
+			array(self, 'callback_substitutedReltextWeekPattern'),
+			$time
+		);
+	}
+	
+	/**
+	 * callback for regexp in doCommonSubstitutions()
+	 * 
+	 * @see doCommonSubstitutions()
+	 * @param string $matches
+	 */
+	protected static function callback_substitutedReltextWeekPattern($matches) {
+		/**
+		 * the day of the week as 3-letter lowercased string (like "mon", "tue")
+		 * @var string
+		 */
+		$dow = strtolower(substr($matches[1], 0, 3));
+		$whichWeek = $matches[2];
+		
+		$ret = '%Y-W%V-'.self::$weekdayToInt[$dow];
+		
+		if($whichWeek === 'last') {
+			$ret .= ' -1 week';
+		} elseif ($whichWeek === 'next') {
+			$ret .= ' +1 week';
+		}
+		
+		return $ret;
+	}
+	
+	/**
+	 * cache variable to hold the info if PHP 5.3 is used
+	 * 
+	 * @var boolean
+	 */
+	protected static $isPHP53used = null;
+	
+	/**
+	 * check if PHP 5.3 is used
+	 * 
+	 * @return boolean
+	 */
+	public static function isPHP53used() {
+		if(is_null(self::$isPHP53used)) {
+			self::$isPHP53used = version_compare(PHP_VERSION, '5.3.0') >= 0;
+		}
+		return self::$isPHP53used;
+	}
+	
 }

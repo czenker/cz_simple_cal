@@ -1,9 +1,7 @@
 <?php 
  
 /**
- * testing the features of DateTime::modify()
- * 
- * they might differ in different PHP versions.
+ * testing the features of StrToTime
  * 
  * @author Christian Zenker <christian.zenker@599media.de>
  * @see http://www.php.net/manual/en/datetime.formats.relative.php
@@ -62,12 +60,44 @@ class StrToTimeTest extends tx_phpunit_testcase
      * @dataProvider provider
      * @return unknown_type
      */
-    public function testModifications($modification, $assumed) {
+    public function testModificationsForPhp53($modification, $assumed) {
+    	if(version_compare(PHP_VERSION, '5.3.0') < 0) {
+    		self::markTestSkipped('You don\'t use PHP 5.3 or higher - so this test is skipped.');
+    		return;
+    	}
+    	
     	self::assertEquals(
     		$assumed,
     		Tx_CzSimpleCal_Utility_StrToTime::strtotime($modification, $this->dateTime),
     		'"'.$modification.'"'
     	);
+    }
+    
+	/**
+     * @dataProvider provider
+     * @return unknown_type
+     */
+    public function testModificationsForPhp52($modification, $assumed) {
+    	if(version_compare(PHP_VERSION, '5.3.0') >= 0) {
+    		// do substitution manually
+    		
+    		$substitution = Tx_CzSimpleCal_Utility_StrToTime::doPHP52Substitutions($modification, $this->dateTime);
+    		if(strpos($substitution, '%') === false) {
+    			self::markTestSkipped('The substituted string seemed not to have any substitutions (marked by "%"), so this test was skipped, as the built-in functionality in PHP 5.3 might yield faulty results.');
+    		}
+    		
+    		self::assertEquals(
+	    		$assumed,
+	    		Tx_CzSimpleCal_Utility_StrToTime::strtotime($substitution, $this->dateTime),
+	    		'"'.$modification.'"'
+	    	);
+    	} else {
+    		self::assertEquals(
+	    		$assumed,
+	    		Tx_CzSimpleCal_Utility_StrToTime::strtotime($modification, $this->dateTime),
+	    		'"'.$modification.'"'
+	    	);
+    	}
     }
     
     public function provider() {
@@ -97,31 +127,55 @@ class StrToTimeTest extends tx_phpunit_testcase
     		array('last monday', strtotime('2009-02-09 00:00:00GMT')),
     		array('next monday', strtotime('2009-02-16 00:00:00GMT')),
     		
-    		array('first day of this week', strtotime('2009-02-09 00:00:00GMT')),
-    		array('first day of last week', strtotime('2009-02-02 00:00:00GMT')),
-    		array('first day of next week', strtotime('2009-02-16 00:00:00GMT')),
-    		array('last day of this week', strtotime('2009-02-15 00:00:00GMT')),
-    		array('last day of last week', strtotime('2009-02-08 00:00:00GMT')),
-    		array('last day of next week', strtotime('2009-02-22 00:00:00GMT')),
+    		array('monday this week', strtotime('2009-02-09 00:00:00GMT')),
+    		array('monday last week', strtotime('2009-02-02 00:00:00GMT')),
+    		array('monday next week', strtotime('2009-02-16 00:00:00GMT')),
+    		array('sunday this week', strtotime('2009-02-15 00:00:00GMT')),
+    		array('sunday last week', strtotime('2009-02-08 00:00:00GMT')),
+    		array('sunday next week', strtotime('2009-02-22 00:00:00GMT')),
     		
-    		array('first day of this month', strtotime('2009-02-01 00:00:00GMT')),
-    		array('first day of last month', strtotime('2009-01-01 00:00:00GMT')),
-    		array('first day of next month', strtotime('2009-03-01 00:00:00GMT')),
-    		array('last day of this month', strtotime('2009-02-28 00:00:00GMT')),
-    		array('last day of last month', strtotime('2009-01-31 00:00:00GMT')),
-    		array('last day of next month', strtotime('2009-03-31 00:00:00GMT')),
+    		array('first day of this month', strtotime('2009-02-01 23:31:30GMT')),
+    		array('first day of last month', strtotime('2009-01-01 23:31:30GMT')),
+    		array('first day of next month', strtotime('2009-03-01 23:31:30GMT')),
+    		array('last day of this month', strtotime('2009-02-28 23:31:30GMT')),
+    		array('last day of last month', strtotime('2009-01-31 23:31:30GMT')),
+    		array('last day of next month', strtotime('2009-03-31 23:31:30GMT')),
     		
-    		array('first day of this year', strtotime('2009-01-01 00:00:00GMT')),
-    		array('first day of last year', strtotime('2008-01-01 00:00:00GMT')),
-    		array('first day of next year', strtotime('2010-01-01 00:00:00GMT')),
-    		array('last day of this year', strtotime('2009-12-31 00:00:00GMT')),
-    		array('last day of last year', strtotime('2008-12-31 00:00:00GMT')),
-    		array('last day of next year', strtotime('2010-12-31 00:00:00GMT')),
+    		array('1st January this year', strtotime('2009-01-01 00:00:00GMT')),
+    		array('1st January last year', strtotime('2008-01-01 00:00:00GMT')),
+    		array('1st January next year', strtotime('2010-01-01 00:00:00GMT')),
+    		array('31th December this year', strtotime('2009-12-31 00:00:00GMT')),
+    		array('31th December last year', strtotime('2008-12-31 00:00:00GMT')),
+    		array('31th December next year', strtotime('2010-12-31 00:00:00GMT')),
     		
     		// test for compound dates
-    		array('first day of this month first day of this week', strtotime('2009-01-26 00:00:00GMT')),
-    		
-    		
+    		array('first day of this month | monday this week', strtotime('2009-01-26 00:00:00GMT')),
     	);
-    }   
+    }
+    
+    public function testWeeksStartWithMonday() {
+    	self::assertEquals(
+    		strtotime('2009-02-02 00:00:00GMT'),
+    		Tx_CzSimpleCal_Utility_StrToTime::strtotime('monday this week', strtotime('2009-02-08 00:00:00')),
+    		'"monday this week" when on a sunday'
+    	);
+    	
+    	self::assertEquals(
+    		strtotime('2009-02-02 00:00:00GMT'),
+    		Tx_CzSimpleCal_Utility_StrToTime::strtotime('monday this week', strtotime('2009-02-02 00:00:00')),
+    		'"monday this week" when on a monday'
+    	);
+    	
+    	self::assertEquals(
+    		strtotime('2009-02-08 00:00:00GMT'),
+    		Tx_CzSimpleCal_Utility_StrToTime::strtotime('sunday this week', strtotime('2009-02-08 00:00:00')),
+    		'"sunday this week" when on a sunday'
+    	);
+    	
+    	self::assertEquals(
+    		strtotime('2009-02-08 00:00:00GMT'),
+    		Tx_CzSimpleCal_Utility_StrToTime::strtotime('sunday this week', strtotime('2009-02-02 00:00:00')),
+    		'"sunday this week" when on a monday'
+    	);
+    }
 }

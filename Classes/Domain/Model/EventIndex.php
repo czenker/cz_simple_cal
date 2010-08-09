@@ -195,6 +195,9 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	 * @return mixed
 	 */
 	public function __call($method, $args) {
+		if(!$this->event) {
+			throw new BadMethodCallException(sprintf('The method %s was not found in %s.', $method, get_class($this)));
+		}
 		$callback = array($this->event, $method);
 		if(!is_callable($callback)) {
 			throw new BadMethodCallException(sprintf('The method %s was neither found in %s nor in %s.', $method, get_class($this), get_class($this->event)));
