@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xml:id="chapter.copyrights"
-	version="5.0" xmlns="http://docbook.org/ns/docbook"
-	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:ns5="http://www.w3.org/2000/svg" xmlns:ns4="http://www.w3.org/1999/xhtml"
-	xmlns:ns3="http://www.w3.org/1998/Math/MathML" xmlns:ns="http://docbook.org/ns/docbook">
+	 xmlns:xl="http://www.w3.org/1999/xlink"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:ns="http://docbook.org/ns/docbook"
+     xmlns:mathml="http://www.w3.org/1998/Math/MathML">
 
 	<title>Copyright Notice</title>
 	<para>This project uses some of the <link xlink:href="http://p.yusukekamiyamane.com/">Fugue Icons</link>. They are published under a <link xlink:href="http://creativecommons.org/licenses/by/3.0"><productname>Creative Commons</productname></link> license:</para>
