@@ -135,7 +135,7 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 		$dow = strtolower(substr($matches[1], 0, 3));
 		$whichWeek = $matches[2];
 		
-		$ret = '%Y-W%V-'.self::$weekdayToInt[$dow];
+		$ret = '%G-W%V-'.self::$weekdayToInt[$dow];
 		
 		if($whichWeek === 'last') {
 			$ret .= ' -1 week';
