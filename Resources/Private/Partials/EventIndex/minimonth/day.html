@@ -1,6 +1,6 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 
-<td class="{cal:array.join(each:{0:'cal-minimonth-day', 1:'{f:if(condition: \'{cal:format.dateTime(timestamp: day.date, format:\\\'%Y%m\\\')} == {monthNumeric}\', else:\'cal-minimonth-dayoff\')}'}, by:' ')}">
+<td class="{cal:array.join(each:{0:'cal-minimonth-day', 1:'{f:if(condition: \'{cal:format.dateTime(timestamp: day.date, format:\\\'%Y%m\\\')} == {monthNumber}\', else:\'cal-minimonth-dayoff\')}'}, by:' ')}">
 <f:alias map="{title:'{f:translate(key:\'numEvents\')->cal:format.NumberChoice(number:day.count, arguments:{number: day.count})}'}">
 
 <f:if condition="{day.count}">
