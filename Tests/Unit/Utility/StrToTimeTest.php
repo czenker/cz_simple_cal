@@ -60,44 +60,13 @@ class StrToTimeTest extends tx_phpunit_testcase
      * @dataProvider provider
      * @return unknown_type
      */
-    public function testModificationsForPhp53($modification, $assumed) {
-    	if(version_compare(PHP_VERSION, '5.3.0') < 0) {
-    		self::markTestSkipped('You don\'t use PHP 5.3 or higher - so this test is skipped.');
-    		return;
-    	}
+    public function testModifications($modification, $assumed) {
     	
     	self::assertEquals(
     		$assumed,
     		Tx_CzSimpleCal_Utility_StrToTime::strtotime($modification, $this->dateTime),
     		'"'.$modification.'"'
     	);
-    }
-    
-	/**
-     * @dataProvider provider
-     * @return unknown_type
-     */
-    public function testModificationsForPhp52($modification, $assumed) {
-    	if(version_compare(PHP_VERSION, '5.3.0') >= 0) {
-    		// do substitution manually
-    		
-    		$substitution = Tx_CzSimpleCal_Utility_StrToTime::doPHP52Substitutions($modification, $this->dateTime);
-    		if(strpos($substitution, '%') === false) {
-    			self::markTestSkipped('The substituted string seemed not to have any substitutions (marked by "%"), so this test was skipped, as the built-in functionality in PHP 5.3 might yield faulty results.');
-    		}
-    		
-    		self::assertEquals(
-	    		$assumed,
-	    		Tx_CzSimpleCal_Utility_StrToTime::strtotime($substitution, $this->dateTime),
-	    		'"'.$modification.'"'
-	    	);
-    	} else {
-    		self::assertEquals(
-	    		$assumed,
-	    		Tx_CzSimpleCal_Utility_StrToTime::strtotime($modification, $this->dateTime),
-	    		'"'.$modification.'"'
-	    	);
-    	}
     }
     
     public function provider() {

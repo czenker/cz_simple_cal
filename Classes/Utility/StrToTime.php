@@ -28,25 +28,16 @@
  */
 class Tx_CzSimpleCal_Utility_StrToTime {
 	
-	/**
-	 * a simple translation table for some non PHP 5.2 conform strings
-	 * 
+	/** 
 	 * @var array
 	 */
-	public static $translateTable52 = array(
+	public static $translateFirstDayOf = array(
 		'first day of this month' => '%Y-%m-01 %H:%M:%S|',
 		'first day of last month' => '%Y-%m-01 %H:%M:%S -1 month|',
 		'first day of next month' => '%Y-%m-01 %H:%M:%S +1 month|',
 		'last day of this month' => '%Y-%m-01 %H:%M:%S +1 month -1 day|',
 		'last day of last month' => '%Y-%m-01 %H:%M:%S -1 day|',
 		'last day of next month' => '%Y-%m-01 %H:%M:%S +2 months -1 day|',
-		
-//		'monday this week' => '%Y-W%V-1|',
-//		'monday last week' => '%Y-W%V-1 -1 week|',
-//		'monday next week' => '%Y-W%V-1 +1 week|',
-//		'sunday this week' => '%Y-W%V-7|',
-//		'sunday last week' => '%Y-W%V-7 -1 week|',
-//		'sunday next week' => '%Y-W%V-7 +1 week|',
 	);
 	
 	/**
@@ -88,21 +79,33 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 	}
 	
 	public static function doSubstitutions($time) {
-		if(!self::isPHP53used()) {
-			$time = self::doPHP52Substitutions($time);
-		}
-		
-		return self::doCommonSubstitutions($time);
+		$time = self::doSubstitutionFirstDayOf($time);
+		return self::doSubstitutionReltextWeek($time);
 	}
 	
 	/**
-	 * substitude PHP 5.3 phrases with PHP 5.2 compatible ones
+	 * substitude the occurance of "first day of ..." and its brothers
+	 * 
+	 * Actually PHP 5.3 understands those "first day of ..." phrases, but it seems a little
+	 * buggy when used with a DateTime Object. Therefore we will substitute this also.
+	 * 
+	 * I encountered this bug when using PHP 5.3.2. Do the following:
+	 * <code>
+	 * 	$foo = new DateTime("first day of this month");
+	 * 	$foo->setDate(2009, 2, 13);
+	 *  echo $foo->format('Y-m-d');
+	 * </code>
+	 * 
+	 * I would expect "2009-02-13" as return, but instead it shows "2009-02-01".
+	 * This bug would break your neck when using something like
+	 * "first day this month|monday this week" which is quite common when rendering
+	 * a month table.
 	 * 
 	 * @param string $time
 	 * @param integer $now
 	 */
-	public static function doPHP52Substitutions($time) {
-		return strtr($time, self::$translateTable52);
+	public static function doSubstitutionFirstDayOf($time) {
+		return strtr($time, self::$translateFirstDayOf);
 	}
 	
 	/**
@@ -113,7 +116,7 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 	 * 
 	 * @param string $time
 	 */
-	public static function doCommonSubstitutions($time) {
+	public static function doSubstitutionReltextWeek($time) {
 		return preg_replace_callback(
 			'/(mon(?:day)?|tue(?:sday)?|wed(?:nesday)?|thu(?:rsday)?|fri(?:day)?|sat(?:urday)?|sun(?:day)?) (last|this|next) week/i',
 			array(self, 'callback_substitutedReltextWeekPattern'),
@@ -145,24 +148,4 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 		
 		return $ret;
 	}
-	
-	/**
-	 * cache variable to hold the info if PHP 5.3 is used
-	 * 
-	 * @var boolean
-	 */
-	protected static $isPHP53used = null;
-	
-	/**
-	 * check if PHP 5.3 is used
-	 * 
-	 * @return boolean
-	 */
-	public static function isPHP53used() {
-		if(is_null(self::$isPHP53used)) {
-			self::$isPHP53used = version_compare(PHP_VERSION, '5.3.0') >= 0;
-		}
-		return self::$isPHP53used;
-	}
-	
 }

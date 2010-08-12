@@ -7,30 +7,6 @@
  */
 class Utility_DateTimeTest extends tx_phpunit_testcase {
 	
-	/**
-     * Gets the data set description of a TestCase.
-     *
-     * @param  boolean $includeData
-     * @return string
-     * @since  Method available since Release 3.3.0
-     */
-    protected function getDataSetAsString($includeData = TRUE) {
-    	$buffer = '';
-
-        if (!empty($this->data)) {
-            if (is_int($this->dataName)) {
-                $buffer .= sprintf(' with data set "%s" and timezone %s',$this->data[0], $this->data[1] ? '"'.$this->data[1].'"' : "null");
-            } else {
-                $buffer .= sprintf(' with data set "%s"', $this->dataName);
-            }
-
-            if ($includeData) {
-                $buffer .= sprintf(' (%s)', $this->dataToString($this->data));
-            }
-        }
-
-        return $buffer;
-    }
 	
 	/**
 	 * @dataProvider provideDataForConstructor
@@ -47,7 +23,7 @@ class Utility_DateTimeTest extends tx_phpunit_testcase {
 	}
 	
 	public function provideDataForConstructor() {
-		return array(
+		$array = array(
 			array('2009-02-13 23:31:30'),
 			array('2009-02-13 23:31:30', 'UTC'),
 			array('2009-02-13 23:31:30', 'Europe/Berlin'),
@@ -56,17 +32,50 @@ class Utility_DateTimeTest extends tx_phpunit_testcase {
 			array('@1234567890'),
 			array('@1234567890', 'Europe/Berlin'),
 		);
+		$labels = array();
+		foreach($array as $value) {
+			$labels[] = isset($value[1]) ? 
+				sprintf('%s and timezone %s', $value[0], $value[1]) :
+				sprintf('%s', $value[0])
+			; 
+		}
+		return array_combine($labels, $array);
 	}
 	
-	public function testConstructorRecognizesEnhancedStrToTime() {
-		$format = 'first day this month';
-		if(version_compare(PHP_VERSION, '5.3.0') >= 0) {
-			$format = Tx_CzSimpleCal_Utility_StrToTime::doPHP52Substitutions($format);
-		}
-		$dateTime = new Tx_CzSimpleCal_Utility_DateTime($format, new DateTimeZone('UTC'));
-				
-		self::assertEquals(gmdate('Y-m-01\TH:i:s+00:00') , $dateTime->format('c'));
-		
+	/**
+	 * @dataProvider provideDateForEnhancement
+	 */
+	public function testConstructorEnhancement($format, $expected) {
+		$dateTime = new Tx_CzSimpleCal_Utility_DateTime($format);
+		$this->assertEquals($expected, $dateTime->format('U'));
 	}
+	
+	/**
+	 * @dataProvider provideDateForEnhancement
+	 */
+	public function testModifyEnhancement($format, $expected) {
+		$format = explode('|', $format);
+		$init = array_shift($format);
+		$format = implode($format, '|');
+		
+		$dateTime = new Tx_CzSimpleCal_Utility_DateTime($init);
+		$dateTime->modify($format);
+		$this->assertEquals($expected, $dateTime->format('U'));
+	}
+	
+	public function provideDateForEnhancement() {
+		$array = array(
+//			array('first day this month', strtotime(strftime('%Y-%m-01 %H:%M:%S'))),
+			array('@1234567890|first day this month', strtotime('2009-02-01 23:31:30GMT')),
+			array('@1234567890|first day this month|monday this week', strtotime('2009-01-26 00:00:00GMT'))
+		);
+		$labels = array();
+		foreach($array as $value) {
+			$labels[] = sprintf('%s is %s', $value[0], gmdate('c', $value[1]));
+		}
+		return array_combine($labels, $array);
+	}
+	
+	
 	
 }
