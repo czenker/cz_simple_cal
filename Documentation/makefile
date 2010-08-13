@@ -6,7 +6,7 @@ FOLDER_PDF = pdf/
 FOLDER_HTML = html/
 
 LANGUAGES = en
-FILES = index
+FILES = index development
 
 # a list of all buildable files in all languages
 BUILDABLE_FILES = $(foreach lang,$(LANGUAGES),$(addprefix $(lang)/,$(FILES)))

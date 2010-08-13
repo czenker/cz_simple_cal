@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book version="5.0" xmlns="http://docbook.org/ns/docbook"
+      xmlns:xl="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:ns="http://docbook.org/ns/docbook"
+      xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+  <title>Technical documentation for calendar extension "cz_simple_cal" for developers</title>
+
+  <!-- Meta information -->
+
+  <info>
+    <abstract>
+      <para>cz_simple_cal is a simple calendar written on top of extbase.</para>
+      <para>This documentation aims to help developers who'd like to understand and extend this extension.</para>
+    </abstract>
+
+    <author>
+      <personname>
+        <firstname>Christian</firstname>
+        <surname>Zenker</surname>
+      </personname>
+      <email>christian.zenker@599media.de</email>
+    </author>
+	
+	<copyright>
+      <year>2010</year>
+      <holder>Christian Zenker</holder>
+    </copyright>
+    
+    <legal><para>This document is published under the Open Content License available from <link href="http://www.opencontent.org/opl.shtml" />.</para></legal>
+  </info>
+
+  <!-- Chapters -->
+
+  <xi:include href="chapters/introduction.xml" />
+  <xi:include href="chapters/concepts.xml" />
+  <xi:include href="development/testing.xml" />
+  <xi:include href="chapters/glossary.xml" />
+
+</book>
