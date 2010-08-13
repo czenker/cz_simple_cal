@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="development.testing"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:ns="http://docbook.org/ns/docbook"
+     xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+
+	<title>Testing</title>
+		<para>This section will explain how to set up a testing environment for the extension.</para>
+		
+		<section xml:id="development.testing.unit">
+			<title>Setting up Unit Tests</title>
+			<para>
+				You need to install the extension <productname>phpunit</productname> in order to run Unit Tests. You can 
+				find the extension <link xlink:href="http://typo3.org/extensions/repository/view/phpunit/current/"><productname>phpunit</productname> on TER</link>. 
+			</para>
+			<para>
+				There is not much to say on the installation of the extension. It is straight forward and as it comes bundled with
+				a PHPUnit library, so you won't even need to install a PEAR package. If you should encounter any difficulties, consult
+				the <link xlink:href="http://typo3.org/documentation/document-library/extension-manuals/phpunit/3.4.12/view/">documentation on the internet</link> or your local machine. 
+			</para>
+			<para>
+				After successful installation you should see the PHPUnit module in the Admin Section. Click it and select 
+				<productname>cz_simple_cal</productname> as extension to run the unit tests. 
+				Click <computeroutput>Run all tests</computeroutput> and all the tests should be run. If the bar is not green
+				after running all tests or the word "Success" is not displayed at the bottom of the list, something went wrong.  
+			</para>
+		</section>
+		
+		<section xml:id="development.testing.selenium">
+			<title>Setting up Selenium Tests</title>
+			<tip>
+				<para>
+					You should use a seperate TYPO3 installation and database for running selenium tests as you need to create some pages
+					for testing.
+				</para>
+			</tip>
+			<para>
+				You should have the extension <productname>phpunit</productname> installed as described in the last section.
+				All Selenium Tests are run inside PHPUnit, so this is vital.
+			</para>
+			<note>
+				<para>
+					If the selenium extension is not enabled, all Selenium Tests will be skipped automatically.
+				</para>
+			</note>
+			<para>
+				Now install <productname>Selenium Remote Control (RC)</productname> - if you don't have it running already.<sbr/>
+				Download it at <link xlink:href="http://seleniumhq.org/download/">selenium.org</link> and unpack. All you need is 
+				the <filename class="directory">selenium-remote-control-1.x.x/selenium-server-1.x.x</filename> folder - you might as well delete
+				all the others.<sbr/>
+				Run the <filename>selenium-server.jar</filename> using <productname>JAVA</productname>, for example by typing
+				<userinput>java -jar selenium-server.jar</userinput> on your console.
+			</para>
+			<para>
+				Import the data stored in <filename>Tests/Selenium/typo3_testing.sql</filename> to your database.
+			</para>
+			<para>
+				Use the <productname>scheduler</productname> to create a <literal>Index all events (cz_simple_cal)</literal>-task and run it to
+				create all the recurring events.
+			</para>
+			<note>
+				<para>The extension <productname>scheduler</productname> is shipped with the <productname>TYPO3</productname> core but disabled by default.</para>
+			</note>
+			<para>
+				If you have done that install the extension <link xlink:href="http://typo3.org/extensions/repository/view/selenium/current/"><productname>selenium</productname> from TER</link>.
+				You can ignore the backend module created by that extension and jump back to the PHPUnit module.<sbr/>
+				Now if you run the tests again a browser window should pop up and magically call some pages of the frontend. 
+			</para>
+			
+		</section>
+		
+</chapter>
+
+
+
