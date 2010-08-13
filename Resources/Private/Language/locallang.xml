@@ -22,11 +22,17 @@
 			
 			
 			<label index="format.monthAndYear">%B %Y</label>
+			<label index="format.dayWrapper">%a, %B %e, %Y</label>
 			
 			<label index="numEvents">[0]No events|[1] 1 event|[2,+Inf] ###number### events</label>
 			
 			
 			
 		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="format.monthAndYear">%B %Y</label>
+			<label index="format.dayWrapper">%a, %e. %B %Y</label>
+		</languageKey>
+		
 	</data>
 </T3locallang>

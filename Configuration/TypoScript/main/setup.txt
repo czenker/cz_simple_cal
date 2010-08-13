@@ -19,6 +19,9 @@ plugin.tx_czsimplecal {
 					orderBy   = start
 					order     = ASC
 					filterCategories = 
+					
+					# excludeOverlongEvents = 0
+					# includeStartedEvents = 0
 				}
 				
 				show {
@@ -45,8 +48,8 @@ plugin.tx_czsimplecal {
 					
 					useGetDate = 1
 					
-					startDate  = first day of this month first day of this week
-					endDate    = last day of this month first day of next week -1 second
+					startDate  = first day of this month|monday this week
+					endDate    = last day of this month|monday next week -1 second
 					groupBy    = day
 				}
 				
