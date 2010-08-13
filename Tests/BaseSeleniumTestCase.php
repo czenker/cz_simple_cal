@@ -65,10 +65,9 @@ if(t3lib_extMgm::isLoaded('selenium')) {
 		}
 	}
 } else {
-	
 	abstract class Tx_CzSimpleCal_Test_BaseSeleniumTestCase extends tx_phpunit_testcase {
 		
-		public function initializeSelenium($browser, $url) {
+		public function setUp() {
 			$this->markTestSkipped('You don\'t have the extension "selenium" enabled, so this test will be skipped.');
 		}
 	}
