@@ -47,9 +47,15 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 	 * @return array
 	 */
 	public function findAllWithSettings($settings = array()) {
-		$query = $this->setupSettings($settings);
+		$settings = $this->cleanSettings($settings);
+		$query = $this->setupSettings($this->cleanSettings($settings));
 		
 		return $query->execute();
+	}
+	
+	public function countAllWithSettings($settings = array()) {
+		$settings = $this->cleanSettings($settings);
+		return $this->doCountAllWithSettings($settings);
 	}
 	
 	/**
@@ -59,7 +65,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 	 * @ugly doing dozens of database requests
 	 * @return array
 	 */
-	public function countAllWithSettings($settings = array()) {
+	protected function doCountAllWithSettings($settings = array()) {
 		if(!isset($settings['groupBy'])) {
 			return $this->setupSettings($settings)->count();
 		} else {
@@ -74,20 +80,21 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 				$step = '+1 year';
 			}
 			
-			$startDate = clone $settings['startDate'];
-			$endDate = $settings['endDate']->getTimestamp();
+			$startDate = new Tx_CzSimpleCal_Utility_DateTime('@'.$settings['startDate']);
+			$startDate->setTimezone(new DateTimeZone(date_default_timezone_get()));
 			
+			$endDate = $settings['endDate'];
 			while ($startDate->getTimestamp() < $endDate) {
 				$tempEndDate = clone $startDate;
 				$tempEndDate->modify($step.' -1 second');
 				
 				$output[] = array(
-					'date' => $startDate->format('Y-m-d H:i:s'),
-					'count' => $this->countAllWithSettings(array_merge(
+					'date' => $startDate->format('c'),
+					'count' => $this->doCountAllWithSettings(array_merge(
 						$settings,
 						array(
-							'startDate' => $startDate,
-							'endDate' => $tempEndDate,
+							'startDate' => $startDate->format('U'),
+							'endDate' => $tempEndDate->format('U'),
 							'groupBy' => null 
 						)
 					))
@@ -112,7 +119,10 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 	 *  * order     string  the mode to sort by (could be 'asc' or 'desc')
 	 *  * orderBy   string  the field to sort by (could be 'start' or 'end')
 	 * 
-	 * @param $settings
+	 * all given values must be sanitized
+	 * 
+	 * @param array $settings
+	 * @param $query
 	 * @ugly extbase query needs a better fluent interface for query creation
 	 * @return Tx_Extbase_Persistence_Query
 	 */
@@ -123,11 +133,11 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		
 		// startDate
 		if(isset($settings['startDate'])) {
-			$constraint = $query->greaterThanOrEqual('start', $settings['startDate']->getTimestamp());
+			$constraint = $query->greaterThanOrEqual($settings['includeStartedEvents'] ? 'end' : 'start', $settings['startDate']);
 		}
 		// endDate
 		if(isset($settings['endDate'])) {
-			$temp_constraint = $query->lessThanOrEqual('end', $settings['endDate']->getTimestamp());
+			$temp_constraint = $query->lessThanOrEqual($settings['excludeOverlongEvents'] ? 'end' : 'start', $settings['endDate']);
 			 
 			if(isset($constraint)) {
 				$constraint = $query->logicalAnd($constraint, $temp_constraint);
@@ -155,8 +165,8 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		}
 		
 		// limit
-		if(isset($settings['limit'])) {
-			$query->setLimit(intval($settings['limit']));
+		if(isset($settings['maxEvents'])) {
+			$query->setLimit(intval($settings['maxEvents']));
 		}
 		
 		// order and orderBy
@@ -186,5 +196,100 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		
 		return $query;
 	}
+	
+	protected static $filterSettings = array(
+		'startDate' => array(
+			'filter' => FILTER_VALIDATE_INT,
+			'options' => array('min_range' => 0, 'default' => null)
+		),
+		'endDate' => array(
+			'filter' => FILTER_VALIDATE_INT,
+			'options' => array('min_range' => 0, 'default' => null)
+		),
+		'maxEvents'     => array(
+			'filter' => FILTER_VALIDATE_INT,
+			'options' => array(
+				'min_range' => 1,
+				'default' => null
+			),
+		),
+		'order'     =>  array(
+			'filter' => FILTER_CALLBACK,
+			'options' => array(self, 'sanitizeOrder')
+		),
+		'orderBy'   => array(
+			'filter' => FILTER_CALLBACK,
+			'options' => array(self, 'sanitizeString'),
+		),
+		'filterCategories' => array(
+			'filter' => FILTER_UNSAFE_RAW, // this is treated seperately
+			'flags' => FILTER_FORCE_ARRAY
+		),
+		'groupBy'   => array(
+			'filter' => FILTER_CALLBACK,
+			'options' => array(self, 'sanitizeString'),
+		),
+		'includeStartedEvents' => array(
+			'filter' => FILTER_VALIDATE_BOOLEAN
+		),
+		'excludeOverlongEvents' => array(
+			'filter' => FILTER_VALIDATE_BOOLEAN,
+		),
+	);
+	
+	protected function cleanSettings($settings) {
+
+		// unset unknown fields 
+		$settings = array_intersect_key($settings, self::$filterSettings);
+		
+		$settings = filter_var_array($settings, self::$filterSettings);
+		$settings['filterCategories'] = self::sanitizeFilterCategories(
+			isset($settings['filterCategories'][1]) ? $settings['filterCategories'] : $settings['filterCategories'][0]
+		);
+		
+		return $settings;
+	}
+	
+	protected static function sanitizeOrder($value) {
+		if(!is_string($value)) {
+			return null;
+		}
+		$value = strtolower($value);
+		if($value === 'desc') {
+			return 'desc';
+		} elseif($value === 'asc') {
+			return 'asc';
+		}
+		return null;
+	}
+	
+	protected static function sanitizeString($value) {
+		$value = trim($value);
+		if(!is_string($value) || empty($value)) {
+			return null;
+		}
+		if(preg_match('/[^a-z0-9\._\-]/i', trim($value))) {
+			// if: there is anything not a letter, number, dot, underscore or hyphen
+			return null;
+		} else {
+			return $value;
+		}
+	}
+	
+	protected static function sanitizeFilterCategories($array) {
+		if(!is_array($array)) {
+			$array = t3lib_div::trimExplode(',', $array, true);
+		}
+		$out = array();
+		
+		foreach($array as $value) {
+			if(is_numeric($value)) {
+				$out[] = intval($value);
+			}
+		}
+		return empty($out) ? null : $out;
+	}
+	
+	
 }
 ?>
