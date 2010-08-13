@@ -98,13 +98,12 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	public function listAction() {
 		$this->view->assign(
 			'events',
-			$this->eventIndexRepository->findAllWithSettings(array(
-				'startDate' => $this->getStartDate(),
-				'endDate'   => $this->getEndDate(),
-				'limit'     => array_key_exists('maxEvents', $this->actionSettings) && !empty($this->actionSettings['maxEvents']) ? $this->actionSettings['maxEvents'] : null,
-				'order'     => array_key_exists('order', $this->actionSettings) ? $this->actionSettings['order'] : null,
-				'orderBy'   => array_key_exists('orderBy', $this->actionSettings) ? $this->actionSettings['orderBy'] : null,
-				'filterCategories' => array_key_exists('filterCategories', $this->actionSettings) && !empty($this->actionSettings['filterCategories']) ? t3lib_div::trimExplode(',', $this->actionSettings['filterCategories'], true) : null,
+			$this->eventIndexRepository->findAllWithSettings(array_merge(
+				$this->actionSettings,
+				array(
+					'startDate' => $this->getStartDate()->getTimestamp(),
+					'endDate'   => $this->getEndDate()->getTimestamp()
+				)
 			))
 		);
 	}
@@ -112,12 +111,12 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	public function countEventsAction() {
 		$this->view->assign(
 			'data',
-			$this->eventIndexRepository->countAllWithSettings(array(
-				'startDate' => $this->getStartDate(),
-				'endDate'   => $this->getEndDate(),
-				'limit'     => array_key_exists('maxEvents', $this->actionSettings) ? $this->actionSettings['maxEvents'] : null,
-				'groupBy'     => array_key_exists('groupBy', $this->actionSettings) ? $this->actionSettings['groupBy'] : null,
-				'filterCategories' => array_key_exists('filterCategories', $this->actionSettings) && !empty($this->actionSettings['filterCategories']) ? t3lib_div::trimExplode(',', $this->actionSettings['filterCategories'], true) : null,
+			$this->eventIndexRepository->countAllWithSettings(array_merge(
+				$this->actionSettings,
+				array(
+					'startDate' => $this->getStartDate()->getTimestamp(),
+					'endDate'   => $this->getEndDate()->getTimestamp()
+				)
 			))
 		);
 	}
