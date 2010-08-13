@@ -1,8 +1,7 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
-
 <f:if condition="{data}">
 	<f:then>
-	<f:alias map="{dayOfMonth: data.10, monthNumeric:'{cal:format.dateTime(timestamp: data.10.date, format:\'%Y%m\')}'}">
+	<f:alias map="{dayOfMonth: data.10, monthNumber:'{cal:format.dateTime(timestamp: data.10.date, format:\'%Y%m\')}'}">
 		<table>
 		
 			<thead>
