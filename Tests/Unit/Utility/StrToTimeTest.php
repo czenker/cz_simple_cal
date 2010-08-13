@@ -177,5 +177,12 @@ class StrToTimeTest extends tx_phpunit_testcase
     		Tx_CzSimpleCal_Utility_StrToTime::strtotime('sunday this week', strtotime('2009-02-02 00:00:00')),
     		'"sunday this week" when on a monday'
     	);
+    	
+    	self::assertEquals(
+    		strtotime('2009-12-28 00:00:00GMT'),
+    		Tx_CzSimpleCal_Utility_StrToTime::strtotime('monday this week', strtotime('2010-01-01 00:00:00')),
+    		'"monday this week" on a year switch'
+    	);
     }
+    
 }
