@@ -1,6 +1,6 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 BEGIN:VEVENT
-UID:<cal:string.uniqueId>event-{event.event.uid}-<cal:format.dateTime format="%Y%m%dT%H%M%S" timestamp="{event.start}"/></cal:string.uniqueId>
+UID:{event.hash}
 SUMMARY:{event.title}
 DESCRIPTION:
 CLASS:PUBLIC

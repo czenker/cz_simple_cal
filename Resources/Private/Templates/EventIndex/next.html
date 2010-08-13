@@ -1,6 +1,7 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
-
+<cal:useMicroformat format="hcalendar" />
 <h2>Next View</h2>
+<div class="vcalendar vcalendar-next">
 <f:if condition="{events}">
 	<f:then>
 		<p>These are the next events that take place.</p>
@@ -19,3 +20,4 @@
 		<p>No events have been found.</p>
 	</f:else>
 </f:if>
+</div>

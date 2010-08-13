@@ -1,8 +1,8 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
-<div class="cal-list-item">
-	<div class="cal-date"><span class="cal-date"><cal:format.dateTime format="%H:%M %Z" timestamp="{event.start}"/></span></div>
-	<div class="cal-content">
-		<h5><f:link.action action="show" arguments="{event: event}">{event.title}</f:link.action></h5>
-		<f:format.html>{event.description}</f:format.html>
+<div class="vevent" id="{event.hash}">
+	<div class="dtstart" title="{cal:format.dateTime(format: '%Y-%m-%dT%H:%M%z', timestamp: event.start)}">
+		<cal:format.dateTime format="%H:%M" timestamp="{event.start}"/>
 	</div>
+		<h5 class="summary"><f:link.action action="show" arguments="{event: event}" class="url">{event.title}</f:link.action></h5>
+		<div class="description"><f:format.html>{event.description}</f:format.html></div>
 </div>

@@ -188,6 +188,20 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	}
 	
 	/**
+	 * get a hash for this recurrance of the event
+	 * 
+	 * @return string
+	 */
+	public function getHash() {
+		return md5(
+			'eventindex-'.
+			$this->getEvent()->getHash().'-'.
+			$this->getStart().'-'.
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']
+		);
+	}
+	
+	/**
 	 * tunnel all methods that were not found to the Event
 	 * 
 	 * @param $method

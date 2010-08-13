@@ -613,5 +613,18 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	public static function getFieldsRequiringReindexing() {
 		return self::$fieldsRequiringReindexing;
 	}
+	
+	/**
+	 * get a hash for this recurrance of the event
+	 * 
+	 * @return string
+	 */
+	public function getHash() {
+		return md5(
+			'event-'.
+			$this->getUid().
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']
+		);
+	}
 }
 ?>
