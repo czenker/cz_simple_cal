@@ -8,10 +8,10 @@
 		<cal:variable.init>
 			<f:for each="{events}" as="event">
 				<cal:calendar.onNewDay event="{event}">
-					<h4 class="underline"><cal:format.dateTime format="%a, %e. %B %Y" timestamp="{event.start}"/></h4>
+					<f:render partial="EventIndex/dayWrapper.html" arguments="{event: event, settings:settings}" />
 				</cal:calendar.onNewDay>
 				
-				<f:render partial="EventIndex/event-for-list.html" arguments="{event: event, settings:settings}"></f:render>
+				<f:render partial="EventIndex/event-for-list.html" arguments="{event: event, settings:settings}" />
 			</f:for>
 		
 		</cal:variable.init>
