@@ -5,16 +5,13 @@
 <f:if condition="{events}">
 	<f:then>
 		<p>These are the next events that take place.</p>
-		<cal:variable.init>
-			<f:for each="{events}" as="event">
-				<cal:calendar.onNewDay event="{event}">
-					<f:render partial="EventIndex/dayWrapper.html" arguments="{event: event, settings:settings}" />
-				</cal:calendar.onNewDay>
-				
-				<f:render partial="EventIndex/event-for-list.html" arguments="{event: event, settings:settings}" />
-			</f:for>
-		
-		</cal:variable.init>
+		<f:for each="{events}" as="event">
+			<cal:calendar.onNewDay event="{event}">
+				<f:render partial="EventIndex/dayWrapper.html" arguments="{event: event, settings:settings}" />
+			</cal:calendar.onNewDay>
+			
+			<f:render partial="EventIndex/event-for-list.html" arguments="{event: event, settings:settings}" />
+		</f:for>
 	</f:then>
 	<f:else>
 		<p>No events have been found.</p>
