@@ -16,7 +16,7 @@
 			<label index="tx_czsimplecal_domain_model_event.description">a long description for this event</label>
 			<label index="tx_czsimplecal_domain_model_event.location_name">the name of the location this event takes place in</label>
 			<label index="tx_czsimplecal_domain_model_event.organizer_name">the name of the institution or person the event is organized by</label>
-			<label index="tx_czsimplecal_domain_model_event.category">category</label>
+			<label index="tx_czsimplecal_domain_model_event.categories">categories</label>
 			<label index="tx_czsimplecal_domain_model_category">a category of an event</label>
 			<label index="tx_czsimplecal_domain_model_category.title">a title for this category</label>
 			
