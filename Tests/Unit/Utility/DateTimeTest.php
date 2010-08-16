@@ -43,7 +43,6 @@ class Utility_DateTimeTest extends tx_phpunit_testcase {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * @dataProvider provideDataForFormats
 	 */
 	public function testRecognizedFormats($format, $expected) {
@@ -148,9 +147,6 @@ class Utility_DateTimeTest extends tx_phpunit_testcase {
 	
 	/**
 	 * @dataProvider provideDataForEnhancement
-=======
-	 * @dataProvider provideDateForEnhancement
->>>>>>> github/master
 	 */
 	public function testConstructorEnhancement($format, $expected) {
 		$dateTime = new Tx_CzSimpleCal_Utility_DateTime($format);
@@ -158,11 +154,7 @@ class Utility_DateTimeTest extends tx_phpunit_testcase {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * @dataProvider provideDataForEnhancement
-=======
-	 * @dataProvider provideDateForEnhancement
->>>>>>> github/master
 	 */
 	public function testModifyEnhancement($format, $expected) {
 		$format = explode('|', $format);
@@ -174,11 +166,7 @@ class Utility_DateTimeTest extends tx_phpunit_testcase {
 		$this->assertEquals($expected, $dateTime->format('U'));
 	}
 	
-<<<<<<< HEAD
 	public function provideDataForEnhancement() {
-=======
-	public function provideDateForEnhancement() {
->>>>>>> github/master
 		$array = array(
 //			array('first day this month', strtotime(strftime('%Y-%m-01 %H:%M:%S'))),
 			array('@1234567890|first day this month', strtotime('2009-02-01 23:31:30GMT')),

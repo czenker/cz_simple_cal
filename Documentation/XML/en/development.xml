@@ -34,18 +34,11 @@
 
   <!-- Chapters -->
 
-<<<<<<< HEAD
   <xi:include href="chapters/concepts.xml" />
   <xi:include href="development/testing.xml" />
   <xi:include href="chapters/copyrights.xml" />
   <xi:include href="chapters/glossary.xml" />
   
   <xi:include href="appendices/date.xml" />
-=======
-  <xi:include href="chapters/introduction.xml" />
-  <xi:include href="chapters/concepts.xml" />
-  <xi:include href="development/testing.xml" />
-  <xi:include href="chapters/glossary.xml" />
->>>>>>> github/master
 
 </book>
