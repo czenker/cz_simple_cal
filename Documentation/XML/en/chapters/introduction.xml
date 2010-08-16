@@ -16,6 +16,25 @@
 			Different versions might work, but propably they do not.
 		</para>
 	</caution>
+	
+	<section xml:id="chapter.introduction.whatdoesitdo">
+		<title>What does it do?</title>
+		<para>
+			This extension provides a simple calendar.
+		</para>
+	</section>
+	
+	<section xml:id="chapter.introduction.features">
+		<title>Feature List</title>
+		<itemizedlist>
+			<listitem><simpara>Allday Events</simpara></listitem>
+			<listitem><simpara>Recurring Events</simpara></listitem>
+			<listitem><simpara>Exceptions, Exception Groups</simpara></listitem>
+			<listitem><simpara>Categories</simpara></listitem>
+			<listitem><simpara>adding actions via Typoscript</simpara></listitem>
+			<listitem><simpara>...and all the goodness that is <productname>Extbase</productname> and <productname>Fluid</productname>.</simpara></listitem>
+		</itemizedlist>
+	</section>
 
 	
 </chapter>

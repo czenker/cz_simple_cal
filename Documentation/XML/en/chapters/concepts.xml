@@ -55,30 +55,32 @@
 				and times. It is based on the english language and international date and time formats.
 			</para>
 			<para>
-				The recommended way of setting a fixed day and time is the <literal>YYYY-MM-DD (HH:MM:SS[T]?)?</literal> syntax.
-				These would be valid dates:
+				The recommended way of setting a fixed day and time is the <literal>YYYY-MM-DD (HH:MM:SS[T]?)?</literal> syntax, but
+				there are also different valid syntaxes:
 			</para>
 			<example>
-				<title>Examples of valid dates and times in YYYY-MM-DD syntax</title>
+				<title>Examples of valid dates and times</title>
 				<itemizedlist>
 					<listitem><para><userinput>2009-02-13</userinput></para></listitem>
 					<listitem><para><userinput>2009-02-13 23:31:30</userinput></para></listitem>
 					<listitem><para><userinput>2009-02-13 23:31:30UTC</userinput></para></listitem>
-				</itemizedlist>
-			</example>
-			<para>But you can easily use different formats like these:</para>
-			<example>
-				<title>Examples of valid dates and times in alternate syntax</title>
-				<itemizedlist>
 					<listitem><para><userinput>13.2.09 23.31.30+00:00</userinput></para></listitem>
 					<listitem><para><userinput>February 13th, 2009 11 pm</userinput></para></listitem>
 				</itemizedlist>
 			</example>
 			<note><para>Note that you can't use localized month names here.</para></note>
-			<para>See <link linkend="appendix.date">the appendix</link> for the complete syntax.</para>
+			<para>Additionally you can use relative dates and chaining of different relative dates.</para>
+			<example>
+				<title>Examples of valid relative dates</title>
+				<itemizedlist>
+					<listitem><para><userinput>yesterday</userinput></para></listitem>
+					<listitem><para><userinput>last monday</userinput></para></listitem>
+					<listitem><para><userinput>+1 month -1 day</userinput></para></listitem>
+					<listitem><para><userinput>first day this month|monday this week</userinput></para></listitem>
+				</itemizedlist>
+			</example>
+			<para>See <link linkend="appendix.date">the appendix for the complete syntax.</link></para>
 		</section>
-
-	
 </chapter>
 
 
