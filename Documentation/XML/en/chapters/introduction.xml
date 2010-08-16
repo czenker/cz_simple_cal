@@ -35,6 +35,37 @@
 			<listitem><simpara>...and all the goodness that is <productname>Extbase</productname> and <productname>Fluid</productname>.</simpara></listitem>
 		</itemizedlist>
 	</section>
+	
+	<section xml:id="chapter.introduction.sources">
+		<title>Sources</title>
+		<variablelist>
+			<varlistentry>
+				<term>Home in forge</term>
+				<listitem><para><link xlink:href="http://forge.typo3.org/projects/extension-cz_simple_cal" /></para></listitem>
+			</varlistentry>
+			
+			<varlistentry>
+				<term>Distribution in TER</term>
+				<listitem><para><link xlink:href="http://typo3.org/extensions/repository/view/cz_simple_cal/current/" /></para></listitem>
+			</varlistentry>
+			
+			<varlistentry>
+				<term>Bugtracker</term>
+				<listitem><para><link xlink:href="http://forge.typo3.org/projects/extension-cz_simple_cal/issues" /></para></listitem>
+			</varlistentry>
+			
+			<varlistentry>
+				<term>Official Git Repository</term>
+				<listitem><para><link xlink:href="http://github.com/czenker/cz_simple_cal" /></para></listitem>
+			</varlistentry>
+			
+			<varlistentry>
+				<term>Mirrored Subversion Repository</term>
+				<listitem><para><link xlink:href="https://svn.typo3.org/TYPO3v4/Extensions/cz_simple_cal" /></para></listitem>
+			</varlistentry>
+			
+		</variablelist>
+	</section>
 
 	
 </chapter>

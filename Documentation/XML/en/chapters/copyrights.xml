@@ -13,5 +13,13 @@
 The icons are licensed under a Creative Commons Attribution
 3.0 license.</literal></para>
 
+	<para>The <link linkend="appendix.date">documentation on the date type in the appendix</link> is a slight modification of the official
+		<productname>PHP</productname> documentation which is licensed under a <link xlink:href="http://creativecommons.org/licenses/by/3.0">Creative Commons</link> license.
+	</para>
+	<para><literal>Copyright © 1997 - 2010 by the PHP Documentation Group.
+This material may be distributed only subject to the terms and
+conditions set forth in the Creative Commons Attribution 3.0 License
+or later.</literal></para>
+
 	
 </chapter>

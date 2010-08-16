@@ -144,8 +144,8 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	 */
 	protected function getStartDate() {
 		if(array_key_exists('startDate', $this->actionSettings)) {
-			if(isset($this->actionSettings['useGetDate']) && $this->request->hasArgument('getDate')) {
-				$date = new Tx_CzSimpleCal_Utility_DateTime($this->request->getArgument('getDate'));
+			if(isset($this->actionSettings['getDate'])) {
+				$date = new Tx_CzSimpleCal_Utility_DateTime($this->actionSettings['getDate']);
 				$date->modify($this->actionSettings['startDate']);
 			} else {
 				$date = new Tx_CzSimpleCal_Utility_DateTime($this->actionSettings['startDate']);
@@ -164,8 +164,8 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	 */
 	protected function getEndDate() {
 		if(array_key_exists('endDate', $this->actionSettings)) {
-			if(isset($this->actionSettings['useGetDate']) && $this->request->hasArgument('getDate')) {
-				$date = new Tx_CzSimpleCal_Utility_DateTime($this->request->getArgument('getDate'));
+			if(isset($this->actionSettings['getDate'])) {
+				$date = new Tx_CzSimpleCal_Utility_DateTime($this->actionSettings['getDate']);
 				$date->modify($this->actionSettings['endDate']);
 			} else {
 				$date = new Tx_CzSimpleCal_Utility_DateTime($this->actionSettings['endDate']);
@@ -192,9 +192,23 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	protected function initializeActionSettings($actionMethodName) {
 		$this->actionSettings = &$this->settings['EventIndex']['actions'][$actionMethodName];
 		
+		// merge the settings from the flexform
 		if(isset($this->settings['override']['action'])) {
 			// this will override values if they are not empty and they already exist (so no adding of keys)
 			$this->actionSettings = t3lib_div::array_merge_recursive_overrule($this->actionSettings, $this->settings['override']['action'], true, false);
+		}
+		
+		// merge settings from getPost-values
+		if(isset($this->actionSettings['getPostAllowed'])) {
+			$allowed = t3lib_div::trimExplode(',', $this->actionSettings['getPostAllowed'], true);
+			
+			$this->actionSettings = array_merge(
+				$this->actionSettings,
+				array_intersect_key(
+					$this->request->getArguments(),
+					array_flip($allowed)
+				)
+			);
 		}
 	}
 	

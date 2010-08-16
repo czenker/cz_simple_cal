@@ -14,11 +14,11 @@ plugin.tx_czsimplecal {
 					defaultPid = {$plugin.tx_czsimplecal.pids.default}
 					startDate  = today
 					endDate    = today +1 year
-
+					
 					maxEvents = 9999
 					orderBy   = start
 					order     = ASC
-					filterCategories = 
+					filterCategories =
 					
 					# excludeOverlongEvents = 0
 					# includeStartedEvents = 0
@@ -46,7 +46,7 @@ plugin.tx_czsimplecal {
 					
 					useAction = countEvents
 					
-					useGetDate = 1
+					getPostAllowed = getDate
 					
 					startDate  = first day of this month|monday this week
 					endDate    = last day of this month|monday next week -1 second
@@ -61,7 +61,7 @@ plugin.tx_czsimplecal {
 					startDate = first day of this week
 					endDate   = last day of this week 23:59:59
 					
-					useGetDate = 1
+					getPostAllowed = getDate
 					
 					maxEvents = 999
 					orderBy = start
@@ -76,7 +76,7 @@ plugin.tx_czsimplecal {
 					startDate = today
 					endDate   = today 23:59:59
 					
-					useGetDate = 1
+					getPostAllowed = getDate
 					
 					maxEvents = 999
 					orderBy = start
