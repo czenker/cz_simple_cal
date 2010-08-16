@@ -38,5 +38,7 @@
   <xi:include href="chapters/howto.xml" />
   <xi:include href="chapters/copyrights.xml" />
   <xi:include href="chapters/glossary.xml" />
+  
+  <xi:include href="appendices/date.xml" />
 
 </book>

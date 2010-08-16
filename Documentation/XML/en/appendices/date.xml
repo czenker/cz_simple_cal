@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xml:id="appendix.date"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:ns="http://docbook.org/ns/docbook"
+     xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+
+	<title>The type <literal>date</literal></title>
+	<para>
+		The first thing to mention is that you can <emphasis>only</emphasis> use english phrases and month names. Numeric formats are usually standartized formats.<sbr/>
+	</para>
+	
+	<note>
+		<para>
+			The type <literal>date</literal> is based on <productname>PHP</productname>'s <link xlink:href="http://php.net/manual/en/datetime.formats.php">date and time formats</link>.
+			With some exceptions all of the formats there can be used. Some of the relative formats require <productname>PHP 5.3</productname>, so you should avoid them if possible
+			to keep compatibility.
+		</para>
+	</note>
+	
+	<xi:include href="../../contrib/php.net-rev300164/formats.xml" xpointer="datetime.formats.date" />
+	<xi:include href="../../contrib/php.net-rev300164/formats.xml" xpointer="datetime.formats.time" />
+	<xi:include href="../../contrib/php.net-rev300164/formats.xml" xpointer="datetime.formats.compound" />
+	<!-- <xi:include href="../../contrib/php.net-rev300164/formats.xml" xpointer="datetime.formats.relative" /> -->
+	
+	<section xml:id="datetime.formats.relative">
+		<title>Relative Formats</title>
+		<table>
+			<title>Used Symbols</title>
+			<tgroup cols="2">
+				<thead>
+					<row>
+						<entry>Description</entry>
+						<entry>Format</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+							<literal>dayname</literal>
+						</entry>
+						<entry>'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' |
+							'friday' | 'saturday' | 'sun' | 'mon' | 'tue' | 'wed' | 'thu' |
+							'fri' |
+							'sat' | 'sun'</entry>
+					</row>
+					<row>
+						<entry>
+							<literal>number</literal>
+						</entry>
+						<entry>[+-]?[0-9]+</entry>
+					</row>
+					<row>
+						<entry>
+							<literal>reltext</literal>
+						</entry>
+						<entry>'next' | 'last' | 'previous' | 'this'</entry>
+					</row>
+					<row>
+						<entry>
+							<literal>space</literal>
+						</entry>
+						<entry>[ \t]+</entry>
+					</row>
+					<row>
+						<entry>
+							<literal>unit</literal>
+						</entry>
+						<entry>
+							(('sec' | 'second' | 'min' | 'minute' | 'hour' | 'day' |
+							'month' | 'year') 's'?) | 'weeks' |
+							<literal>daytext</literal>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+
+		<table>
+			<title>Day-based Notations</title>
+			<tgroup cols="3">
+				<thead>
+					<row>
+						<entry>Format</entry>
+						<entry>Description</entry>
+						<entry>Examples</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>'yesterday'</entry>
+						<entry>Midnight of yesterday</entry>
+						<entry>"yesterday 14:00"</entry>
+					</row>
+					<row>
+						<entry>'midnight'</entry>
+						<entry>The time is set to 00:00:00</entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>'today'</entry>
+						<entry>The time is set to 00:00:00</entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>'now'</entry>
+						<entry>Now - this is simply ignored</entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>'noon'</entry>
+						<entry>The time is set to 12:00:00</entry>
+						<entry>"yesterday noon"</entry>
+					</row>
+					<row>
+						<entry>'tomorrow'</entry>
+						<entry>Midnight of tomorrow</entry>
+						<entry></entry>
+					</row>
+					<row>
+						<entry>'first day' ' of'?</entry>
+						<entry>Sets the day of the first of the current month. This phrase
+							is
+							best used together with a month name following it.</entry>
+						<entry>"first day of January 2008"</entry>
+					</row>
+					<row>
+						<entry>'last day' ' of'?</entry>
+						<entry>Sets the day to the last day of the current month. This
+							phrase is
+							best used together with a month name following it.</entry>
+						<entry>"last day of next month"</entry>
+					</row>
+					<row>
+						<entry>
+							'last'
+							<literal>space</literal>
+							<literal>dayname</literal>
+							<literal>space</literal>
+							'of'
+						</entry>
+						<entry>
+							Calculates the
+							<emphasis>last</emphasis>
+							week day of the current month.
+						</entry>
+						<entry>"last sat of July 2008"</entry>
+					</row>
+					<row>
+						<entry>
+							<literal>number</literal>
+							<literal>space</literal>
+							? (
+							<literal>unit</literal>
+							| 'week')
+						</entry>
+						<entry>Handles relative time items where the value is a number.</entry>
+						<entry>"+5 weeks", "12 day", "-7 weekdays"</entry>
+					</row>
+					<row>
+						<entry>
+							<literal>reltext</literal>
+							<literal>space</literal>
+							'week'
+						</entry>
+						<entry>Handles the special format "weekday + last/this/next week".</entry>
+						<entry>"Monday next week"</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+		
+		<caution>
+			<para>Weeks always start with mondays. That's a difference to the original DateTime starts with sundays.</para>
+		</caution>
+			
+	</section>
+	
+	<section xml:id="datetime.formats.chaining">
+		<title>Chaining</title>
+		<para>All afore mentioned formats can be chained by using the pipe character (<literal>|</literal>). All rules 
+		will be applied one after another.</para>
+		<example>
+			<title>Chaining of DateTime formats</title>
+			<itemizedlist>
+				<listitem><para><userinput>first day this month|monday this week</userinput></para></listitem>
+				<listitem><para><userinput>2009-02-13 00:00:00|sunday next week</userinput></para></listitem>
+			</itemizedlist>
+		</example>
+	</section>
+		
+	
+</appendix>

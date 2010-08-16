@@ -47,6 +47,36 @@
 			</para>
 			<para>See <link linkend="chapter.howto.add-fake-action">HowTo: Add a fake action</link> to learn - guess what - how to add a fake action.</para>
 		</section>
+		
+		<section xml:id="chapter.concepts.date-type">
+			<title>The type <literal>date</literal></title>
+			<para>
+				This type is quite heavily used in the extension. It allowes for a very flexible and simple calculation of dates
+				and times. It is based on the english language and international date and time formats.
+			</para>
+			<para>
+				The recommended way of setting a fixed day and time is the <literal>YYYY-MM-DD (HH:MM:SS[T]?)?</literal> syntax.
+				These would be valid dates:
+			</para>
+			<example>
+				<title>Examples of valid dates and times in YYYY-MM-DD syntax</title>
+				<itemizedlist>
+					<listitem><para><userinput>2009-02-13</userinput></para></listitem>
+					<listitem><para><userinput>2009-02-13 23:31:30</userinput></para></listitem>
+					<listitem><para><userinput>2009-02-13 23:31:30UTC</userinput></para></listitem>
+				</itemizedlist>
+			</example>
+			<para>But you can easily use different formats like these:</para>
+			<example>
+				<title>Examples of valid dates and times in alternate syntax</title>
+				<itemizedlist>
+					<listitem><para><userinput>13.2.09 23.31.30+00:00</userinput></para></listitem>
+					<listitem><para><userinput>February 13th, 2009 11 pm</userinput></para></listitem>
+				</itemizedlist>
+			</example>
+			<note><para>Note that you can't use localized month names here.</para></note>
+			<para>See <link linkend="appendix.date">the appendix</link> for the complete syntax.</para>
+		</section>
 
 	
 </chapter>
