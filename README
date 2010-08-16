@@ -1,0 +1,41 @@
+Calendar extension "cz_simple_cal"
+     ______________________________________________________________________________________
+
+Introduction
+
+Caution
+
+   This extension in alpha state.
+
+   It was only tried with TYPO3 4.4 and the corresponding extbase version. Different versions
+   might work, but propably they do not.
+
+What does it do?
+
+   This extension provides a simple calendar.
+
+Feature List
+
+     * Allday Events
+     * Recurring Events
+     * Exceptions, Exception Groups
+     * Categories
+     * adding actions via Typoscript
+     * ...and all the goodness that is Extbase and Fluid.
+
+Sources
+
+   Home in forge
+          http://forge.typo3.org/projects/extension-cz_simple_cal
+
+   Distribution in TER
+          http://typo3.org/extensions/repository/view/cz_simple_cal/current/
+
+   Bugtracker
+          http://forge.typo3.org/projects/extension-cz_simple_cal/issues
+
+   Official Git Repository
+          http://github.com/czenker/cz_simple_cal
+
+   Mirrored Subversion Repository
+          https://svn.typo3.org/TYPO3v4/Extensions/cz_simple_cal

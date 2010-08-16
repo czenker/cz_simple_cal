@@ -11,9 +11,11 @@ FILES = index development
 # a list of all buildable files in all languages
 BUILDABLE_FILES = $(foreach lang,$(LANGUAGES),$(addprefix $(lang)/,$(FILES)))
 
-all: pdf
+all: pdf html readme
 
 pdf: $(addsuffix .pdf,$(BUILDABLE_FILES)) 
+
+html: $(addsuffix .html,$(BUILDABLE_FILES))
 
 # build pdf files 
 $(addsuffix .pdf,$(BUILDABLE_FILES)) : 
@@ -21,5 +23,13 @@ $(addsuffix .pdf,$(BUILDABLE_FILES)) :
 	fop -pdf $(FOLDER_PDF)$@ -fo $(FOLDER_PDF)$(subst .pdf,.fo,$@)
 	rm -rf $(FOLDER_PDF)$(subst .pdf,.fo,$@)
 
+$(addsuffix .html,$(BUILDABLE_FILES)) : 
+	xsltproc $(XSLTPROC_OPTIONS) -o $(FOLDER_HTML)$@ $(STYLESHEETS_DIR)/html/docbook.xsl $(FOLDER_XML)$(subst .html,.xml,$@)
+
+readme: 
+	xsltproc $(XSLTPROC_OPTIONS) --stringparam generate.toc 0 --stringparam  chapter.autolabel 0 -o ../README.html $(STYLESHEETS_DIR)/xhtml/docbook.xsl $(FOLDER_XML)en/readme.xml
+	lynx -dump ../README.html -nolist -width 100 > ../README
+	rm ../README.html
+
 clean:
-	rm -rf $(FOLDER_PDF)
+	rm -rf $(FOLDER_PDF) $(FOLDER_HTML)
