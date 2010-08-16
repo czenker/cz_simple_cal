@@ -18,11 +18,7 @@ plugin.tx_czsimplecal {
 					maxEvents = 9999
 					orderBy   = start
 					order     = ASC
-<<<<<<< HEAD
-					filterCategories =
-=======
 					filterCategories = 
->>>>>>> github/master
 					
 					# excludeOverlongEvents = 0
 					# includeStartedEvents = 0
