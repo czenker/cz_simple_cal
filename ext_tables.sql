@@ -72,7 +72,10 @@ CREATE TABLE tx_czsimplecal_domain_model_exception (
 	
 	
 	title tinytext,
-	day int(11),
+	start_day int(11),
+	start_time int(11) DEFAULT -1,
+	end_day int(11) DEFAULT -1,
+	end_time int(11) DEFAULT -1,
 	timezone varchar(20) DEFAULT 'GMT',
 	recurrance_type varchar(30) DEFAULT 'none',
 	recurrance_subtype varchar(30) DEFAULT '',

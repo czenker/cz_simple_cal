@@ -4,10 +4,10 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $TCA['tx_czsimplecal_domain_model_exception'] = array(
 	'ctrl' => $TCA['tx_czsimplecal_domain_model_exception']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'title,day,recurrance_type,recurrance_subtype,recurrance_until'
+		'showRecordFieldList' => 'title,start_day,start_time,end_day,end_time,recurrance_type,recurrance_subtype,recurrance_until'
 	),
 	'types' => array(
-		'1' => array('showitem' => 'title,day,recurrance_type,recurrance_subtype,recurrance_until')
+		'1' => array('showitem' => 'title,start_day,start_time,end_day,end_time,recurrance_type,recurrance_subtype,recurrance_until')
 	),
 	'palettes' => array(
 		'1' => array('showitem' => '')
@@ -39,9 +39,9 @@ $TCA['tx_czsimplecal_domain_model_exception'] = array(
 				'eval' => 'trim,required'
 			)
 		),
-		'day' => array(
+		'start_day' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.day',
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.start_day',
 			'config'  => array(
 				'type' => 'input',
 				'size' => 12,
@@ -49,9 +49,45 @@ $TCA['tx_czsimplecal_domain_model_exception'] = array(
 				'eval' => 'date,required',
 			)
 		),
+		'start_time' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.start_time',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 12,
+				'max' => 20,
+				'eval' => 'time',
+				'checkbox' => '-1',
+				'default' => '-1'
+			)
+		),
+		'end_day' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.end_day',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 12,
+				'max' => 20,
+				'eval' => 'date',
+				'checkbox' => '-1',
+				'default' => '-1'
+			)
+		),
+		'end_time' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.end_time',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 12,
+				'max' => 20,
+				'eval' => 'time',
+				'checkbox' => '-1',
+				'default' => '-1'
+			)
+		),
 		'timezone' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.timezone',
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.timezone',
 			'config'  => array(
 				'type' => 'input',
 				'size' => 40,
@@ -62,28 +98,37 @@ $TCA['tx_czsimplecal_domain_model_exception'] = array(
 		),
 		'recurrance_type' => array(
 			'exclude' => 1,
-			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_type',
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type',
 			'config'  => array(
 				'type' => 'select',
 				'items' => array(
 					array(
-						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_type.none',
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.none',
 						'none'
 					),
 					array(
-						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_type.daily',
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.daily',
 						'daily'
 					),
 					array(
-						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_type.weekly',
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.weekly',
 						'weekly'
 					),
 					array(
-						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_type.monthly',
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.monthly',
 						'monthly'
 					),
 					
 				),
+			)
+		),
+		'recurrance_subtype' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_subtype',
+			'displayCond' => 'FIELD:recurrance_type:!IN:0,,none,daily',
+			'config'  => array(
+				'type' => 'select',
+				'itemsProcFunc' => 'EXT:cz_simple_cal/Legacy/class.tx_czsimplecal_dynFlexform.php:tx_czsimplecal_dynFlexform->getRecurranceSubtype'
 			)
 		),
 		'recurrance_until' => array(
@@ -96,15 +141,6 @@ $TCA['tx_czsimplecal_domain_model_exception'] = array(
 				'eval' => 'date',
 				'checkbox' => '-1',
 				'default' => '-1'
-			)
-		),
-		'recurrance_subtype' => array(
-			'exclude' => 1,
-			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_subtype',
-			'displayCond' => 'FIELD:recurrance_type:!IN:none,daily',
-			'config'  => array(
-				'type' => 'select',
-				'itemsProcFunc' => 'EXT:cz_simple_cal/Legacy/class.tx_czsimplecal_dynFlexform.php:tx_czsimplecal_dynFlexform->getRecurranceSubtype'
 			)
 		),
 		'events' => array(

@@ -17,13 +17,13 @@ class Tx_CzSimpleCal_Recurrance_Factory {
 	/**
 	 * build the recurrance for an event
 	 * 
-	 * @param Tx_CzSimpleCal_Domain_Model_Event $event
+	 * @param Tx_CzSimpleCal_Domain_Model_BaseEvent $event
 	 * @return Tx_CzSimpleCal_Domain_Model_Event
 	 */
 	public function buildRecurranceForEvent($event) {
-		if(!$event instanceof Tx_CzSimpleCal_Domain_Model_Event) {
+		if(!$event instanceof Tx_CzSimpleCal_Domain_Model_BaseEvent) {
 			// no type hinting to make it more reusable
-			throw new InvalidArgumentException(sprintf('$event must be of class Tx_CzSimpleCal_Domain_Model_Event in %s::%s', get_class($this), __METHOD__));
+			throw new InvalidArgumentException(sprintf('$event must be of class Tx_CzSimpleCal_Domain_Model_BaseEvent in %s::%s', get_class($this), __METHOD__));
 		}
 		
 		$this->event = $event;
