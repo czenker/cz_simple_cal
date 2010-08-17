@@ -27,5 +27,20 @@ abstract class Tx_CzSimpleCal_Recurrance_Type_Base {
 		return $this->timeline;
 	}
 	
+	/**
+	 * add locallang labels to an array of subtypes
+	 * 
+	 * @param array $values
+	 * @param string $base the locallang base
+	 */
+	protected static function addLL($values, $base = 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_subtype.') {
+		foreach($values as &$value) {
+			$value = array(
+				$GLOBALS["LANG"]->sL($base.$value),
+				$value,
+			);
+		}
+		return $values;
+	}
 	
 }

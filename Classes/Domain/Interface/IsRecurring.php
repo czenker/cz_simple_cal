@@ -11,14 +11,14 @@ interface Tx_CzSimpleCal_Domain_Interface_IsRecurring extends Tx_CzSimpleCal_Dom
 	
 	public function setRecurranceType($recurranceType);
 	
+	public function getRecurranceSubtype();
+	
+	public function setRecurranceSubtype($recurranceSubtype);
+	
 	public function getRecurranceUntil();
 	
 	public function getDateTimeObjectRecurranceUntil();
 	
 	public function setRecurranceUntil($recurranceUntil);
-	
-	public function getRecurranceWeeklyInterval();
-	
-	public function setRecurranceWeeklyInterval($recurranceWeeklyInterval);
 	
 }

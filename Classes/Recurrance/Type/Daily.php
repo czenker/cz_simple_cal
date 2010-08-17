@@ -7,6 +7,11 @@
  */
 class Tx_CzSimpleCal_Recurrance_Type_Daily extends Tx_CzSimpleCal_Recurrance_Type_Base {
 	
+	/**
+	 * the main method building the recurrance
+	 * 
+	 * @return void
+	 */
 	protected function doBuild() {
 		
 		$start = clone $this->event->getDateTimeObjectStart();

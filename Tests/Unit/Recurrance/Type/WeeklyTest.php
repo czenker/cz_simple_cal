@@ -1,12 +1,6 @@
 <?php 
-//require_once 'PHPUnit/Framework.php';
-//require_once dirname(__FILE__).'/../../../Classes/Domain/Interface/HasTimespan.php';
-//require_once dirname(__FILE__).'/../../../Classes/Recurrance/Type/Base.php';
-//require_once dirname(__FILE__).'/../../../Classes/Recurrance/Type/Weekly.php';
-//require_once dirname(__FILE__).'/../../../Classes/Utility/DateTime.php';
-//require_once dirname(__FILE__).'/../../../Classes/Recurrance/Timeline/Base.php';
-require_once dirname(__FILE__).'/../../../Mocks/IsRecurringMock.php';
 
+require_once dirname(__FILE__).'/../../../Mocks/IsRecurringMock.php';
 
 /**
  * testing the features of Tx_CzSimpleCal_Recurrance_Type_Daily
@@ -23,7 +17,6 @@ class Tx_CzSimpleCalTests_Recurrance_Type_WeeklyTest extends Tx_Extbase_BaseTest
 		
 		return $typeWeekly->build($event, $timeline);
 	}
-	
 	
 	public function testRecurranceUntil() {
 		$event = Tx_CzSimpleCalTests_Mocks_IsRecurringMock::fromArray(array(
@@ -57,12 +50,12 @@ class Tx_CzSimpleCalTests_Recurrance_Type_WeeklyTest extends Tx_Extbase_BaseTest
 		self::assertEquals(2, count($return->toArray()), 'exactly two event returned.');
 	}
 	
-	public function testRecurranceWeeklyIntervalWeekly() {
+	public function testRecurranceSubtypeWeekly() {
 		$event = Tx_CzSimpleCalTests_Mocks_IsRecurringMock::fromArray(array(
 			'start'            => '2009-02-13 23:31:30GMT',
 			'end'              => '2009-02-13 23:31:30GMT',
 			'recurrance_until' => '2009-02-25 16:00:00GMT',
-			'recurrance_weekly_interval' => 'weekly'
+			'recurrance_subtype' => 'weekly'
 		));
 		
 		$return = $this->buildRecurrance($event);
@@ -78,12 +71,12 @@ class Tx_CzSimpleCalTests_Recurrance_Type_WeeklyTest extends Tx_Extbase_BaseTest
 		), $return->next(), 'times are preserved');
 	}
 	
-	public function testRecurranceWeeklyInterval2Week() {
+	public function testRecurranceSubtype2Week() {
 		$event = Tx_CzSimpleCalTests_Mocks_IsRecurringMock::fromArray(array(
 			'start'            => '2009-02-13 23:31:30GMT',
 			'end'              => '2009-02-13 23:31:30GMT',
 			'recurrance_until' => '2009-03-04 16:00:00GMT',
-			'recurrance_weekly_interval' => '2week'
+			'recurrance_subtype' => '2week'
 		));
 		
 		$return = $this->buildRecurrance($event);
@@ -99,13 +92,13 @@ class Tx_CzSimpleCalTests_Recurrance_Type_WeeklyTest extends Tx_Extbase_BaseTest
 		), $return->next(), 'correct interval used');
 	}
 	
-	public function testRecurranceWeeklyIntervalOddEven() {
+	public function testRecurranceSubtypeOddEven() {
 		
 		$event = Tx_CzSimpleCalTests_Mocks_IsRecurringMock::fromArray(array(
 			'start'            => '2009-02-13 23:31:30GMT',
 			'end'              => '2009-02-13 23:31:30GMT',
 			'recurrance_until' => '2009-03-04 16:00:00GMT',
-			'recurrance_weekly_interval' => 'oddeven'
+			'recurrance_subtype' => 'oddeven'
 		));
 		
 		$return = $this->buildRecurrance($event);
@@ -127,7 +120,7 @@ class Tx_CzSimpleCalTests_Recurrance_Type_WeeklyTest extends Tx_Extbase_BaseTest
 			'start'            => '2009-12-28 23:31:30GMT',
 			'end'              => '2009-12-28 23:31:30GMT',
 			'recurrance_until' => '2010-01-07 16:00:00GMT',
-			'recurrance_weekly_interval' => 'oddeven'
+			'recurrance_subtype' => 'oddeven'
 		));
 		
 		$return = $this->buildRecurrance($event);
@@ -143,12 +136,12 @@ class Tx_CzSimpleCalTests_Recurrance_Type_WeeklyTest extends Tx_Extbase_BaseTest
 		), $return->next(), 'on year switch: correct interval used');
 	}
 	
-	public function testRecurranceWeeklyInterval3Week() {
+	public function testRecurranceSubtype3Week() {
 		$event = Tx_CzSimpleCalTests_Mocks_IsRecurringMock::fromArray(array(
 			'start'            => '2009-02-13 23:31:30GMT',
 			'end'              => '2009-02-13 23:31:30GMT',
 			'recurrance_until' => '2009-03-11 16:00:00GMT',
-			'recurrance_weekly_interval' => '3week'
+			'recurrance_subtype' => '3week'
 		));
 		
 		$return = $this->buildRecurrance($event);
@@ -164,12 +157,12 @@ class Tx_CzSimpleCalTests_Recurrance_Type_WeeklyTest extends Tx_Extbase_BaseTest
 		), $return->next(), 'correct interval used');
 	}
 	
-	public function testRecurranceWeeklyInterval4Week() {
+	public function testRecurranceSubtype4Week() {
 		$event = Tx_CzSimpleCalTests_Mocks_IsRecurringMock::fromArray(array(
 			'start'            => '2009-02-13 23:31:30GMT',
 			'end'              => '2009-02-13 23:31:30GMT',
 			'recurrance_until' => '2009-03-18 16:00:00GMT',
-			'recurrance_weekly_interval' => '4week'
+			'recurrance_subtype' => '4week'
 		));
 		
 		$return = $this->buildRecurrance($event);
@@ -184,7 +177,4 @@ class Tx_CzSimpleCalTests_Recurrance_Type_WeeklyTest extends Tx_Extbase_BaseTest
 			'end'   => strtotime('2009-03-13 23:31:30GMT')
 		), $return->next(), 'correct interval used');
 	}
-	
-	
-}
-	
+}	

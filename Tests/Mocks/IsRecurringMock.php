@@ -8,8 +8,7 @@ class Tx_CzSimpleCalTests_Mocks_IsRecurringMock implements Tx_CzSimpleCal_Domain
 	protected $start = null;
 	protected $end = null;
 	protected $recurranceType = null;
-	protected $recurranceUntil = null;
-	protected $recurranceWeeklyInterval = null;
+	protected $recurranceSubtype = null;
 	
 	/**
 	 * get the start of this domain model
@@ -45,6 +44,14 @@ class Tx_CzSimpleCalTests_Mocks_IsRecurringMock implements Tx_CzSimpleCal_Domain
 		$this->recurranceType = $recurranceType;
 	}
 	
+	public function getRecurranceSubtype() {
+		return $this->recurranceSubtype;
+	}
+	
+	public function setRecurranceSubtype($recurranceSubtype) {
+		$this->recurranceSubtype = $recurranceSubtype;
+	}
+	
 	public function getRecurranceUntil() {
 		return $this->recurranceUntil;
 	}
@@ -55,14 +62,6 @@ class Tx_CzSimpleCalTests_Mocks_IsRecurringMock implements Tx_CzSimpleCal_Domain
 	
 	public function setRecurranceUntil($recurranceUntil) {
 		$this->recurranceUntil = $recurranceUntil;
-	}
-	
-	public function getRecurranceWeeklyInterval() {
-		return $this->recurranceWeeklyInterval;
-	}
-	
-	public function setRecurranceWeeklyInterval($recurranceWeeklyInterval) {
-		$this->recurranceWeeklyInterval = $recurranceWeeklyInterval;
 	}
 	
 	/**

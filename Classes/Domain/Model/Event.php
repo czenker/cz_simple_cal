@@ -40,9 +40,8 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	 */
 	protected static $fieldsRequiringReindexing = array(
 		'recurrance_type',
+		'recurrance_subtype',
 		'recurrance_until',
-		'recurrance_times',
-		'recurrance_weekly_interval',
 		'start_day',
 		'start_time',
 		'end_day',
@@ -118,18 +117,17 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	protected $recurranceType;
 	
 	/**
-	 * recurrance until this date
-	 * @var integer
-	 */
-	protected $recurranceUntil;
-	
-	/**
-	 * recurrance type weekly 
+	 * the subtype of recurrance 
 	 * 
 	 * @var string
 	 */
-	protected $recurranceWeeklyInterval;
+	protected $recurranceSubtype;
 	
+	/**
+	 * recurrance until this date
+	 * @var integer
+	 */
+	protected $recurranceUntil;	
 	
 	/**
 	 * the name of the location this event takes place in
@@ -527,6 +525,14 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 		$this->recurranceType = $recurranceType;
 	}
 	
+	public function getRecurranceSubtype() {
+		return $this->recurranceSubtype; 
+	}
+	
+	public function setRecurranceSubtype($recurranceSubtype) {
+		$this->recurranceSubtype = $recurranceSubtype;
+	}
+	
 	public function getRecurranceUntil() {
 		return $this->recurranceUntil; 
 	}
@@ -546,16 +552,6 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	public function setRecurranceUntil($recurranceUntil) {
 		$this->recurranceUntil = $recurranceUntil;
 	}
-	
-	public function getRecurranceWeeklyInterval() {
-		return $this->recurranceWeeklyInterval;
-	}
-	
-	public function setRecurranceWeeklyInterval($recurranceWeeklyInterval) {
-		$this->recurranceWeeklyInterval = $recurranceWeeklyInterval;
-		return $this;
-	}
-	
 	
 	
 	public function getRecurrances() {

@@ -31,7 +31,7 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_CzSimpleCal_Domain_Model_Exception extends Tx_Extbase_DomainObject_AbstractEntity implements Tx_CzSimpleCal_Domain_Interface_HasTimespan {
+class Tx_CzSimpleCal_Domain_Model_Exception extends Tx_Extbase_DomainObject_AbstractEntity implements Tx_CzSimpleCal_Domain_Interface_IsRecurring {
 	
 	/**
 	 * The title of this exception
@@ -55,17 +55,18 @@ class Tx_CzSimpleCal_Domain_Model_Exception extends Tx_Extbase_DomainObject_Abst
 	protected $recurranceType;
 	
 	/**
+	 * the subtype of recurrance 
+	 * 
+	 * @var string
+	 */
+	protected $recurranceSubtype;
+	
+	/**
 	 * recurrance until this date
 	 * @var integer
 	 */
 	protected $recurranceUntil;
 	
-	/**
-	 * repeat the event this many times
-	 * 
-	 * @var integer
-	 */
-	protected $recurranceTimes;
 
 	/**
 	 * the timezone
@@ -156,6 +157,14 @@ class Tx_CzSimpleCal_Domain_Model_Exception extends Tx_Extbase_DomainObject_Abst
 		$this->recurranceType = $recurranceType;
 	}
 	
+	public function getRecurranceSubtype() {
+		return $this->recurranceSubtype; 
+	}
+	
+	public function setRecurranceSubtype($recurranceSubtype) {
+		$this->recurranceSubtype = $recurranceSubtype;
+	}
+	
 	public function getRecurranceUntil() {
 		return $this->recurranceUntil; 
 	}
@@ -176,13 +185,6 @@ class Tx_CzSimpleCal_Domain_Model_Exception extends Tx_Extbase_DomainObject_Abst
 		$this->recurranceUntil = $recurranceUntil;
 	}
 	
-	public function getRecurranceTimes() {
-		return $this->recurranceTimes; 
-	}
-	
-	public function setRecurranceTimes($recurranceTimes) {
-		$this->recurranceTimes = $recurranceTimes;
-	}
 	
 	/**
 	 * create the DateTimeObjects of start and end

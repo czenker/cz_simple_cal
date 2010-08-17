@@ -7,6 +7,11 @@
  */
 class Tx_CzSimpleCal_Recurrance_Type_None extends Tx_CzSimpleCal_Recurrance_Type_Base {
 	
+	/**
+	 * the main method building the recurrance
+	 * 
+	 * @return void
+	 */
 	protected function doBuild() {
 		$this->timeline->add(array(
 			'start' => $this->event->getDateTimeObjectStart()->getTimestamp(),
