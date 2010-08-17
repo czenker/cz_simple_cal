@@ -27,6 +27,5 @@ abstract class Tx_CzSimpleCal_Recurrance_Type_Base {
 		return $this->timeline;
 	}
 	
-	abstract protected function doBuild();
 	
 }

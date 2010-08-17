@@ -4,10 +4,10 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $TCA['tx_czsimplecal_domain_model_exception'] = array(
 	'ctrl' => $TCA['tx_czsimplecal_domain_model_exception']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'title,day,recurrance_type,recurrance_until'
+		'showRecordFieldList' => 'title,day,recurrance_type,recurrance_weekly_interval,recurrance_until'
 	),
 	'types' => array(
-		'1' => array('showitem' => 'title,day,recurrance_type,recurrance_until')
+		'1' => array('showitem' => 'title,day,recurrance_type,recurrance_weekly_interval,recurrance_until')
 	),
 	'palettes' => array(
 		'1' => array('showitem' => '')
@@ -92,6 +92,36 @@ $TCA['tx_czsimplecal_domain_model_exception'] = array(
 				'eval' => 'date',
 				'checkbox' => '-1',
 				'default' => '-1'
+			)
+		),
+		'recurrance_weekly_interval' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_weekly_interval',
+			'displayCond' => 'FIELD:recurrance_type:=:weekly',
+			'config'  => array(
+				'type' => 'select',
+				'items' => array(
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.weekly',
+						'weekly'
+					),
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.oddeven',
+						'oddeven'
+					),
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.2week',
+						'2week'
+					),
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.3week',
+						'3week'
+					),
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.4week',
+						'4week'
+					),
+				),
 			)
 		),
 //		'recurrance_times' => array(

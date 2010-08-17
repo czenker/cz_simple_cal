@@ -31,7 +31,7 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEntity implements Tx_CzSimpleCal_Domain_Interface_HasTimespan {
+class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEntity implements Tx_CzSimpleCal_Domain_Interface_IsRecurring {
 	
 	/**
 	 * an array of fields that if changed require a reindexing of all the events
@@ -42,6 +42,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 		'recurrance_type',
 		'recurrance_until',
 		'recurrance_times',
+		'recurrance_weekly_interval',
 		'start_day',
 		'start_time',
 		'end_day',
@@ -123,11 +124,12 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 	protected $recurranceUntil;
 	
 	/**
-	 * repeat the event this many times
+	 * recurrance type weekly 
 	 * 
-	 * @var integer
+	 * @var string
 	 */
-	protected $recurranceTimes;
+	protected $recurranceWeeklyInterval;
+	
 	
 	/**
 	 * the name of the location this event takes place in
@@ -545,12 +547,13 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_Extbase_DomainObject_Abstract
 		$this->recurranceUntil = $recurranceUntil;
 	}
 	
-	public function getRecurranceTimes() {
-		return $this->recurranceTimes; 
+	public function getRecurranceWeeklyInterval() {
+		return $this->recurranceWeeklyInterval;
 	}
 	
-	public function setRecurranceTimes($recurranceTimes) {
-		$this->recurranceTimes = $recurranceTimes;
+	public function setRecurranceWeeklyInterval($recurranceWeeklyInterval) {
+		$this->recurranceWeeklyInterval = $recurranceWeeklyInterval;
+		return $this;
 	}
 	
 	

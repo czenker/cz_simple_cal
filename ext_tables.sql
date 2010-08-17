@@ -18,6 +18,8 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	teaser tinytext DEFAULT '',
 	description tinytext DEFAULT '',
 	recurrance_type varchar(30) DEFAULT 'none',
+	recurrance_weekly_interval varchar(30) DEFAULT '',
+	recurrance_monthly_interval varchar(30) DEFAULT '',
 	recurrance_until int(11) DEFAULT -1,
 	recurrance_times int(11) DEFAULT 0,
 	location_name tinytext DEFAULT '',
@@ -77,6 +79,8 @@ CREATE TABLE tx_czsimplecal_domain_model_exception (
 	recurrance_type varchar(30) DEFAULT 'none',
 	recurrance_until int(11) DEFAULT -1,
 	recurrance_times int(11) DEFAULT 0,
+	recurrance_weekly_interval varchar(30) DEFAULT '',
+	recurrance_monthly_interval varchar(30) DEFAULT '',
 
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
