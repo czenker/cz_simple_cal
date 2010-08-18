@@ -15,7 +15,7 @@ plugin.tx_czsimplecal {
 					startDate  = today
 					endDate    = today +1 year
 					
-					maxEvents = 9999
+					maxEvents = 10
 					orderBy   = start
 					order     = ASC
 					filterCategories = 
