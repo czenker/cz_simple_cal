@@ -1,7 +1,0 @@
-tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-author www <www@735d13b6-9817-0410-8766-e36946ffe9aa> 1280505531 +0000
-committer www <www@735d13b6-9817-0410-8766-e36946ffe9aa> 1280505531 +0000
-
-Initializing project cz_simple_cal (4/4)
-
-git-svn-id: https://svn.typo3.org/TYPO3v4/Extensions/cz_simple_cal/trunk@36204 735d13b6-9817-0410-8766-e36946ffe9aa

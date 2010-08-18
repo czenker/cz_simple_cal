@@ -3,6 +3,20 @@ plugin.tx_czsimplecal {
 	#@description: the pid the records are stored in
 	persistence.storagePid = {$plugin.tx_czsimplecal.pidList}
 	
+	persistence.classes {
+		Tx_CzSimpleCal_Domain_Model_Organizer {
+	        mapping {
+	            tableName = tt_address
+	        }
+	    }
+	    
+	    Tx_CzSimpleCal_Domain_Model_Location {
+	        mapping {
+	            tableName = tt_address
+	        }
+	    }
+	}
+	
 	settings {
 	
 		# first one is the default action
@@ -13,9 +27,9 @@ plugin.tx_czsimplecal {
 				list {
 					defaultPid = {$plugin.tx_czsimplecal.pids.default}
 					startDate  = today
-					endDate    = today +1 year
+					endDate    = today +1 week
 					
-					maxEvents = 10
+					maxEvents = 9999
 					orderBy   = start
 					order     = ASC
 					filterCategories = 

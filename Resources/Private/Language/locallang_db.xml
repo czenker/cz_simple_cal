@@ -35,7 +35,9 @@
 			<label index="tx_czsimplecal_domain_model_event.recurrance_until">Repeat until</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_times">Repeat times</label>
 			<label index="tx_czsimplecal_domain_model_event.location_name">Location Name</label>
+			<label index="tx_czsimplecal_domain_model_event.location">Location</label>
 			<label index="tx_czsimplecal_domain_model_event.organizer_name">Organizer Name</label>
+			<label index="tx_czsimplecal_domain_model_event.organizer">Organizer</label>
 			<label index="tx_czsimplecal_domain_model_event.category">Category</label>
 			<label index="tx_czsimplecal_domain_model_event.exceptions">Exceptions</label>
 			
@@ -46,26 +48,6 @@
 			
 			<label index="tx_czsimplecal_domain_model_exception">Exception</label>
 			<label index="tx_czsimplecal_domain_model_exception.title">Title</label>
-			<label index="tx_czsimplecal_domain_model_exception.day">Exception Day</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_type">Recurrance</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_type.none">(none)</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_type.daily">daily</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_type.weekly">weekly</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_type.monthly">monthly</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_weekly_interval">weekly interval</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.weekly">every week</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.oddeven">every two weeks (odd/even-aware)</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.2week">every two weeks</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.3week">every three weeks</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_weekly_interval.4week">every four weeks</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_monthly_interval">monthly interval</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_monthly_interval.auto">(auto)</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_monthly_interval.byday">by day of the month</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_monthly_interval.first">first [weekday] of month</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_monthly_interval.second">second [weekday] of month</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_monthly_interval.third">third [weekday] of month</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_monthly_interval.last">last [weekday] of month</label>
-			<label index="tx_czsimplecal_domain_model_exception.recurrance_monthly_interval.penultimate">penultimate [weekday] of month</label>
 			
 			<label index="tx_czsimplecal_domain_model_exception.recurrance_until">Repeat until</label>
 			<label index="tx_czsimplecal_domain_model_exception.recurrance_times">Repeat times</label>
@@ -78,6 +60,9 @@
 			
 			<label index="tx_czsimplecal_domain_model_category">Category</label>
 			<label index="tx_czsimplecal_domain_model_category.title">Title</label>
+			
+			<label index="tt_address.is_organizer">is calendar organizer</label>
+			<label index="tt_address.is_location">is calendar location</label>
 		</languageKey>
 	</data>
 </T3locallang>

@@ -31,7 +31,7 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_Extbase_DomainObject_AbstractEntity {
+abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
 	 * the day that event starts

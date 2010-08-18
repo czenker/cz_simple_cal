@@ -84,10 +84,24 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	protected $locationName;
 	
 	/**
+	 * the organizer of the event
+	 * 
+	 * @var Tx_CzSimpleCal_Domain_Model_Location
+	 */
+	protected $location;
+	
+	/**
 	 * the name of the institution or person the event is organized by
 	 * @var string
 	 */
 	protected $organizerName;
+	
+	/**
+	 * the organizer of the event
+	 * 
+	 * @var Tx_CzSimpleCal_Domain_Model_Organizer
+	 */
+	protected $organizer;
 	
 	/**
 	 * category
@@ -317,6 +331,46 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 */
 	public function isEnabled() {
 		return !$this->hidden && !$this->deleted;
+	}
+	
+	/**
+	 * get the organizer of the event
+	 * 
+	 * @return Tx_CzSimpleCal_Domain_Model_Organizer
+	 */
+	public function getOrganizer() {
+		return $this->organizer;
+	}
+	
+	/**
+	 * setter for organizer
+	 * 
+	 * @param Tx_CzSimpleCal_Domain_Model_Organizer $organizer
+	 * @return Tx_CzSimpleCal_Domain_Model_Event
+	 */
+	public function setOrganizer($organizer) {
+		$this->organizer = $organizer;
+		return $this;
+	}
+	
+	/**
+	 * getter for location
+	 *
+	 * @return Tx_CzSimpleCal_Domain_Model_Location
+	 */
+	public function getLocation() {
+		return $this->location;
+	}
+	
+	/**
+	 * setter for location
+	 * 
+	 * @param Tx_CzSimpleCal_Domain_Model_Location $location
+	 * @return Tx_CzSimpleCal_Domain_Model_Event
+	 */
+	public function setLocation($location) {
+		$this->location = $location;
+		return $this;
 	}
 	
 	/**

@@ -21,7 +21,9 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	recurrance_subtype varchar(30) DEFAULT '',
 	recurrance_until int(11) DEFAULT -1,
 	location_name tinytext DEFAULT '',
+	location int(11) DEFAULT 0,
 	organizer_name tinytext DEFAULT '',
+	organizer int(11) DEFAULT 0,
 	category int(11) unsigned DEFAULT '0' NOT NULL,
 	exceptions int(11) unsigned DEFAULT '0' NOT NULL,
 
@@ -201,6 +203,11 @@ CREATE TABLE tx_czsimplecal_event_category_mm (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
+);
+
+CREATE TABLE tt_address (
+	tx_cal_controller_isorganizer tinyint(4) DEFAULT '0' NOT NULL,
+	tx_cal_controller_islocation tinyint(4) DEFAULT '0' NOT NULL,
 );
 
 
