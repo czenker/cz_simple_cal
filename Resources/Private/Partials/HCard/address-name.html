@@ -1,5 +1,10 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 <f:if condition="{address.title}"><span class="honorific-prefix">{address.title}</span></f:if>
 <f:if condition="{address.firstName}"><span class="given-name">{address.firstName}</span></f:if>
+<f:if condition="{cal:condition.oneNotEmpty(values: {0: address.title, 1: address.firstName})}"><f:then></f:then>
+<f:else>
+	<f:translate key="{f:if(condition: '{cal:condition.compare(value1: address.gender, value2: \'m\')}', then:'title.gender.male', else:'title.gender.female')}" />
+</f:else>
+</f:if>
 <f:if condition="{address.middleName}"><span class="additional-name">{address.middleName}</span></f:if>
 <f:if condition="{address.lastName}"><span class="family-name">{address.lastName}</span></f:if>

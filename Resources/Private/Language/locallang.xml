@@ -38,6 +38,8 @@
 			<label index="mobile">Mobile</label>
 			<label index="email">Email</label>
 			<label index="www">WWW</label>
+			<label index="title.gender.male">Mr.</label>
+			<label index="title.gender.female">Mrs.</label>
 			
 			
 			
