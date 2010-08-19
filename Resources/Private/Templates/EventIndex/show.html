@@ -2,9 +2,24 @@
 <cal:useMicroformat format="hcalendar" />
 <div class="vevent vcalendar-event">
 
-<h2 class="summary">{event.title}</h2>
+<h2><f:render partial="EventIndex/show/startdate.html" arguments="{settings: settings, event: event}"/> <span class="summary">{event.title}</span></h2>
+<f:render partial="EventIndex/show/enddate.html" arguments="{settings: settings, event: event}"/>
 <div class="description"><f:format.html>{event.description}</f:format.html></div>
-<f:debug>{event.event.organizer}</f:debug>
+<f:if condition="{event.location}">
+	<f:then><p><f:translate key="location" />: <f:render partial="Location/location-for-event-inline.html" arguments="{settings: settings, location: event.location}" /></p></f:then>
+	<f:else><f:if condition="{event.locationName}">
+		<p><f:translate key="location" />: {event.locationName}</p>
+	</f:if></f:else>
+</f:if>
+<f:if condition="{event.location}{event.locationName}">
+	
+</f:if>
+<f:if condition="{event.organizer}">
+	<f:then><p><f:translate key="organizer" />: <f:render partial="Organizer/organizer-for-event-inline.html" arguments="{settings: settings, organizer: event.organizer}" /></p></f:then>
+	<f:else><f:if condition="{event.organizerName}">
+		<p><f:translate key="organizer" />: {event.organizerName}</p>
+	</f:if></f:else>
+</f:if>
 
 
 

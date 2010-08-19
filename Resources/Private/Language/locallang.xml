@@ -23,8 +23,21 @@
 			
 			<label index="format.monthAndYear">%B %Y</label>
 			<label index="format.dayWrapper">%a, %B %e, %Y</label>
+			<label index="format.show.allday">%B %e, %Y</label>
+			<label index="format.show.dayTime">%B %e, %Y %H:%M</label>
+			<label index="format.show.time">%H:%M</label>
+			
+			<label index="time.end">end at </label>
 			
 			<label index="numEvents">[0]No events|[1] 1 event|[2,+Inf] ###number### events</label>
+			
+			<label index="organizer">Organizer</label>
+			<label index="location">Location</label>
+			<label index="phone">Phone</label>
+			<label index="fax">Fax</label>
+			<label index="mobile">Mobile</label>
+			<label index="email">Email</label>
+			<label index="www">WWW</label>
 			
 			
 			

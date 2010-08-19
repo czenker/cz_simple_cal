@@ -1,0 +1,5 @@
+{namespace cal=Tx_CzSimpleCal_ViewHelpers}
+<f:if condition="{address.title}"><span class="honorific-prefix">{address.title}</span></f:if>
+<f:if condition="{address.firstName}"><span class="given-name">{address.firstName}</span></f:if>
+<f:if condition="{address.middleName}"><span class="additional-name">{address.middleName}</span></f:if>
+<f:if condition="{address.lastName}"><span class="family-name">{address.lastName}</span></f:if>

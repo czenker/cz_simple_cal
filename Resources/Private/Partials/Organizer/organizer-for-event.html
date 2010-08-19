@@ -1,0 +1,15 @@
+{namespace cal=Tx_CzSimpleCal_ViewHelpers}
+<cal:useMicroformat format="hcard" />
+<div class="vcard">
+<f:if condition="{organizer.company}">
+	<f:then>
+		<h5 class="fn org">{organizer.company}</h5>		
+		<f:if condition="{organizer.title}{organizer.firstName}{organizer.middleName}{organizer.lastName}">
+			<h6 class="n"><f:render partial="HCard/address-name.html" arguments="{settings: settings, address: organizer}" /></h6>
+		</f:if>
+	</f:then>
+	<f:else><h5 class="fn n"><f:render partial="HCard/address-name.html" arguments="{settings: settings, address: organizer}" /></h5></f:else>
+</f:if>
+<f:render partial="Organizer/organizer-address.html" arguments="{settings: settings, organizer: organizer}" />
+<f:render partial="Organizer/organizer-electronic.html" arguments="{settings: settings, organizer: organizer}" />
+</div>

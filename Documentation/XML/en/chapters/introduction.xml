@@ -32,6 +32,7 @@
 			<listitem><simpara>Exceptions, Exception Groups</simpara></listitem>
 			<listitem><simpara>Categories</simpara></listitem>
 			<listitem><simpara>adding actions via Typoscript</simpara></listitem>
+			<listitem><simpara>templates using the hCalendar and hCard microformats</simpara></listitem>
 			<listitem><simpara>...and all the goodness that is <productname>Extbase</productname> and <productname>Fluid</productname>.</simpara></listitem>
 		</itemizedlist>
 	</section>

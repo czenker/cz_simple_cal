@@ -27,71 +27,28 @@
  * @package Fluid
  * @subpackage ViewHelpers
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @see Tx_CzSimpleCal_ViewHelpers_Array_JoinViewHelper
  * @api
  * @scope prototype
  *
  */
-class Tx_CzSimpleCal_ViewHelpers_Array_JoinViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_CzSimpleCal_ViewHelpers_Array_JoinItemViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * @param array $items
-	 * @param string $by
-	 * @param boolean $removeEmpty
-	 * @return string Rendered result
+	 * @return void
 	 */
-	public function render($items=null, $by=', ', $removeEmpty = false) {
-		if(is_null($items)) {
-			$items = $this->getItems();
-		}
-		
-		if($removeEmpty) {
-			$items = $this->removeEmpty($items);
-		}
-		
-		return implode($by, $items);
-	}
-	
-	/**
-	 * get items from the nodes
-	 * 
-	 * @return array
-	 */
-	protected function getItems() {
-		$viewHelperName = get_class($this);
+	public function render() {
+		$viewHelperName = str_replace('_JoinItemViewHelper', '_JoinViewHelper', get_class($this));
 		$key = 'items';
-		
-		if($this->viewHelperVariableContainer->exists($viewHelperName, $key)) {
-			$temp = $this->viewHelperVariableContainer->get($viewHelperName, $key);
-		}
-		$this->viewHelperVariableContainer->addOrUpdate($viewHelperName, $key, array());
-		
-		$this->renderChildren();
-		
-		$return = $this->viewHelperVariableContainer->get($viewHelperName, $key);
-		
-		$this->viewHelperVariableContainer->remove($viewHelperName, $key);
-		if(isset($temp)) {
-			$this->viewHelperVariableContainer->add($viewHelperName, $key, $temp);
+		if(!$this->viewHelperVariableContainer->exists($viewHelperName, $key)) {
+			throw LogicException(sprintf('%s must be used as child of %s.', get_class($this), $viewHelperName));
 		}
 		
-		return $return;
+		$values = $this->viewHelperVariableContainer->get($viewHelperName, $key);
+		$values[] = $this->renderChildren();
+		
+		$this->viewHelperVariableContainer->addOrUpdate($viewHelperName, $key, $values);
 	}
-	
-	/**
-	 * remove empty values from array
-	 * 
-	 * @param array $items
-	 * @return array
-	 */
-	protected function removeEmpty($items) {
-		foreach($items as $key=>$value) {
-			if(empty($value)) {
-				unset($items[$key]);
-			}
-		}
-		return $items;
-	}
-
 }
 
 ?>

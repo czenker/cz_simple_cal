@@ -1,0 +1,33 @@
+{namespace cal=Tx_CzSimpleCal_ViewHelpers}
+<cal:useMicroformat format="hcard" />
+<span class="vcard">
+<f:if condition="{location.company}">
+	<f:then><strong class="fn org">{location.company}</strong></f:then>
+	<f:else>
+		<cal:array.join by=", " removeEmpty="1">
+			<f:if condition="{location.address}">
+				<cal:array.joinItem><span class="street-address">{location.address}</span></cal:array.joinItem>
+			</f:if>
+			<f:if condition="{cal:condition.oneNotEmpty(values: {0: location.zip, 1:location.city})}" >
+				<cal:array.joinItem>
+					<f:if condition="{location.zip}"><span class="postal-code">{location.zip}</span></f:if>
+					<f:if condition="{location.city}"><span class="locality">{location.city}</span></f:if>
+				</cal:array.joinItem>
+			</f:if>
+		</cal:array.join>
+	</f:else>
+</f:if>
+<f:if condition="{cal:condition.oneNotEmpty(values: {0: location.email, 1:location.www, 2:location.phone, 3:location.mobile})}" >
+(<cal:array.join by=", " removeEmpty="1">
+	<f:if condition="{cal:condition.oneNotEmpty(values: {0: location.phone, 1:location.mobile})}">
+		<cal:array.joinItem><f:if condition="{location.mobile}" then="{location.mobile}" else="{location.phone}" /></cal:array.joinItem>
+	</f:if>
+	<f:if condition="{location.email}">
+		<cal:array.joinItem><f:link.email email="{location.email}" /></cal:array.joinItem>
+	</f:if>
+	<f:if condition="{location.www}">
+		<cal:array.joinItem><f:link.external uri="{location.www}" /></cal:array.joinItem>
+	</f:if>
+</cal:array.join>)
+</f:if>
+</span>
