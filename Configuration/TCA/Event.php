@@ -203,7 +203,7 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 			'displayCond' => 'FIELD:recurrance_type:!IN:0,,none,daily',
 			'config'  => array(
 				'type' => 'select',
-				'itemsProcFunc' => 'EXT:cz_simple_cal/Legacy/class.tx_czsimplecal_dynFlexform.php:tx_czsimplecal_dynFlexform->getRecurranceSubtype'
+				'itemsProcFunc' => 'EXT:cz_simple_cal/Legacy/class.tx_czsimplecal_dynEventForm.php:tx_czsimplecal_dynEventForm->getRecurranceSubtype'
 			)
 		),
 		'recurrance_until' => array(

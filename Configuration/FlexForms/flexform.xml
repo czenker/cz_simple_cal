@@ -13,32 +13,8 @@
               <label>LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView</label>
               <config>
                 <type>select</type>
-                <items>
-					<numIndex index="1" type="array">
-						<numIndex index="0">LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.list</numIndex>
-						<numIndex index="1">list</numIndex>
-					</numIndex>
-					<numIndex index="2" type="array">
-						<numIndex index="0">LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.show</numIndex>
-						<numIndex index="1">show</numIndex>
-					</numIndex>
-					<numIndex index="3" type="array">
-						<numIndex index="0">LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.day</numIndex>
-						<numIndex index="1">day</numIndex>
-					</numIndex>
-					<numIndex index="4" type="array">
-						<numIndex index="0">LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.week</numIndex>
-						<numIndex index="1">week</numIndex>
-					</numIndex>
-					<numIndex index="5" type="array">
-						<numIndex index="0">LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.month</numIndex>
-						<numIndex index="1">month</numIndex>
-					</numIndex>
-					<numIndex index="6" type="array">
-						<numIndex index="0">LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.minimonth</numIndex>
-						<numIndex index="1">minimonth</numIndex>
-					</numIndex>
-                </items>
+                <items></items>
+                <itemsProcFunc>EXT:cz_simple_cal/Legacy/class.tx_czsimplecal_dynFlexform.php:tx_czsimplecal_dynFlexform->getAllowedActions</itemsProcFunc>
                 <minitems>0</minitems>
 				<maxitems>500</maxitems>
 				<size>6</size>

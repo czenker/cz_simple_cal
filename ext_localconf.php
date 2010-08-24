@@ -17,4 +17,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['Tx_CzSimpleCal_
     'title'            => 'Index all events',
     'description'      => 'Indexing all events of czSimpleCal'
 );
+
+// add default pageTSConfig
+t3lib_extMgm::addPageTSConfig(
+	file_get_contents(
+		t3lib_extMgm::extPath('cz_simple_cal').'Configuration/TSconfig/default.txt'
+	)
+);
 ?>
