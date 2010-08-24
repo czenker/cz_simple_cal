@@ -86,6 +86,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	/**
 	 * the organizer of the event
 	 * 
+	 * @lazy
 	 * @var Tx_CzSimpleCal_Domain_Model_Location
 	 */
 	protected $location;
@@ -99,15 +100,16 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	/**
 	 * the organizer of the event
 	 * 
+	 * @lazy
 	 * @var Tx_CzSimpleCal_Domain_Model_Organizer
 	 */
 	protected $organizer;
 	
 	/**
-	 * category
+	 * categories
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Category>
 	 */
-	protected $category;
+	protected $categories;
 	
 	/**
 	 * exceptions for this event
@@ -232,20 +234,33 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	/**
 	 * Setter for category
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Category> $category category
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Category> $categories categories
 	 * @return void
 	 */
-	public function setCategory(Tx_Extbase_Persistence_ObjectStorage $category) {
-		$this->category = $category;
+	public function setCategories(Tx_Extbase_Persistence_ObjectStorage $categories) {
+		$this->categories = $categories;
 	}
 
 	/**
 	 * Getter for category
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Category> category
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Category> categories
+	 */
+	public function getCategories() {
+		return $this->categories;
+	}
+	
+	/**
+	 * getter for the first category
+	 *
+	 * @return type
 	 */
 	public function getCategory() {
-		return $this->category;
+		if(!$this->categories) {
+			return null;
+		}
+		$this->categories->rewind();
+		return $this->categories->current();
 	}
 	
 	/**
@@ -255,7 +270,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * @return void
 	 */
 	public function addCategory(Tx_CzSimpleCal_Domain_Model_Category $category) {
-		$this->category->attach($category);
+		$this->categories->attach($category);
 	}
 	
 	/**
@@ -265,7 +280,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * @return void
 	 */
 	public function removeCategory(Tx_CzSimpleCal_Domain_Model_Category $category) {
-		$this->category->detach($category);
+		$this->categories->detach($category);
 	}
 	
 	/**

@@ -65,6 +65,25 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	}
 	
 	protected function initializeView($view) {
+		/* set the template and partial path
+		 * 
+		 * this was added due to a bug. If the default action (dispatcher) was called, it created
+		 * Tx_CzSimpleCal_View_EventIndex_Dispatch but did not set the templateRoot (only the
+		 * discarded Template view had it). So we do it here.
+		 */
+		if($view instanceof Tx_Fluid_View_TemplateViewInterface) {
+			$extbaseFrameworkConfiguration = Tx_Extbase_Dispatcher::getExtbaseFrameworkConfiguration();
+			if (isset($extbaseFrameworkConfiguration['view']['templateRootPath']) && strlen($extbaseFrameworkConfiguration['view']['templateRootPath']) > 0) {
+				$view->setTemplateRootPath(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['templateRootPath']));
+			}
+			if (isset($extbaseFrameworkConfiguration['view']['layoutRootPath']) && strlen($extbaseFrameworkConfiguration['view']['layoutRootPath']) > 0) {
+				$view->setLayoutRootPath(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['layoutRootPath']));
+			}
+			if (isset($extbaseFrameworkConfiguration['view']['partialRootPath']) && strlen($extbaseFrameworkConfiguration['view']['partialRootPath']) > 0) {
+				$view->setPartialRootPath(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['partialRootPath']));
+			}
+		}
+		
 		$view->assign('actionSettings', $this->actionSettings);
 	}
 	
@@ -139,7 +158,6 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	/**
 	 * get the start date of events that should be fetched
 	 *
-	 * @todo getDate support
 	 * @return DateTime
 	 */
 	protected function getStartDate() {

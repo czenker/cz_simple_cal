@@ -243,7 +243,7 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 				'type' => 'select',
 				'foreign_table' => 'tx_czsimplecal_domain_model_category',
 				'MM' => 'tx_czsimplecal_event_category_mm',
-				'size' => 2,
+				'size' => 10,
 				'maxSize' => 20,
 				'maxitems' => 9999
 			)

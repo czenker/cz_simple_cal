@@ -1,13 +1,13 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 <div class="vevent" id="{event.hash}">
-	<f:if condition="{event.isAlldayEvent}">
+	<f:if condition="{event.isAlldayEvent}"><f:then></f:then>
 	<f:else>
 		<div class="dtstart" title="{cal:format.dateTime(format: '%Y-%m-%dT%H:%M%z', timestamp: event.start)}">
 			<cal:format.dateTime format="%H:%M" timestamp="{event.start}"/>
 		</div>
 	</f:else>
 	</f:if>
-	<h5 class="summary"><f:link.action action="show" arguments="{event: event}" class="url">{event.title}</f:link.action></h5>
+	<h5 class="summary"><cal:link.action action="show" arguments="{event: event}" class="url">{event.title}</cal:link.action></h5>
 	<f:if condition="{event.teaser}" >
 	<f:then>
 		<div class="description">{event.teaser}</div>

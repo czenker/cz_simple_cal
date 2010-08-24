@@ -20,13 +20,13 @@
 <f:if condition="{cal:condition.oneNotEmpty(values: {0: location.email, 1:location.www, 2:location.phone, 3:location.mobile})}" >
 (<cal:array.join by=", " removeEmpty="1">
 	<f:if condition="{cal:condition.oneNotEmpty(values: {0: location.phone, 1:location.mobile})}">
-		<cal:array.joinItem><f:if condition="{location.mobile}" then="{location.mobile}" else="{location.phone}" /></cal:array.joinItem>
+		<cal:array.joinItem><span class="tel"><f:if condition="{location.mobile}" then="{location.mobile}" else="{location.phone}" /></span></cal:array.joinItem>
 	</f:if>
 	<f:if condition="{location.email}">
 		<cal:array.joinItem><f:link.email email="{location.email}" /></cal:array.joinItem>
 	</f:if>
 	<f:if condition="{location.www}">
-		<cal:array.joinItem><f:link.external uri="{location.www}" /></cal:array.joinItem>
+		<cal:array.joinItem><span class="url"><f:link.external uri="{location.www}" /></span></cal:array.joinItem>
 	</f:if>
 </cal:array.join>)
 </f:if>

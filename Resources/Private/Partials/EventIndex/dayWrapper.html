@@ -1,2 +1,2 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
-<h4 class="underline"><cal:format.dateTime format="{f:translate(key:'format.dayWrapper')}" timestamp="{event.start}"/></h4>
+<h4 id="{cal:format.dateTime(timestamp: event.start, format: 'day-%Y-%m-%d')}"><cal:format.dateTime format="{f:translate(key:'format.dayWrapper')}" timestamp="{event.start}"/></h4>

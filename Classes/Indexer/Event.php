@@ -28,6 +28,7 @@ class Tx_CzSimpleCal_Indexer_Event {
 	public function __construct() {
 		t3lib_div::makeInstance('Tx_Extbase_Dispatcher');
 		
+		
 		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
 		$this->eventIndexRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository');
 	}
