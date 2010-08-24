@@ -47,10 +47,10 @@ plugin.tx_czsimplecal {
 					
 					useAction = list
 					
-					startDate  = today
-					endDate    = today +1 month
+					startDate  = now
+					endDate    = now +1 month
 									
-					maxEvents = 3
+					maxEvents = 1
 					orderBy   = start  
 					order     = ASC
 				}

@@ -7,14 +7,14 @@ options.cz_simple_cal_pi1.flexform {
 		show {
 			label = LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.show
 		}
+		next {
+			label = LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.next
+		}
 		day {
 			label = LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.day
 		}
 		week {
 			label = LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.week
-		}
-		month {
-			label = LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.month
 		}
 		minimonth {
 			label = LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.useView.minimonth

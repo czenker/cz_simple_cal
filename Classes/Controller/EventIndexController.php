@@ -212,8 +212,8 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 		
 		// merge the settings from the flexform
 		if(isset($this->settings['override']['action'])) {
-			// this will override values if they are not empty and they already exist (so no adding of keys)
-			$this->actionSettings = t3lib_div::array_merge_recursive_overrule($this->actionSettings, $this->settings['override']['action'], true, false);
+			// this will override values if they are not empty
+			$this->actionSettings = t3lib_div::array_merge_recursive_overrule($this->actionSettings, $this->settings['override']['action'], false, false);
 		}
 		
 		// merge settings from getPost-values

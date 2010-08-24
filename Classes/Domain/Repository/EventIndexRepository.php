@@ -48,7 +48,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 	 */
 	public function findAllWithSettings($settings = array()) {
 		$settings = $this->cleanSettings($settings);
-		$query = $this->setupSettings($this->cleanSettings($settings));
+		$query = $this->setupSettings($settings);
 		
 		return $query->execute();
 	}
@@ -147,13 +147,18 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		}
 		
 		// filterCategories
-		if(isset($settings['filterCategories'])) {
-			$temp_constraint = $query->in('event.category', $settings['filterCategories']);
-			
-			if(isset($constraint)) {
-				$constraint = $query->logicalAnd($constraint, $temp_constraint);
-			} else {
-				$constraint = $temp_constraint;
+		if(isset($settings['filter'])) {
+			foreach($settings['filter'] as $name => $filter) {
+				if(is_array($filter)) {
+					$temp_constraint = $query->in('event.'.$name.'.uid', $filter);
+					
+					if(isset($constraint)) {
+						$constraint = $query->logicalAnd($constraint, $temp_constraint);
+					} else {
+						$constraint = $temp_constraint;
+					}
+				}
+				// @todo: support for atomic values
 			}
 		}
 		
@@ -221,10 +226,6 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 			'filter' => FILTER_CALLBACK,
 			'options' => array(self, 'sanitizeString'),
 		),
-		'filterCategories' => array(
-			'filter' => FILTER_UNSAFE_RAW, // this is treated seperately
-			'flags' => FILTER_FORCE_ARRAY
-		),
 		'groupBy'   => array(
 			'filter' => FILTER_CALLBACK,
 			'options' => array(self, 'sanitizeString'),
@@ -235,6 +236,10 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		'excludeOverlongEvents' => array(
 			'filter' => FILTER_VALIDATE_BOOLEAN,
 		),
+		'filter' => array(
+			'filter' => FILTER_UNSAFE_RAW, // this is treated seperately
+			'flags' => FILTER_FORCE_ARRAY
+		),
 	);
 	
 	protected function cleanSettings($settings) {
@@ -243,9 +248,11 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		$settings = array_intersect_key($settings, self::$filterSettings);
 		
 		$settings = filter_var_array($settings, self::$filterSettings);
-		$settings['filterCategories'] = self::sanitizeFilterCategories(
-			isset($settings['filterCategories'][1]) ? $settings['filterCategories'] : $settings['filterCategories'][0]
-		);
+		
+		
+		if(isset($settings['filter'])) {
+			$settings['filter'] = $this->setupFilters($settings['filter']);
+		}
 		
 		return $settings;
 	}
@@ -276,18 +283,47 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		}
 	}
 	
-	protected static function sanitizeFilterCategories($array) {
-		if(!is_array($array)) {
-			$array = t3lib_div::trimExplode(',', $array, true);
+	protected static function sanitizeFilter($filter) {
+		if(!is_array($filter)) {
+			$filter = t3lib_div::trimExplode(',', $filter, true);
 		}
 		$out = array();
 		
-		foreach($array as $value) {
+		foreach($filter as $value) {
 			if(is_numeric($value)) {
 				$out[] = intval($value);
 			}
 		}
 		return empty($out) ? null : $out;
+	}
+	
+	protected function setupFilters($filters, $prefix = '') {
+		if(!is_array($filters)) {
+			return null;
+		}
+		
+		$return = array();
+		
+		foreach($filters as $name => $filter) {
+			if($this->isFilter($filter)) {
+				$cleanedFilter = self::sanitizeFilter($filter);
+				if(!is_null($cleanedFilter)) {
+					$return[$prefix.$name] = $cleanedFilter;
+				}
+			} else {
+				if(is_array($filter)) {
+					$return = array_merge(
+						$return, 
+						$this->setupFilters($filter, $prefix.$name.'.')
+					);
+				}
+			}
+		}
+		return $return;
+	}
+	
+	protected function isFilter($filter) {
+		return !is_array($filter);
 	}
 	
 	

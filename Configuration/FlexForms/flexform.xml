@@ -24,7 +24,7 @@
             </TCEforms>
           </settings.override.allowedActions>
           
-          <settings.override.action.filterCategories>
+          <settings.override.action.filter.categories>
             <TCEforms>
               <label>LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_flex.xml:field.action.filterCategories</label>
               <config>
@@ -37,7 +37,7 @@
 				<itemListStyle>min-width:150px</itemListStyle>
               </config>
             </TCEforms>
-          </settings.override.action.filterCategories>
+          </settings.override.action.filter.categories>
           
               
           <settings.override.action.startDate>

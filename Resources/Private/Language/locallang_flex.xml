@@ -13,8 +13,8 @@
 			<label index="field.useView.show">Show single event (SINGLE)</label>
 			<label index="field.useView.day">day view (DAY)</label>
 			<label index="field.useView.week">week view (WEEK)</label>
-			<label index="field.useView.month">month view (MONTH)</label>
-			<label index="field.useView.minimonth">minimonth view (MONTH)</label>
+			<label index="field.useView.next">next event view (NEXT)</label>
+			<label index="field.useView.minimonth">minimonth view (MINIMONTH)</label>
 			
 			<label index="field.action.startDate">Start Date</label>
 			<label index="field.action.startDate.default">(use default)</label>
