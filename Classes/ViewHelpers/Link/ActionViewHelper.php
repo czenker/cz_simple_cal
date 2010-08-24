@@ -41,7 +41,7 @@ class Tx_CzSimpleCal_ViewHelpers_Link_ActionViewHelper extends Tx_Fluid_ViewHelp
 	 */
 	public function render($action = NULL, array $arguments = array(), $controller = NULL, $extensionName = NULL, $pluginName = NULL, $pageUid = NULL, $pageType = 0, $noCache = FALSE, $noCacheHash = FALSE, $section = '', $format = '', $linkAccessRestrictedPages = FALSE, array $additionalParams = array(), $absolute = FALSE, $addQueryString = FALSE, array $argumentsToBeExcludedFromQueryString = array()) {
 		if(is_null($pageUid)) {
-			$pageUid = $this->getPageUid();
+			$pageUid = $this->getPageUid($controller, $action);
 		}
 		return parent::render($action,$arguments, $controller, $extensionName, $pluginName, $pageUid, $pageType, $noCache, $noCacheHash, $section, $format, $linkAccessRestrictedPages,$additionalParams, $absolute, $addQueryString,$argumentsToBeExcludedFromQueryString);
 	}
@@ -66,8 +66,8 @@ class Tx_CzSimpleCal_ViewHelpers_Link_ActionViewHelper extends Tx_Fluid_ViewHelp
 		}
 		
 		$settings = $this->templateVariableContainer->get('settings');
-		if(isset($settings[$controller][$action]['defaultPid'])) {
-			return intval($settings[$controller][$action]['defaultPid']);
+		if(isset($settings[$controller]['actions'][$action]['defaultPid'])) {
+			return intval($settings[$controller]['actions'][$action]['defaultPid']);
 		}
 	}
 }
