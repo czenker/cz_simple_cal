@@ -57,14 +57,14 @@
 			
 			<step>
 				<title>Add the action to the allowed actions</title>
-				<para>Just add the name of the action to the <code>allowedViews</code> in the root of the extensions settings.</para>
+				<para>Just add the name of the action to the <code>allowedActions</code> in the root of the extensions settings.</para>
 			</step>
 			
 			<step>
 				<title>Create a view</title>
 				<para>
 					Well, thats even simpler: Just copy the <literal>list.html</literal> template and rename it to
-					<literal>recent.html</literal>. Do changes on the file if you like.
+					<literal>recent.html</literal>. Do changes on the file if you like - removing the dayWrapper could be a good idea.
 				</para>
 			</step>
 		

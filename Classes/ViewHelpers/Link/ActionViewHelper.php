@@ -43,7 +43,37 @@ class Tx_CzSimpleCal_ViewHelpers_Link_ActionViewHelper extends Tx_Fluid_ViewHelp
 		if(is_null($pageUid)) {
 			$pageUid = $this->getPageUid($controller, $action);
 		}
-		return parent::render($action,$arguments, $controller, $extensionName, $pluginName, $pageUid, $pageType, $noCache, $noCacheHash, $section, $format, $linkAccessRestrictedPages,$additionalParams, $absolute, $addQueryString,$argumentsToBeExcludedFromQueryString);
+		
+		// this is the way it should work
+//		return parent::render($action,$arguments, $controller, $extensionName, $pluginName, $pageUid, $pageType, $noCache, $noCacheHash, $section, $format, $linkAccessRestrictedPages,$additionalParams, $absolute, $addQueryString,$argumentsToBeExcludedFromQueryString);
+		//@ugly
+		/* but as all link viewHelpers return an empty href when linking to a hidden
+		 * (or non-existant) page, we'll have to fix this
+		 */ 
+		$uriBuilder = $this->controllerContext->getUriBuilder();
+		$uri = $uriBuilder
+			->reset()
+			->setTargetPageUid($pageUid)
+			->setTargetPageType($pageType)
+			->setNoCache($noCache)
+			->setUseCacheHash(!$noCacheHash)
+			->setSection($section)
+			->setFormat($format)
+			->setLinkAccessRestrictedPages($linkAccessRestrictedPages)
+			->setArguments($additionalParams)
+			->setCreateAbsoluteUri($absolute)
+			->setAddQueryString($addQueryString)
+			->setArgumentsToBeExcludedFromQueryString($argumentsToBeExcludedFromQueryString)
+			->uriFor($action, $arguments, $controller, $extensionName, $pluginName);
+
+		if(empty($uri)) {
+			return $this->renderChildren();
+		}
+		
+		$this->tag->addAttribute('href', $uri);
+		$this->tag->setContent($this->renderChildren());
+
+		return $this->tag->render();
 	}
 	
 	/**
