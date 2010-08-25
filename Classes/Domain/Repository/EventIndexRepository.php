@@ -150,7 +150,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		if(isset($settings['filter'])) {
 			foreach($settings['filter'] as $name => $filter) {
 				if(is_array($filter)) {
-					$temp_constraint = $query->in('event.'.$name.'.uid', $filter);
+					$temp_constraint = $query->in('event.'.$name, $filter);
 					
 					if(isset($constraint)) {
 						$constraint = $query->logicalAnd($constraint, $temp_constraint);
