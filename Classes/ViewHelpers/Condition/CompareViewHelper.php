@@ -65,7 +65,7 @@
  * 
  *   
  *   
- * @license WTFPL
+ * @license WTFPL, Version 2
  * @author Christian Zenker <christian.zenker@599media.de>
  */
 class Tx_CzSimpleCal_ViewHelpers_Condition_CompareViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {

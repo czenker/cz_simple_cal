@@ -72,8 +72,8 @@ plugin.tx_czsimplecal {
 					
 					useAction = list
 					
-					startDate = first day of this week
-					endDate   = last day of this week 23:59:59
+					startDate = monday this week
+					endDate   = sunday this week 23:59:59
 					
 					getPostAllowed = getDate
 					

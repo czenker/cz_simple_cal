@@ -115,26 +115,38 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_Extbase_MVC_Cont
 	 * @return null
 	 */
 	public function listAction() {
+		$start = $this->getStartDate();
+		$end = $this->getEndDate();
+		
+		$this->view->assign('start', $start);
+		$this->view->assign('end', $end);
+		
 		$this->view->assign(
 			'events',
 			$this->eventIndexRepository->findAllWithSettings(array_merge(
 				$this->actionSettings,
 				array(
-					'startDate' => $this->getStartDate()->getTimestamp(),
-					'endDate'   => $this->getEndDate()->getTimestamp()
+					'startDate' => $start->getTimestamp(),
+					'endDate'   => $end->getTimestamp()
 				)
 			))
 		);
 	}
 	
 	public function countEventsAction() {
+		$start = $this->getStartDate();
+		$end = $this->getEndDate();
+		
+		$this->view->assign('start', $start);
+		$this->view->assign('end', $end);
+		
 		$this->view->assign(
 			'data',
 			$this->eventIndexRepository->countAllWithSettings(array_merge(
 				$this->actionSettings,
 				array(
-					'startDate' => $this->getStartDate()->getTimestamp(),
-					'endDate'   => $this->getEndDate()->getTimestamp()
+					'startDate' => $start->getTimestamp(),
+					'endDate'   => $end->getTimestamp()
 				)
 			))
 		);
