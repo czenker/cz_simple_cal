@@ -1,6 +1,21 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 <cal:useMicroformat format="hcalendar" />
-<h2>Week View</h2>
+<h2><f:translate key="events" /> <cal:format.timespanToWords start="{start}" end="{end}" />
+</h2>
+<div class="clear-both">
+<f:alias map="{minDate: '{cal:calendar.createDateTime(dateTime: \'now - 2 month\')}', maxDate: '{cal:calendar.createDateTime(dateTime: \'now +1 year\')}'}">
+	<f:if condition="{cal:condition.compare(value1: start, value2: minDate, operation:'&gt;')}">
+		<div class="float-left">
+			<f:link.action arguments="{getDate: '{cal:format.dateTime(format: \'%Y-%m-%d\', timestamp: start, get: \'-1 week\')}'}">previous week</f:link.action>
+		</div>
+	</f:if>
+	<f:if condition="{cal:condition.compare(value1: end, value2: maxDate, operation:'&lt;')}">
+		<div class="float-right">
+			<f:link.action arguments="{getDate: '{cal:format.dateTime(format: \'%Y-%m-%d\', timestamp: start, get: \'+1 week\')}'}">next week</f:link.action>
+		</div>
+	</f:if>
+</f:alias>
+</div>
 <div class="vcalendar vcalendar-list">
 <f:if condition="{events}">
 	<f:then>

@@ -20,6 +20,9 @@
 			<label index="tx_czsimplecal_domain_model_category">a category of an event</label>
 			<label index="tx_czsimplecal_domain_model_category.title">a title for this category</label>
 			
+			<label index="event">Event</label>
+			<label index="events">Events</label>
+			
 			<label index="msg.noEvents">No events have been found.</label>
 			
 			<label index="format.monthAndYear">%B %Y</label>
@@ -28,10 +31,24 @@
 			<label index="format.show.dayTime">%B %e, %Y %H:%M</label>
 			<label index="format.show.time">%H:%M</label>
 			
-			<label index="time.end">end at </label>
+			<!-- used for timespan generation -->
+			<label index="timespan.format.sameDay">%B %e, %Y</label>
+			<label index="timespan.format.sameMonth.start">%B %e</label>
+			<label index="timespan.format.sameMonth.end">%e, %Y</label>
+			<label index="timespan.format.sameYear.start">%B %e</label>
+			<label index="timespan.format.sameYear.end">%B %e, %Y</label>
+			<label index="timespan.format.else.start">%B %e, %Y</label>
+			<label index="timespan.format.else.end">%B %e, %Y</label>
+			<label index="timespan.from">from</label>
+			<label index="timespan.to">to</label>
+			<label index="timespan.on">on</label>
+			
+			
+			<label index="time.end">end at</label>
 			
 			<label index="numEvents">[0]No events|[1] 1 event|[2,+Inf] ###number### events</label>
 			
+			<!-- labels for organizers and location -->
 			<label index="organizer">Organizer</label>
 			<label index="location">Location</label>
 			<label index="phone">Phone</label>

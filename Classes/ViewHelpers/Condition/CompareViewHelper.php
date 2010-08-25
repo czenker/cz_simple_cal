@@ -80,7 +80,6 @@ class Tx_CzSimpleCal_ViewHelpers_Condition_CompareViewHelper extends Tx_Fluid_Co
 	 * @author Christian Zenker <christian.zenker@599media.de>
 	 */
 	public function render($value1, $value2, $operation = '=') {
-		
 		$operation = htmlspecialchars_decode($operation);
 		
 		if($operation === '=' || $operation === '==') {
