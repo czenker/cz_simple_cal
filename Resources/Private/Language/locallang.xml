@@ -20,6 +20,7 @@
 			<label index="tx_czsimplecal_domain_model_category">a category of an event</label>
 			<label index="tx_czsimplecal_domain_model_category.title">a title for this category</label>
 			
+			<label index="msg.noEvents">No events have been found.</label>
 			
 			<label index="format.monthAndYear">%B %Y</label>
 			<label index="format.dayWrapper">%a, %B %e, %Y</label>
@@ -40,9 +41,7 @@
 			<label index="www">WWW</label>
 			<label index="title.gender.male">Mr.</label>
 			<label index="title.gender.female">Mrs.</label>
-			
-			
-			
+				
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="format.monthAndYear">%B %Y</label>
