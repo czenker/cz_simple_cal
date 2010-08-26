@@ -9,7 +9,7 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	pid int(11) DEFAULT '0' NOT NULL,
 	
 	
-	title tinytext,
+	title varchar(220),
 	start_day int(11),
 	start_time int(11) DEFAULT -1,
 	end_day int(11) DEFAULT -1,
@@ -26,6 +26,7 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	organizer int(11) DEFAULT 0,
 	category int(11) unsigned DEFAULT '0' NOT NULL,
 	exceptions int(11) unsigned DEFAULT '0' NOT NULL,
+	slug varchar(250) DEFAULT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -47,7 +48,8 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	l18n_diffsource mediumblob NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid),
+	KEY slug (slug)
 );
 
 ###
@@ -60,9 +62,11 @@ CREATE TABLE tx_czsimplecal_domain_model_eventindex (
 	start    int(11) NOT NULL,
 	end      int(11) NOT NULL,	
 	event    int(11) NOT NULL,
+	slug varchar(250) DEFAULT NULL,
 	
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid),
+	KEY slug (slug)
 );
 
 ###

@@ -101,7 +101,10 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	 */
 	public function getDateTimeObjectStart() {
 		if(is_null($this->dateTimeObjectStart)) {
-			$this->dateTimeObjectStart = new Tx_CzSimpleCal_Utility_DateTime($this->start);
+			$this->dateTimeObjectStart = new Tx_CzSimpleCal_Utility_DateTime(
+				'@'.$this->start
+			);
+			$this->dateTimeObjectStart->setTimezone(new DateTimeZone(date_default_timezone_get()));
 		}
 		return $this->dateTimeObjectStart;
 	}
@@ -131,7 +134,10 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 	 */
 	public function getDateTimeObjectEnd() {
 		if(is_null($this->dateTimeObjectEnd)) {
-			$this->dateTimeObjectEnd = new Tx_CzSimpleCal_Utility_DateTime($this->end);
+			$this->dateTimeObjectEnd = new Tx_CzSimpleCal_Utility_DateTime(
+				'@'.$this->end
+			);
+			$this->dateTimeObjectEnd->setTimezone(new DateTimeZone(date_default_timezone_get()));
 		}
 		return $this->dateTimeObjectEnd;
 	}
@@ -218,6 +224,73 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_Abs
 		}
 		
 		return call_user_func_array($callback, $args);
+	}
+	
+	/**
+	 * the property slug
+	 *
+	 * @var string slug
+	 */
+	protected $slug;
+	
+	/**
+	 * getter for slug
+	 *
+	 * @return string
+	 */
+	public function getSlug() {
+		return $this->slug;
+	}
+	
+	/**
+	 * setter for slug
+	 * 
+	 * @param string $slug
+	 * @return Tx_CzSimpleCal_Domain_Model_EventIndex
+	 */
+	public function setSlug($slug) {
+		if(preg_match('/^[a-z0-9\-]*$/i', $slug) === false) {
+			throw new InvalidArgument(sprintf('"%s" is no valid slug. Only ASCII-letters, numbers and the hyphen are allowed.'));
+		}
+		$this->slug = $slug;
+		return $this;
+	}
+	
+	/**
+	 * generate a slug for this record
+	 * 
+	 * @return string
+	 */
+	public function generateSlug() {
+		$value = $this->generateRawSlug();
+		$value = Tx_CzSimpleCal_Utility_Inflector::urlize($value);
+		
+		$slug = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository')->makeSlugUnique($value, $this->uid);
+		$this->setSlug($slug);
+	}
+	
+	/**
+	 * generate a raw slug that might have invalid characters
+	 * 
+	 * you could overwrite this if you want a different slug
+	 * 
+	 * @return string
+	 */
+	protected function generateRawSlug() {
+		$value = $this->getEvent()->getSlug();
+		if($this->getEvent()->isRecurrant()) {
+			$value .= ' '.$this->getDateTimeObjectStart()->format('Y-m-d');
+		}
+		return $value;
+	}
+	
+	/**
+	 * will be called before instance is added to the repository 
+	 * 
+	 * @return null
+	 */
+	public function preCreate() {
+		$this->generateSlug();
 	}
 }
 ?>

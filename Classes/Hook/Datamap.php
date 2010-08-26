@@ -3,6 +3,16 @@
 class Tx_CzSimpleCal_Hook_Datamap {
 
 	/**
+	 * @var Tx_CzSimpleCal_Domain_Repository_EventRepository
+	 */
+	protected $eventRepository;
+	
+	public function __construct() {
+		t3lib_div::makeInstance('Tx_Extbase_Dispatcher');
+		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
+	}
+	
+	/**
 	 * implements the hook processDatamap_afterDatabaseOperations that gets invoked
 	 * when a form in the backend was saved and written to the database.
 	 * 
@@ -17,14 +27,26 @@ class Tx_CzSimpleCal_Hook_Datamap {
 	public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, $tce) {
 		if ($table == 'tx_czsimplecal_domain_model_event') {
 			//if: an event was changed
-			$indexer = t3lib_div::makeInstance('Tx_CzSimpleCal_Indexer_Event');
 			
 			if($status == 'new') {
 				// if: record is new
-				$indexer->create($tce->substNEWwithIDs[$id]);
-			} elseif($this->haveFieldsChanged(Tx_CzSimpleCal_Domain_Model_Event::getFieldsRequiringReindexing(), $fieldArray)) {
-				//if: record was updated and a value that requires re-indexing was changed
-				$indexer->update($id);
+				$indexer = t3lib_div::makeInstance('Tx_CzSimpleCal_Indexer_Event');
+				
+				// create the slug
+				$event = $this->fetchEventObject($tce->substNEWwithIDs[$id]);
+				$event->generateSlug();
+				$this->eventRepository->update($event);
+				
+				// index events
+				$indexer->create($event);
+				
+				
+			} else {
+				if($this->haveFieldsChanged(Tx_CzSimpleCal_Domain_Model_Event::getFieldsRequiringReindexing(), $fieldArray)) {
+					//if: record was updated and a value that requires re-indexing was changed
+					$indexer = t3lib_div::makeInstance('Tx_CzSimpleCal_Indexer_Event');
+					$indexer->update($id);
+				}
 			}
 		}
 	}
@@ -60,6 +82,21 @@ class Tx_CzSimpleCal_Hook_Datamap {
 			$fields
 		);
 		return !empty($criticalFields);
+	}
+	
+	/**
+	 * get an event object by its uid
+	 * 
+	 * @param integer $id
+	 * @throws InvalidArgumentException
+	 * @return Tx_CzSimpleCal_Domain_Model_Event
+	 */
+	protected function fetchEventObject($id) {
+		$event = $this->eventRepository->findOneByUidEverywhere($id);
+		if(empty($event)) {
+			throw new InvalidArgumentException(sprintf('An event with uid %d could not be found.', $id));
+		}
+		return $event;
 	}
 	
 }

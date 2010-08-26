@@ -48,8 +48,14 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 		$query->matching($query->equals('uid',$uid));
 		
 		$result = $query->execute();
-		return count($result) > 0 ? $result[0] : NULL;
+		if(count($result) < 1) {
+			return null;
+		}
 		
+		$object = current($result);
+		$this->identityMap->registerObject($object, $uid);
+		
+		return $object;
 	}
 	
 	public function findAllEverywhere() {
@@ -61,6 +67,47 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 		;
 		
 		return $query->execute();
+	}
+	
+	public function makeSlugUnique($slug, $uid) {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->
+			setRespectStoragePage(false)->
+			setRespectEnableFields(false)->
+			setRespectSysLanguage(false)
+		;
+		$query->matching($query->logicalAnd(
+			$query->equals('slug', $slug),
+			$query->logicalNot($query->equals('uid', $uid))
+		));
+		$count = $query->count();
+		if($count !== false && $count == 0) {
+			return $slug;
+		} else {
+			$query = $this->createQuery();
+			$query->getQuerySettings()->
+				setRespectStoragePage(false)->
+				setRespectEnableFields(false)->
+				setRespectSysLanguage(false)
+			;
+			$query->matching($query->logicalAnd(
+				$query->like('slug', $slug.'-%'),
+				$query->logicalNot($query->equals('uid', $uid))
+			));
+			$query->setOrderings(array(
+				'slug' => Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING
+			));
+			$query->setLimit(1);
+			$result = $query->execute();
+			
+			if(empty($result)) {
+				return $slug.'-1';
+			} else {
+				$number = intval(substr(current($result)->getSlug(), strlen($slug) + 1)) + 1;
+				return $slug.'-'.$number;
+			}
+		}
+		
 	}
 	
 }

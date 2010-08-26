@@ -326,6 +326,52 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		return !is_array($filter);
 	}
 	
+	public function makeSlugUnique($slug, $uid) {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->
+			setRespectStoragePage(false)->
+			setRespectEnableFields(false)->
+			setRespectSysLanguage(false)
+		;
+		$query->matching($query->logicalAnd(
+			$query->equals('slug', $slug),
+			$query->logicalNot($query->equals('uid', $uid))
+		));
+		$count = $query->count();
+		if($count !== false && $count == 0) {
+			return $slug;
+		} else {
+			$query = $this->createQuery();
+			$query->getQuerySettings()->
+				setRespectStoragePage(false)->
+				setRespectEnableFields(false)->
+				setRespectSysLanguage(false)
+			;
+			$query->matching($query->logicalAnd(
+				$query->like('slug', $slug.'-%'),
+				$query->logicalNot($query->equals('uid', $uid))
+			));
+			$query->setOrderings(array(
+				'slug' => Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING
+			));
+			$query->setLimit(1);
+			$result = $query->execute();
+			
+			if(empty($result)) {
+				return $slug.'-1';
+			} else {
+				$number = intval(substr(current($result)->getSlug(), strlen($slug) + 1)) + 1;
+				return $slug.'-'.$number;
+			}
+		}
+	}
+	
+	
+	public function add($object) {
+		$object->preCreate();
+		parent::add($object);
+	}
+	
 	
 }
 ?>

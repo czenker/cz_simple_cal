@@ -349,6 +349,15 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	}
 	
 	/**
+	 * returns true if this is a recurrant event
+	 * 
+	 * @return boolean
+	 */
+	public function isRecurrant() {
+		return !empty($this->recurranceType) && $this->recurranceType !== 'none';
+	}
+	
+	/**
 	 * get the organizer of the event
 	 * 
 	 * @return Tx_CzSimpleCal_Domain_Model_Organizer
@@ -409,5 +418,60 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 			$GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']
 		);
 	}
+	
+	/**
+	 * the property slug
+	 *
+	 * @var string slug
+	 */
+	protected $slug;
+	
+	/**
+	 * getter for slug
+	 *
+	 * @return string
+	 */
+	public function getSlug() {
+		return $this->slug;
+	}
+	
+	/**
+	 * setter for slug
+	 * 
+	 * @param string $slug
+	 * @return Tx_CzSimpleCal_Domain_Model_Event
+	 */
+	public function setSlug($slug) {
+		if(preg_match('/^[a-z0-9\-]*$/i', $slug) === false) {
+			throw new InvalidArgument(sprintf('"%s" is no valid slug. Only ASCII-letters, numbers and the hyphen are allowed.'));
+		}
+		$this->slug = $slug;
+		return $this;
+	}
+	
+	/**
+	 * generate a slug for this record
+	 * 
+	 * @return string
+	 */
+	public function generateSlug() {
+		$value = $this->generateRawSlug();
+		$value = Tx_CzSimpleCal_Utility_Inflector::urlize($value);
+		
+		$slug = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository')->makeSlugUnique($value, $this->uid);
+		$this->setSlug($slug);
+	}
+	
+	/**
+	 * generate a raw slug that might have invalid characters
+	 * 
+	 * you could overwrite this if you want a different slug
+	 * 
+	 * @return string
+	 */
+	protected function generateRawSlug() {
+		return $this->getTitle();
+	}
+	
 }
 ?>

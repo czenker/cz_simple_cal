@@ -4,10 +4,10 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $TCA['tx_czsimplecal_domain_model_event'] = array(
 	'ctrl' => $TCA['tx_czsimplecal_domain_model_event']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'title,start_day,start_time,end_day,end_time,teaser,description,recurrance_type,recurrance_subtype,recurrance_until,location_name,location,organizer_name,organizer,categories,exceptions'
+		'showRecordFieldList' => 'title,start_day,start_time,end_day,end_time,teaser,description,slug,recurrance_type,recurrance_subtype,recurrance_until,location_name,location,organizer_name,organizer,categories,exceptions'
 	),
 	'types' => array(
-		'1' => array('showitem' => '--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_general,title,start_day,start_time,end_day,end_time,categories,teaser,description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css],--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_recurrance,recurrance_type,recurrance_subtype,recurrance_until,exceptions,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_location,location_name,location,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_organizer,organizer_name,organizer')
+		'1' => array('showitem' => '--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_general,title,start_day,start_time,end_day,end_time,categories,teaser,description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css],slug,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_recurrance,recurrance_type,recurrance_subtype,recurrance_until,exceptions,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_location,location_name,location,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_organizer,organizer_name,organizer')
 	),
 	'palettes' => array(
 		'1' => array('showitem' => '')
@@ -260,6 +260,13 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 				'maxitems' => 99999,
 				'size' => 5,
 				'autoSizeMax' => 20
+			)
+		),
+		'slug' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.slug',
+			'config'  => array(
+				'type' => 'none', // just show the value - don't make it editable
 			)
 		),
 	),

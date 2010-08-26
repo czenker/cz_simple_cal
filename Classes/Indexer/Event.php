@@ -115,6 +115,9 @@ class Tx_CzSimpleCal_Indexer_Event {
 				$instance
 			);
 		}
+		
+		// store everything to database manually to allow correct unique hash creation when using scheduler
+		Tx_Extbase_Dispatcher::getPersistenceManager()->persistAll();
 	}
 	
 	/**

@@ -53,7 +53,14 @@ $TCA['tx_czsimplecal_domain_model_eventindex'] = array(
 				'minitems' => 1,
 				'maxitems' => 1
 			) 
-		)
+		),
+		'slug' => array(
+			'exclude' => 0,
+			'label'   => '',
+			'config'  => array(
+				'type' => 'none', // just show the value - don't make it editable
+			)
+		),
 	),
 );
 ?>
