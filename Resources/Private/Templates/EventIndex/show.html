@@ -1,5 +1,6 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 <cal:useMicroformat format="hcalendar" />
+<cal:setGlobalData field="title">{event.title}</cal:setGlobalData>
 <div class="vevent vcalendar-event">
 
 <h2><f:render partial="EventIndex/show/startdate.html" arguments="{settings: settings, event: event}"/> <span class="summary">{event.title}</span></h2>

@@ -1,5 +1,6 @@
 {namespace cal=Tx_CzSimpleCal_ViewHelpers}
 <cal:useMicroformat format="hcalendar" />
+<cal:setGlobalData field="title"><f:translate key="events" /> <cal:format.timespanToWords start="{start}" end="{end}" /></cal:setGlobalData>
 <h2><f:translate key="events" /> <cal:format.timespanToWords start="{start}" end="{end}" />
 </h2>
 <div class="clear-both">
