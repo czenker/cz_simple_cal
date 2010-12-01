@@ -43,6 +43,8 @@
 			<label index="timespan.to">to</label>
 			<label index="timespan.on">on</label>
 			
+			<label index="previousWeek">previous week</label>
+			<label index="nextWeek">next week</label>
 			
 			<label index="time.end">end at</label>
 			
@@ -60,9 +62,63 @@
 			<label index="title.gender.female">Mrs.</label>
 				
 		</languageKey>
+		
 		<languageKey index="de" type="array">
+			<label index="tx_czsimplecal_domain_model_event">an event in an calendar</label>
+			<label index="tx_czsimplecal_domain_model_event.title">The title of this event</label>
+			<label index="tx_czsimplecal_domain_model_event.start_day">the day that event starts</label>
+			<label index="tx_czsimplecal_domain_model_event.start_time">the time this event starts (leave blank for an allday event)</label>
+			<label index="tx_czsimplecal_domain_model_event.end_day">the day this event ends (leave blank for an event on one day)</label>
+			<label index="tx_czsimplecal_domain_model_event.end_time">the time this event ends</label>
+			<label index="tx_czsimplecal_domain_model_event.teaser">a short teaser for this event</label>
+			<label index="tx_czsimplecal_domain_model_event.description">a long description for this event</label>
+			<label index="tx_czsimplecal_domain_model_event.location_name">the name of the location this event takes place in</label>
+			<label index="tx_czsimplecal_domain_model_event.organizer_name">the name of the institution or person the event is organized by</label>
+			<label index="tx_czsimplecal_domain_model_event.categories">categories</label>
+			<label index="tx_czsimplecal_domain_model_category">a category of an event</label>
+			<label index="tx_czsimplecal_domain_model_category.title">a title for this category</label>
+			
+			<label index="event">Veranstaltung</label>
+			<label index="events">Veranstaltungen</label>
+			
+			<label index="msg.noEvents">Es wurden keine passenden Veranstaltungen gefunden.</label>
+			
 			<label index="format.monthAndYear">%B %Y</label>
 			<label index="format.dayWrapper">%a, %e. %B %Y</label>
+			<label index="format.show.allday">%e. %B %Y</label>
+			<label index="format.show.dayTime">%e. %B %Y %H:%M</label>
+			<label index="format.show.time">%H:%M</label>
+			
+			<!-- used for timespan generation -->
+			<label index="timespan.format.sameDay">%e. %B %Y</label>
+			<label index="timespan.format.sameMonth.start">%e.</label>
+			<label index="timespan.format.sameMonth.end">%e. %B, %Y</label>
+			<label index="timespan.format.sameYear.start">%e. %B</label>
+			<label index="timespan.format.sameYear.end">%e. %B, %Y</label>
+			<label index="timespan.format.else.start">%e. %B %Y</label>
+			<label index="timespan.format.else.end">%e. %B %Y</label>
+			<label index="timespan.from">vom</label>
+			<label index="timespan.to">bis</label>
+			<label index="timespan.on">am</label>
+			
+			
+			<label index="time.end">end at</label>
+			
+			<label index="numEvents">[0]No events|[1] 1 event|[2,+Inf] ###number### events</label>
+			
+			<label index="previousWeek">vorherige Woche</label>
+			<label index="nextWeek">nächste Woche</label>
+			
+			<!-- labels for organizers and location -->
+			<label index="organizer">Organizer</label>
+			<label index="location">Location</label>
+			<label index="phone">Phone</label>
+			<label index="fax">Fax</label>
+			<label index="mobile">Mobile</label>
+			<label index="email">Email</label>
+			<label index="www">WWW</label>
+			<label index="title.gender.male">Mr.</label>
+			<label index="title.gender.female">Mrs.</label>
 		</languageKey>
 		
 	</data>

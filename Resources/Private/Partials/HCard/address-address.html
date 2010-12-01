@@ -3,7 +3,7 @@
 <div class="adr label"><p>
 	<f:if condition="{cal:condition.oneNotEmpty(values: {0:address.building, 1:address.room})}" ><span class="extended-address">{address.building} {address.room}</span><br/></f:if>
 	<f:if condition="{address.address}" ><span class="street-address">{address.address}</span><br/></f:if>
-	<f:if condition="{cal:condition.oneNotEmpty(values: {0address.zip, 1:address.zip, 2:address.region})}">
+	<f:if condition="{cal:condition.oneNotEmpty(values: {0:address.zip, 1:address.city, 2:address.region})}">
 		<f:if condition="{address.zip}" ><span class="postal-code">{address.zip}</span></f:if>
 		<f:if condition="{address.city}" ><span class="locality">{address.city}</span></f:if>
 		<f:if condition="{address.region}" ><span class="region">({address.region})</span></f:if>
