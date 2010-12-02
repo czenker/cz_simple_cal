@@ -472,44 +472,5 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	protected function generateRawSlug() {
 		return $this->getTitle();
 	}
-	
-	/**
-	 * __call
-	 * 
-	 * @param $methodName
-	 * @param $arguments
-	 */
-	public function __call($methodName, $arguments) {
-		/* this makes methods starting with "is..." and "has..." available to fluid templates
-		 * without the need of writing custom handlers. 
-		 * 
-		 * By default Extbase *only* calls methods starting with "get...", but
-		 * "getIsFoobar" is a rather stupid method name. 
-		 * 
-		 * Usage:
-		 * 	{object.isFoobar}
-		 * will call isFoobar() on object.
-		 */
-		if(strncmp('getIs', $method, 5) == 0) {
-			// if: the called method starts with "getIs..."
-			$method = 'is' + substr($methodName, 5);
-			//@todo: check if method is public -> this might be done by a Reflection class, but it should use Extbase internals
-			if(method_exists($this, $methodName)) {
-				return call_user_func_array(array($this, $method), $arguments);
-			}
-		}
-		if(strncmp('getHas', $method, 5) == 0) {
-			// if: the called method starts with "getHas..."
-			$method = 'has' + substr($methodName, 5);
-			//@todo: check if method is public -> this might be done by a Reflection class, but it should use Extbase internals
-			if(method_exists($this, $methodName)) {
-				return call_user_func_array(array($this, $method), $arguments);
-			}
-		}
-		
-		
-//		return parent::__call($method, $arguments);
-	}
-	
 }
 ?>

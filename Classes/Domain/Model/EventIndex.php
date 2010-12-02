@@ -31,7 +31,7 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_CzSimpleCal_Domain_Model_Base {
 	
 	/**
 	 * the timestamp from the beginning of that event
