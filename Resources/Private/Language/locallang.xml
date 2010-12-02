@@ -24,6 +24,8 @@
 			<label index="events">Events</label>
 			
 			<label index="msg.noEvents">No events have been found.</label>
+			<label index="msg.backToList">back to the list view</label>
+			
 			
 			<label index="format.monthAndYear">%B %Y</label>
 			<label index="format.dayWrapper">%a, %B %e, %Y</label>
@@ -64,24 +66,25 @@
 		</languageKey>
 		
 		<languageKey index="de" type="array">
-			<label index="tx_czsimplecal_domain_model_event">an event in an calendar</label>
-			<label index="tx_czsimplecal_domain_model_event.title">The title of this event</label>
-			<label index="tx_czsimplecal_domain_model_event.start_day">the day that event starts</label>
-			<label index="tx_czsimplecal_domain_model_event.start_time">the time this event starts (leave blank for an allday event)</label>
-			<label index="tx_czsimplecal_domain_model_event.end_day">the day this event ends (leave blank for an event on one day)</label>
-			<label index="tx_czsimplecal_domain_model_event.end_time">the time this event ends</label>
-			<label index="tx_czsimplecal_domain_model_event.teaser">a short teaser for this event</label>
-			<label index="tx_czsimplecal_domain_model_event.description">a long description for this event</label>
-			<label index="tx_czsimplecal_domain_model_event.location_name">the name of the location this event takes place in</label>
-			<label index="tx_czsimplecal_domain_model_event.organizer_name">the name of the institution or person the event is organized by</label>
-			<label index="tx_czsimplecal_domain_model_event.categories">categories</label>
-			<label index="tx_czsimplecal_domain_model_category">a category of an event</label>
-			<label index="tx_czsimplecal_domain_model_category.title">a title for this category</label>
+			<label index="tx_czsimplecal_domain_model_event">Ein Event im Kalender</label>
+			<label index="tx_czsimplecal_domain_model_event.title">Name des Events</label>
+			<label index="tx_czsimplecal_domain_model_event.start_day">Der Tag an dem das Event beginnt</label>
+			<label index="tx_czsimplecal_domain_model_event.start_time">Die Uhrzeit zu der das Event startet (Feld leer lassen für Ganztages-Event)</label>
+			<label index="tx_czsimplecal_domain_model_event.end_day">Der Tag an dem das Event endet (Feld leer lasse für eintägiges Event)</label>
+			<label index="tx_czsimplecal_domain_model_event.end_time">Die Uhrzeit zu der das Event endet</label>
+			<label index="tx_czsimplecal_domain_model_event.teaser">kurzer Teaser</label>
+			<label index="tx_czsimplecal_domain_model_event.description">lange Beschreibung</label>
+			<label index="tx_czsimplecal_domain_model_event.location_name">Name des Veranstaltungsortes</label>
+			<label index="tx_czsimplecal_domain_model_event.organizer_name">Name des Veranstalters</label>
+			<label index="tx_czsimplecal_domain_model_event.categories">Kategorien</label>
+			<label index="tx_czsimplecal_domain_model_category">Eine Event-Kategorie</label>
+			<label index="tx_czsimplecal_domain_model_category.title">Name der Event-Kategorie</label>
 			
 			<label index="event">Veranstaltung</label>
 			<label index="events">Veranstaltungen</label>
 			
 			<label index="msg.noEvents">Es wurden keine passenden Veranstaltungen gefunden.</label>
+			<label index="msg.backToList">zurück zur Übersicht</label>
 			
 			<label index="format.monthAndYear">%B %Y</label>
 			<label index="format.dayWrapper">%a, %e. %B %Y</label>
@@ -104,21 +107,21 @@
 			
 			<label index="time.end">end at</label>
 			
-			<label index="numEvents">[0]No events|[1] 1 event|[2,+Inf] ###number### events</label>
+			<label index="numEvents">[0]keine Veranstaltungen|[1] eine Veranstaltung|[2,+Inf] ###number### Veranstaltungen</label>
 			
 			<label index="previousWeek">vorherige Woche</label>
 			<label index="nextWeek">nächste Woche</label>
 			
 			<!-- labels for organizers and location -->
-			<label index="organizer">Organizer</label>
-			<label index="location">Location</label>
-			<label index="phone">Phone</label>
+			<label index="organizer">Veranstalter</label>
+			<label index="location">Ort</label>
+			<label index="phone">Telefon</label>
 			<label index="fax">Fax</label>
-			<label index="mobile">Mobile</label>
-			<label index="email">Email</label>
-			<label index="www">WWW</label>
-			<label index="title.gender.male">Mr.</label>
-			<label index="title.gender.female">Mrs.</label>
+			<label index="mobile">Handy</label>
+			<label index="email">E-Mail</label>
+			<label index="www">Webseite</label>
+			<label index="title.gender.male">Herr</label>
+			<label index="title.gender.female">Frau</label>
 		</languageKey>
 		
 	</data>

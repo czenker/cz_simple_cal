@@ -6,6 +6,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	'Pi1',
 	array(
 		'EventIndex' => 'dispatch',
+		'Event' => 'dispatch',
 		'Category' => 'show',
 	),
 	array(
