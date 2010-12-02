@@ -70,9 +70,9 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 		}
 		
 		$time = self::doSubstitutions($time);
-		
+				
 		foreach(t3lib_div::trimExplode('|', $time, true) as $time) {
-			$now = strtotime(strftime($time, $now), $now);
+			$now = strtotime(self::strftime($time, $now), $now);
 		}
 		
 		return $now;
@@ -147,5 +147,34 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 		}
 		
 		return $ret;
+	}
+	
+	/**
+	 * a non-local version of strftime
+	 * 
+	 * an alternative would be to switch the language local, but there 
+	 * is no guarantee it is present and even if, the label might be hard
+	 * to guess. So this should be a rather light-weight solution.
+	 * 
+	 * @param string $time
+	 * @param integer $now
+	 */
+	public static function strftime($time, $now = null) {
+		if(strpos($time, '%') !== false) {
+			if(is_null($now)) {
+				$now = time();
+			}
+			$time = strtr(
+				$time,
+				array(
+					'%a' => date('l', $now),
+					'%A' => date('D', $now),
+					'%b' => date('M', $now),
+					'%B' => date('F', $now),
+					'%h' => date('M', $now)
+				)
+			);
+		}
+		return strftime($time, $now);
 	}
 }
