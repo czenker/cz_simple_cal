@@ -372,6 +372,24 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		parent::add($object);
 	}
 	
+	/**
+	 * get a list of upcomming appointments by an event uid
+	 * 
+	 * @param integer $eventUid
+	 * @param integer $limit
+	 */
+	public function findNextAppointmentsByEventUid($eventUid, $limit = 3) {
+		$query = $this->createQuery();
+		$query->setLimit($limit);
+		$query->matching($query->logicalAnd(
+			$query->equals('event.uid', $eventUid),
+			$query->greaterThanOrEqual('start', time())
+		));
+		$query->setOrderings(array('start' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
+		
+		return $query->execute();
+	}
+	
 	
 }
 ?>

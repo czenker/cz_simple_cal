@@ -22,6 +22,7 @@
 			
 			<label index="event">Event</label>
 			<label index="events">Events</label>
+			<label index="nextAppointments">next Appointments</label>
 			
 			<label index="msg.noEvents">No events have been found.</label>
 			<label index="msg.backToList">back to the list view</label>
@@ -82,6 +83,7 @@
 			
 			<label index="event">Veranstaltung</label>
 			<label index="events">Veranstaltungen</label>
+			<label index="nextAppointments">nächste Termine</label>
 			
 			<label index="msg.noEvents">Es wurden keine passenden Veranstaltungen gefunden.</label>
 			<label index="msg.backToList">zurück zur Übersicht</label>

@@ -1,0 +1,45 @@
+{namespace cal=Tx_CzSimpleCal_ViewHelpers}
+<cal:useMicroformat format="hcalendar" />
+<cal:setGlobalData field="title">{event.title}</cal:setGlobalData>
+<div class="vevent vcalendar-event">
+
+<h2>{event.title}</h2>
+
+<f:if condition="{event.isRecurrant}">
+	<f:then>
+		<p><em><f:render partial="Event/recurrance.html" arguments="{event:event, settings:settings}" /></em></p>
+		<f:if condition="{event.nextAppointments}">
+			<f:then>
+				<h6><f:translate key="nextAppointments" /></h6>
+				<ul>
+					<f:for each="{event.nextAppointments}" as="appointment">
+						<li><f:render partial="EventIndex/show/startdate.html" arguments="{event:appointment, settings:settings}" /></li>
+					</f:for>
+				</ul>
+			</f:then>
+		</f:if>
+	</f:then>
+	<f:else>
+		<p><em><f:render partial="Event/show/startdate.html" arguments="{event:event, settings:settings}" /></em></p>
+	</f:else>
+</f:if>
+
+<div class="description"><f:format.html>{event.description}</f:format.html></div>
+<f:if condition="{event.location}">
+	<f:then><p><f:translate key="location" />: <f:render partial="Location/location-for-event-inline.html" arguments="{settings: settings, location: event.location}" /></p></f:then>
+	<f:else><f:if condition="{event.locationName}">
+		<p><f:translate key="location" />: {event.locationName}</p>
+	</f:if></f:else>
+</f:if>
+<f:if condition="{event.location}{event.locationName}">
+	
+</f:if>
+<f:if condition="{event.organizer}">
+	<f:then><p><f:translate key="organizer" />: <f:render partial="Organizer/organizer-for-event-inline.html" arguments="{settings: settings, organizer: event.organizer}" /></p></f:then>
+	<f:else><f:if condition="{event.organizerName}">
+		<p><f:translate key="organizer" />: {event.organizerName}</p>
+	</f:if></f:else>
+</f:if>
+
+<f:link.action action="list"><f:translate key="msg.backToList"/></f:link.action>
+</div>

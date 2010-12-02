@@ -308,7 +308,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * 
 	 * @return boolean
 	 */
-	public function getIsAlldayEvent() {
+	public function isAlldayEvent() {
 		return $this->startTime < 0;
 	}
 	
@@ -317,7 +317,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * 
 	 * @return boolean
 	 */
-	public function getHasEndTime() {
+	public function hasEndTime() {
 		return $this->endTime > -1;
 	}
 	
@@ -326,7 +326,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * 
 	 * @return boolean
 	 */
-	public function getIsOneDayEvent() {
+	public function isOneDayEvent() {
 		return $this->endDate < 0 || $this->endDate === $this->startDate;
 	}
 	
@@ -472,5 +472,47 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	protected function generateRawSlug() {
 		return $this->getTitle();
 	}
+	
+	/**
+	 * an array of cached next appointments
+	 * 
+	 * @var array
+	 */
+	protected $nextAppointments = null;
+	
+	/**
+	 * counts the number of requested nextAppointments
+	 * 
+	 * this is used to check if a database query has to been done
+	 * of if the current result set can be taken
+	 * 
+	 * @var integer
+	 */
+	protected $nextAppointmentsCount = 0;
+	
+	/**
+	 * get a list of next appointments
+	 * 
+	 * @param $limit
+	 */
+	public function getNextAppointments($limit = 3) {
+		if(is_null($this->nextAppointments) || $this->nextAppointmentsCount < $limit) {
+			$this->nextAppointments = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository')->
+				findNextAppointmentsByEventUid($this->getUid(), $limit)
+			;
+			$this->nextAppointmentsCount = $limit;
+		}
+		if($this->nextAppointmentsCount === $limit) {
+			return $this->nextAppointments;
+		} else {
+			return array_slice($this->nextAppointments, 0, $limit);
+		}
+	}
+	
+	public function getNextAppointment() {
+		$appointments = $this->getNextAppointments(1);
+		return empty($appointments) ? null : current($appointments);
+	}
+	
 }
 ?>
