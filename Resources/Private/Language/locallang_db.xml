@@ -19,6 +19,7 @@
 			<label index="tx_czsimplecal_domain_model_event.recurrance_type.daily">daily</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_type.weekly">weekly</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_type.monthly">monthly</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type.yearly">yearly</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype">Recurrance subtype</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.weekly">every week</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.oddeven">every two weeks (odd/even-aware)</label>
@@ -32,6 +33,7 @@
 			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.thirdweekdayofmonth">third [weekday] of month</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.lastweekdayofmonth">last [weekday] of month</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.penultimateweekdayofmonth">penultimate [weekday] of month</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.relativetoeaster">relative to easter</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_until">Repeat until</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_times">Repeat times</label>
 			<label index="tx_czsimplecal_domain_model_event.location_name">Location Name</label>

@@ -118,7 +118,10 @@ $TCA['tx_czsimplecal_domain_model_exception'] = array(
 						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.monthly',
 						'monthly'
 					),
-					
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.yearly',
+						'yearly'
+					),
 				),
 			)
 		),
@@ -128,7 +131,7 @@ $TCA['tx_czsimplecal_domain_model_exception'] = array(
 			'displayCond' => 'FIELD:recurrance_type:!IN:0,,none,daily',
 			'config'  => array(
 				'type' => 'select',
-				'itemsProcFunc' => 'EXT:cz_simple_cal/Legacy/class.tx_czsimplecal_dynFlexform.php:tx_czsimplecal_dynFlexform->getRecurranceSubtype'
+				'itemsProcFunc' => 'EXT:cz_simple_cal/Legacy/class.tx_czsimplecal_dynEventForm.php:tx_czsimplecal_dynEventForm->getRecurranceSubtype'
 			)
 		),
 		'recurrance_until' => array(

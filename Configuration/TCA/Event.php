@@ -193,7 +193,10 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.monthly',
 						'monthly'
 					),
-					
+					array(
+						'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.recurrance_type.yearly',
+						'yearly'
+					),
 				),
 			)
 		),
