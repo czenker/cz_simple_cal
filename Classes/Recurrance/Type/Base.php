@@ -15,10 +15,10 @@ abstract class Tx_CzSimpleCal_Recurrance_Type_Base {
 	/**
 	 * build all recurrant events from an Event
 	 * 
-	 * @param Tx_CzSimpleCal_Domain_Model_BaseEvent  $hasTimespan
+	 * @param Tx_CzSimpleCal_Domain_Interface_HasTimespan $event
 	 * @return Tx_CzSimpleCal_Domain_Collection_EventIndex
 	 */
-	public function build(Tx_CzSimpleCal_Domain_Model_BaseEvent $event, $timeline) {
+	public function build(Tx_CzSimpleCal_Domain_Interface_HasTimespan $event, $timeline) {
 		$this->event = $event;
 		$this->timeline = $timeline;
 	

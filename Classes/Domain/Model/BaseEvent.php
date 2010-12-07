@@ -31,7 +31,7 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Domain_Model_Base {
+abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Domain_Model_Base implements Tx_CzSimpleCal_Domain_Interface_HasTimespan {
 
 	/**
 	 * the day that event starts

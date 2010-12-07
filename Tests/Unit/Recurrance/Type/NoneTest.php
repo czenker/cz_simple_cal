@@ -1,40 +1,35 @@
 <?php 
-//require_once 'PHPUnit/Framework.php';
-//require_once dirname(__FILE__).'/../../../Classes/Domain/Interface/HasTimespan.php';
-//require_once dirname(__FILE__).'/../../../Classes/Recurrance/Type/Base.php';
-//require_once dirname(__FILE__).'/../../../Classes/Recurrance/Type/None.php';
-//require_once dirname(__FILE__).'/../../../Classes/Utility/DateTime.php';
-//require_once dirname(__FILE__).'/../../../Classes/Recurrance/Timeline/Base.php';
-
-require_once dirname(__FILE__).'/../../../Mocks/class.MockHasTimespanClass.php';
+require_once dirname(__FILE__).'/../../../Mocks/IsRecurringMock.php';
 
 /**
- * testing the features of Tx_CzSimpleCal_Recurrance_Type_None
+ * testing the features of Tx_CzSimpleCal_Recurrance_Type_Weekly
  * 
  * @author Christian Zenker <christian.zenker@599media.de>
  */
-class RecurranceTypeNoneTest extends Tx_Extbase_BaseTestCase {
+class Tx_CzSimpleCalTests_Recurrance_Type_NoneTest extends Tx_Extbase_BaseTestCase {
 	
-	public function testBasic() {
-		
-		$event = new MockHasTimespanClass(
-			new Tx_CzSimpleCal_Utility_DateTime('2009-02-13 23:31:30GMT'),
-			new Tx_CzSimpleCal_Utility_DateTime('2009-02-13 23:31:30GMT')
-		);
-		
-		$timeline = new Tx_CzSimpleCal_Recurrance_Timeline_Base();
-		
+	protected function buildRecurrance($event, $timeline = null) {
+		if(is_null($timeline)) {
+			$timeline = new Tx_CzSimpleCal_Recurrance_Timeline_Base();
+		}
 		$typeNone = new Tx_CzSimpleCal_Recurrance_Type_None();
 		
-		$return = $typeNone->build($event, $timeline);
+		return $typeNone->build($event, $timeline);
+	}
+	
+	public function testBasic() {
+		$event = Tx_CzSimpleCalTests_Mocks_IsRecurringMock::fromArray(array(
+			'start'           => '2009-02-13 23:31:30GMT',
+			'end'             => '2009-02-13 23:31:30GMT'
+		));
+		
+		$return = $this->buildRecurrance($event);
 		
 		self::assertEquals(1, count($return->toArray()), 'exactly one event returned');
 		self::assertEquals(array(
 			'start' => strtotime('2009-02-13 23:31:30GMT'),
 			'end'   => strtotime('2009-02-13 23:31:30GMT')
-		), $return->current(), 'this event equals the input settings');
+		), $return->current(), 'the event equals the input settings');
 	}
-	
-	
 }
 	

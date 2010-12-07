@@ -19,11 +19,11 @@ class Tx_CzSimpleCal_Recurrance_Type_Yearly extends Tx_CzSimpleCal_Recurrance_Ty
 		$until = $this->event->getDateTimeObjectRecurranceUntil();
 		
 		$interval = $this->event->getRecurranceSubtype();
-		if($interval === 'auto') {
-			$step = '+1 year';
-		} elseif($interval === 'relativetoeaster') {
+		if($interval === 'relativetoeaster') {
 			$this->buildEaster($start, $end, $until);
 			return;
+		} else {
+			$step = '+1 year';
 		}
 		
 		while($until >= $start) {
@@ -80,11 +80,7 @@ class Tx_CzSimpleCal_Recurrance_Type_Yearly extends Tx_CzSimpleCal_Recurrance_Ty
 		 * @var string|null
 		 */
 		$diffDaysStart = $dayOfYear - $dayOfYearEaster;
-		if($diffDayStart == 0) {
-			$diffDaysStart = null;
-		} else {
-			$diffDaysStart = sprintf('%+d days', $diffDaysStart);
-		}
+		$diffDaysStart = sprintf('%+d days', $diffDaysStart);
 		
 		/**
 		 * a string for DateTime->modify() to jump from easter sunday
@@ -94,11 +90,7 @@ class Tx_CzSimpleCal_Recurrance_Type_Yearly extends Tx_CzSimpleCal_Recurrance_Ty
 		 * @var string|null
 		 */
 		$diffDaysEnd = date('z', $end->getTimestamp()) - $dayOfYearEaster;
-		if($diffDaysEnd == 0) {
-			$diffDaysEnd = null;
-		} else {
-			$diffDaysEnd = sprintf('%+d days', $diffDaysEnd);
-		}
+		$diffDaysEnd = sprintf('%+d days', $diffDaysEnd);
 		
 		while($until >= $start) {
 			$this->timeline->add(array(
@@ -143,8 +135,8 @@ class Tx_CzSimpleCal_Recurrance_Type_Yearly extends Tx_CzSimpleCal_Recurrance_Ty
 		 * @var integer
 		 * @see http://en.wikipedia.org/wiki/Equinox
 		 */
-		$equinox = date('z', mktime(0,0,0,3,21,$year));
-		return $dayOfYearEquinox + easter_days($year);
+		$equinox = intval(date('z', mktime(0,0,0,3,21,$year)));
+		return $equinox + easter_days($year);
 	}
 	
 	/**
