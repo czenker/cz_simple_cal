@@ -35,7 +35,7 @@
 				
 				<para>
 					The TypoScript settings already hold some action configurations. So we'll just copy the configuration for the 
-					<literal>listAction</literal> in <code>settings.Event.actions.list</code> to <code>settings.Event.actions.recent</code>.
+					<literal>listAction</literal> in <code>settings.EventIndex.actions.list</code> to <code>settings.EventIndex.actions.recent</code>.
 				</para>
 				
 				<para>The configureable options should be pretty obvious. But first we'll add <code>useAction = list</code> to the 
@@ -44,7 +44,7 @@
 				</para>
 				
 				<programlisting>recent {
-    // ...
+    useAction  = list
     startDate  = now -1 month
     endDate    = now
 
@@ -52,12 +52,13 @@
     orderBy   = end  
     order     = DESC
 }</programlisting>
-				<para>Guess what each of the configuration values is doing. ;)</para>
+				<para>Guess what each of the configuration values is doing. ;) We select all events between now and one month ago,
+				order them by their endtime and just pick the first one.</para>
 			</step>
 			
 			<step>
 				<title>Add the action to the allowed actions</title>
-				<para>Just add the name of the action to the <code>allowedActions</code> in the root of the extensions settings.</para>
+				<para>Just add the name of the action to the <code>allowedActions</code> in <code>settins.EventIndex</code>.</para>
 			</step>
 			
 			<step>

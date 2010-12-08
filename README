@@ -21,6 +21,7 @@ Feature List
      * Exceptions, Exception Groups
      * Categories
      * adding actions via Typoscript
+     * templates using the hCalendar and hCard microformats
      * ...and all the goodness that is Extbase and Fluid.
 
 Sources
