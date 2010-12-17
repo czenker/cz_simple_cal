@@ -32,8 +32,14 @@ class Tx_CzSimpleCal_Hook_Datamap {
 				// if: record is new
 				$indexer = t3lib_div::makeInstance('Tx_CzSimpleCal_Indexer_Event');
 				
+				// get the uid of the new record
+				if(!is_numeric($id)) {
+					$id = $tce->substNEWwithIDs[$id];
+				}
+				
 				// create the slug
-				$event = $this->fetchEventObject($tce->substNEWwithIDs[$id]);
+				
+				$event = $this->fetchEventObject($id);
 				$event->generateSlug();
 				$this->eventRepository->update($event);
 				
