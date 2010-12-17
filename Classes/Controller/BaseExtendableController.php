@@ -106,7 +106,7 @@ abstract class Tx_CzSimpleCal_Controller_BaseExtendableController extends Tx_Ext
 		$actionMethodName = $this->request->getControllerActionName() . 'Action';
 		
 		// the override for actions set in GPvars
-		if($this->request->hasArgument('action')) {
+		if($this->request->hasArgument('action') && $this->request->getArgument('action')) {
 			$actionMethodName = $this->request->getArgument('action') . 'Action';
 		}
 		
