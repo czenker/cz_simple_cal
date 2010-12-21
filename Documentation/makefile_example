@@ -1,0 +1,86 @@
+#
+# M A K E F I L E   U S A G E
+# ===========================
+# 
+# This makefile is used to build the documentation from docbook
+# to all the formats needed.
+# 
+# To get this running, do the following steps
+#     1. install "make" on your machine
+#     2. copy this file and rename it to "makefile"
+#     3. change the following varialbes to the ones your machine is using
+#     4. enter the "Documentation" - folder and run "make"
+# 
+# You don't have to build all the files on each run. There are some targets
+# that can be set when running make like that:
+#     make [target]
+# 
+# The following targets can be used:
+# 
+# all
+#     Same as setting to target at all: It just builds all files in all
+#     all languages and filetypes.
+# pdf 
+#     Builds just the pdf files in all languages.
+# html
+#     Builds just the html files in all languages.
+# [lang]/[filename].[filetype]
+#     Build a specific file in a specific language and filetype, e.g.
+#     make en/index.pdf
+# readme
+#     Build the README file in the extensions root (requires lynx).
+# clean
+#     Just remove all created files.
+# 
+
+# configuration starts here
+#
+# ---
+
+# the folder where your xsl files are
+# (this default path is the default for Ubuntu and probably other Debian-based distributions) 
+STYLESHEETS_DIR = /usr/share/xml/docbook/stylesheet/nwalsh
+
+# path to the lynx binary
+# this is needed to render a text-only version for the README file
+# (converting docbook to text didn't seem that easy to me) 
+LYNX_BIN = lynx
+
+# no custom changes need to be done after this line (i hope...)
+# 
+# ---
+
+.SUFFIXES: .pdf .fo .html .xml
+XSLTPROC_OPTIONS = --xinclude
+FOLDER_XML = XML/
+FOLDER_PDF = pdf/
+FOLDER_HTML = html/
+
+LANGUAGES = en
+FILES = index development
+
+# a list of all buildable files in all languages
+BUILDABLE_FILES = $(foreach lang,$(LANGUAGES),$(addprefix $(lang)/,$(FILES)))
+
+all: pdf html readme
+
+pdf: $(addsuffix .pdf,$(BUILDABLE_FILES)) 
+
+html: $(addsuffix .html,$(BUILDABLE_FILES))
+
+# build pdf files 
+$(addsuffix .pdf,$(BUILDABLE_FILES)) : 
+	xsltproc $(XSLTPROC_OPTIONS) -o $(FOLDER_PDF)$(subst .pdf,.fo,$@) $(STYLESHEETS_DIR)/fo/docbook.xsl $(FOLDER_XML)$(subst .pdf,.xml,$@)
+	fop -pdf $(FOLDER_PDF)$@ -fo $(FOLDER_PDF)$(subst .pdf,.fo,$@)
+	rm -rf $(FOLDER_PDF)$(subst .pdf,.fo,$@)
+
+$(addsuffix .html,$(BUILDABLE_FILES)) : 
+	xsltproc $(XSLTPROC_OPTIONS) -o $(FOLDER_HTML)$@ $(STYLESHEETS_DIR)/html/docbook.xsl $(FOLDER_XML)$(subst .html,.xml,$@)
+
+readme: 
+	xsltproc $(XSLTPROC_OPTIONS) --stringparam generate.toc 0 --stringparam  chapter.autolabel 0 -o ../README.html $(STYLESHEETS_DIR)/xhtml/docbook.xsl $(FOLDER_XML)en/readme.xml
+	$(LYNX_BIN) -dump ../README.html -nolist -width 100 > ../README
+	rm ../README.html
+
+clean:
+	rm -rf $(FOLDER_PDF) $(FOLDER_HTML)
