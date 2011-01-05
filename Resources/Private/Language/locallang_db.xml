@@ -66,5 +66,67 @@
 			<label index="tt_address.is_organizer">is calendar organizer</label>
 			<label index="tt_address.is_location">is calendar location</label>
 		</languageKey>
+		
+		<languageKey index="de" type="array">
+			<label index="tx_czsimplecal_domain_model_event">Event</label>
+			<label index="tx_czsimplecal_domain_model_event.title">Titel</label>
+			<label index="tx_czsimplecal_domain_model_event.start_day">Tag Beginn</label>
+			<label index="tx_czsimplecal_domain_model_event.start_time">Zeit Beginn</label>
+			<label index="tx_czsimplecal_domain_model_event.end_day">Tag Ende</label>
+			<label index="tx_czsimplecal_domain_model_event.end_time">Zeit Ende</label>
+			<label index="tx_czsimplecal_domain_model_event.teaser">Kurzbeschreibung</label>
+			<label index="tx_czsimplecal_domain_model_event.description">Beschreibung</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type">Wiederholung</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type.none">(keine)</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type.daily">täglich</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type.weekly">wöchentlich</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type.monthly">monatlich</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_type.yearly">jährlich</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype">Wiederholung Untertyp</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.weekly">jede Woche</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.oddeven">alle zwei Wochen (gerade/ungerade)</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.2week">alle zwei Wochen</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.3week">alle drei Wochen</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.4week">alle vier Wochen</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.auto">(automatisch)</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.bydayofmonth">nach Tag des Monats</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.firstweekdayofmonth">erster [Wochentag] des Monats</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.secondweekdayofmonth">zweiter [Wochentag] des Monats</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.thirdweekdayofmonth">dritter [Wochentag] des Monats</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.lastweekdayofmonth">letzter [Wochentag] des Monats</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.penultimateweekdayofmonth">vorletzter [Wochentag] des Monats</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_subtype.relativetoeaster">Relativ zu Ostern</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_until">Wiederholung bis</label>
+			<label index="tx_czsimplecal_domain_model_event.recurrance_times">Anzahl der Widerholungen</label>
+			<label index="tx_czsimplecal_domain_model_event.location_name">Veranstaltungsort Name</label>
+			<label index="tx_czsimplecal_domain_model_event.location">Veranstaltungsort</label>
+			<label index="tx_czsimplecal_domain_model_event.organizer_name">Veranstalter Name</label>
+			<label index="tx_czsimplecal_domain_model_event.organizer">Veranstalter</label>
+			<label index="tx_czsimplecal_domain_model_event.categories">Kategorien</label>
+			<label index="tx_czsimplecal_domain_model_event.exceptions">Ausnahmen</label>
+			
+			<label index="tx_czsimplecal_domain_model_event.tab_general">Event</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_recurrance">Wiederholung</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_location">Veranstaltungsort</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_organizer">Veranstalter</label>
+			
+			<label index="tx_czsimplecal_domain_model_exception">Ausnahme</label>
+			<label index="tx_czsimplecal_domain_model_exception.title">Titel</label>
+			
+			<label index="tx_czsimplecal_domain_model_exception.recurrance_until">Wiederholung bis</label>
+			<label index="tx_czsimplecal_domain_model_exception.recurrance_times">Anzahl der Widerholungen</label>
+			<label index="tx_czsimplecal_domain_model_exception.events">Events</label>
+			<label index="tx_czsimplecal_domain_model_exception.exception_groups">Ausnahme Gruppen</label>
+			
+			<label index="tx_czsimplecal_domain_model_exceptiongroup">Ausnahme Gruppe</label>
+			<label index="tx_czsimplecal_domain_model_exceptiongroup.title">Titel</label>
+			<label index="tx_czsimplecal_domain_model_exceptiongroup.exceptions">Ausnahmen</label>
+			
+			<label index="tx_czsimplecal_domain_model_category">Kategorien</label>
+			<label index="tx_czsimplecal_domain_model_category.title">Titel</label>
+			
+			<label index="tt_address.is_organizer">ist Veranstalter für Kalender</label>
+			<label index="tt_address.is_location">ist Veranstaltungsort für Kalender</label>
+		</languageKey>
 	</data>
 </T3locallang>

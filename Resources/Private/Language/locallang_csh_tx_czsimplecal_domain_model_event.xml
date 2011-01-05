@@ -16,7 +16,19 @@
 			<label index="description.description">a long description for this event</label>
 			<label index="location_name.description">the name of the location this event takes place in</label>
 			<label index="organizer_name.description">the name of the institution or person the event is organized by</label>
-			<label index="category.description">category</label>
+			<label index="category.description">the categories this event belongs to</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="title.description">Ein Titel für dieses Event</label>
+			<label index="start_day.description">Der Tag an dem das Event startet</label>
+			<label index="start_time.description">Die Uhrzeit um die das Event startet (leer lassen um ein Ganztages-Event zu erzeugen)</label>
+			<label index="end_day.description">Der Tag an dem das Event endet (leer lassen, damit das Event am gleichen Tag endet)</label>
+			<label index="end_time.description">Die Uhrzeit um die das Event endet</label>
+			<label index="teaser.description">eine Kurzbeschreibung für dieses Event</label>
+			<label index="description.description">eine lange Beschreibung für das Event</label>
+			<label index="location_name.description">Der Name des Veranstaltungsortes dieses Events</label>
+			<label index="organizer_name.description">Der Name der Person oder Organisation, die das Event organisiert</label>
+			<label index="category.description">Die Kategorien, in die das Event gehört</label>
 		</languageKey>
     </data>
 </T3locallang>

@@ -9,5 +9,8 @@
         <languageKey index="default" type="array">
 			<label index="title.description">a title for this category</label>
 		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="title.description">ein Titel für diese Kategorie</label>
+		</languageKey>
     </data>
 </T3locallang>

@@ -53,5 +53,54 @@
 			<label index="field.action.order.ascending">ascending</label>
 			<label index="field.action.order.descending">descending</label>
 		</languageKey>
+		
+		<languageKey index="de" type="array">
+			<label index="sheet.general">Normal</label>
+			
+			<label index="field.useView">Ansicht</label>
+			<label index="field.useView.list">zeige einige Events (LIST)</label>
+			<label index="field.useView.show">zeige einzelnes Event (SINGLE)</label>
+			<label index="field.useView.day">Tagesansicht (DAY)</label>
+			<label index="field.useView.week">Wochenansicht (WEEK)</label>
+			<label index="field.useView.next">nächstes Event (NEXT)</label>
+			<label index="field.useView.minimonth">Mini-Monatsansicht (MINIMONTH)</label>
+			
+			<label index="field.action.startDate">Anfangsdatum</label>
+			<label index="field.action.startDate.default">(standard)</label>
+			<label index="field.action.startDate.thisYear">dieses Jahr</label>
+			<label index="field.action.startDate.thisMonth">dieser Monat</label>
+			<label index="field.action.startDate.thisWeek">diese Woche</label>
+			<label index="field.action.startDate.yesterday">gestern</label>
+			<label index="field.action.startDate.today">heute</label>
+			<label index="field.action.startDate.now">jetzt</label>
+			<label index="field.action.startDate.tomorrow">morgen</label>
+			<label index="field.action.startDate.nextMonth">nächsten Monat</label>
+			
+			<label index="field.action.endDate">Enddatum</label>
+			<label index="field.action.endDate.default">(standard)</label>
+			<label index="field.action.endDate.today">Ende des heutigen Tages</label>
+			<label index="field.action.endDate.24hours">in 24 Stunden</label>
+			<label index="field.action.endDate.tomorrow">Ende des morgigen Tages</label>
+			<label index="field.action.endDate.thisWeek">Ende dieser Woche</label>
+			<label index="field.action.endDate.thisMonth">Ende dieses Monats</label>
+			<label index="field.action.endDate.nextMonth">Ende nächsten Monats</label>
+			<label index="field.action.endDate.thisYear">Ende des Jahres</label>
+			
+			<label index="field.action.filterCategories">zeige nur diese Kategorien</label>
+			<label index="field.action.filterOrganizer">Zeige nur diese Veranstalter</label>
+			<label index="field.action.filterLocation">Zeige nur diese Veranstaltungsorte</label>
+			
+			<label index="field.action.maxEvents">maximale Anzahl von Events</label>
+			
+			<label index="field.action.orderBy">Sortierung nach</label>
+			<label index="field.action.orderBy.default">(standart)</label>
+			<label index="field.action.orderBy.start">Anfangsdatum</label>
+			<label index="field.action.orderBy.end">Enddatum</label>
+
+			<label index="field.action.order">Sortierung</label>
+			<label index="field.action.order.default">(use default)</label>
+			<label index="field.action.order.ascending">aufsteigend</label>
+			<label index="field.action.order.descending">absteigend</label>
+		</languageKey>
 	</data>
 </T3locallang>
