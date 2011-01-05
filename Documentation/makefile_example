@@ -8,7 +8,7 @@
 # To get this running, do the following steps
 #     1. install "make" on your machine
 #     2. copy this file and rename it to "makefile"
-#     3. change the following varialbes to the ones your machine is using
+#     3. change the following variables to the ones your machine is using
 #     4. enter the "Documentation" - folder and run "make"
 # 
 # You don't have to build all the files on each run. There are some targets

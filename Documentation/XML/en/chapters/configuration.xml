@@ -9,4 +9,51 @@
 
 	<title>Configuration</title>
 	
+	<section xml:id="chapter.configuration.extconf">
+		<title>extConf</title>
+		<para>
+			When installing the extension the <productname>Extension Manager</productname> will let 
+			you set some values.
+		</para>
+		<variablelist>
+			<varlistentry>
+				<term>recurrenceEnd</term>
+				<listitem>
+					<para>					
+						<productname>cz_simple_cal</productname> indexes recurring events. Here you can set until
+						what date the indexing should be done. Use any valid format for the
+						<link linkend="appendix.date"><literal>date</literal> type</link> here - <literal>2020-12-31</literal>
+						or <literal>+2 years</literal> could be some.
+					</para>
+					<note>
+						<para>Don't forget to reindex your events when using a relative date. The index could be outdated else.</para>
+					</note>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+	
+	<section xml:id="chapter.configuration.typoscript">
+		<title>TypoScript</title>
+		<para>
+			You can also configure the extension on page-level using TypoScript. Everything you configure goes into
+			<literal>plugin.tx_czsimplecal</literal>
+		</para>
+		<variablelist>
+			<varlistentry>
+				<term>persistence.storagePid</term>
+				<listitem>
+					<para>	
+						The page id where your records are stored. You can set multiple pages seperated by comma (<literal>,</literal>).
+					</para>
+					<note>
+						<para>
+							If you use tt_address for location and/or organizer, you also have to give the pids of these records.
+						</para>
+					</note>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+	
 </chapter>
