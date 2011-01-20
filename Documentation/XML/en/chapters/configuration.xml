@@ -39,9 +39,13 @@
 			You can also configure the extension on page-level using TypoScript. Everything you configure goes into
 			<literal>plugin.tx_czsimplecal</literal>
 		</para>
+		<para>
+			The following settings are <productname>Extbase</productname>-specific. If you have worked with <productname>Extbase</productname>
+			before, you should be quite familiar with them.
+		</para>
 		<variablelist>
 			<varlistentry>
-				<term>persistence.storagePid</term>
+				<term>persistence.storagePid<sbr/>(type: <literal>string</literal>)</term>
 				<listitem>
 					<para>	
 						The page id where your records are stored. You can set multiple pages seperated by comma (<literal>,</literal>).
@@ -53,7 +57,454 @@
 					</note>
 				</listitem>
 			</varlistentry>
+			<varlistentry>
+				<term>view.templateRootPath<sbr/>view.partialRootPath<sbr/>(type: <literal>string</literal>)</term>
+				<listitem>
+					<para>	
+						The path to the folder your customized templates or partials are stored in.
+					</para>
+					<note>
+						<para>
+							You find the default templates and partials in <filename>typo3conf/ext/cz_simple_cal/Resources/Private/Templates</filename> or <filename>Resources/Private/Partials</filename>.<sbr/>
+							If you copied those folders to <filename>fileadmin/template/cz_simple_cal/</filename> the paths to set were
+							<filename>fileadmin/template/cz_simple_cal/Templates/</filename> or <filename>fileadmin/template/cz_simple_cal/Partials/</filename> respectively.
+						</para>
+					</note>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>_LOCAL_LANG.[lang].[key]<sbr/>(type: <literal>string</literal>)</term>
+				<listitem>
+					<para>	
+						An array were you can override localized strings with your custom substitudes.<sbr/>
+						<literal>[lang]</literal> is the 2-sign-language code used by <productname>TYPO3</productname>, like <literal>en</literal> or <literal>de</literal>.<sbr/>
+						<literal>[key]</literal> is the identifier of the string. For a list of identifiers, have a look at <literal>EXT:cz_simple_cal/Resources/Private/Language/locallang.xml</literal>.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>settings<sbr/>(type: <literal>settings</literal>)</term>
+				<listitem>
+					<para>
+						See <link linkend="chapter.configuration.typoscript.settings"><literal>settings</literal></link> for all options.
+					</para>
+				</listitem>
+			</varlistentry>
 		</variablelist>
+		<section xml:id="chapter.configuration.typoscript.settings">
+			<title>type <literal>settings</literal></title>
+			<para>
+				All cz_simple_cal-configuration goes into <literal>plugin.tx_czsimplecal.settings</literal>.
+			</para>
+			<note>
+				<para>
+					Thanks to <productname>fluid</productname>, you'll have every setting available in each <productname>fluid</productname>-template 
+					through the property <literal>{settings}</literal>.
+				</para>
+			</note>
+			<variablelist>
+				<varlistentry>
+					<term>custom<sbr/>(type: <literal>array</literal>)</term>
+					<listitem>
+						<para>
+							This space is reserved for whatever values you'd like to have available in your templates.
+						</para>
+						<example>
+							<title>Using the <literal>custom</literal> array</title>
+							<para>When setting
+								<programlisting>plugin.tx_czsimplecal.settings.custom.foo = bar</programlisting>
+								in TypoScript, the <productname>Fluid</productname>-template
+								<programlisting>&lt;p&gt;{settings.custom.foo}&lt;/p&gt;</programlisting>
+								would print
+								<programlisting>&lt;p&gt;bar&lt;/p&gt;</programlisting>
+								in the frontend.
+							</para>
+						</example>
+						<note>
+							<para>
+								Please note, that this is just a dumb plain array! So it does know nothing of stdWraps and
+								cObjects. If you want to create content using TypoScript objects, use the
+								<literal>Tx_Fluid_ViewHelpers_CObjectViewHelper</literal> instead.
+							</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>EventIndex<sbr />(type: <literal>EventIndex configuration</literal>)</term>
+					<listitem>
+						<para>
+							See <link linkend="chapter.configuration.typoscript.EventIndex"><literal>EventIndex configuration</literal></link>.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Event<sbr />(type: <literal>Event configuration</literal>)</term>
+					<listitem>
+						<para>
+							See <link linkend="chapter.configuration.typoscript.Event"><literal>Event configuration</literal></link>.
+						</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</section>
+		<section xml:id="chapter.configuration.typoscript.EventIndex">
+			<title><literal>EventIndex configuration</literal></title>
+			<variablelist>
+				<varlistentry>
+					<term>allowedActions<sbr/>(type: <literal>comma seperated values</literal>)</term>
+					<listitem>
+						<para>
+							A comma seperated list of the actions that are enabled.
+						</para>
+						<note>
+							<para>
+								The TypoScript functions <literal>addToList</literal> and <literal>removeFromList</literal>
+								could come in handy here. They allow to add and remove values from a csv-list when not knowing
+								which values are already present.
+							</para>
+							<example>
+								<title>Using TypoScript functions</title>
+								<programlisting>plugin.tx_czsimplecal.settings.EventIndex {
+  allowedActions = foo,bar
+  allowedActions := addToList(baz)
+  allowedActions := removeFromList(foo)
+}</programlisting> will leave <literal>bar,baz</literal> as value of <literal>allowedActions</literal>.
+							</example>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>actions.[action]</term>
+					<listitem>
+						<para>Configure your Fake Actions here. There are two properties each configuration understands:</para>
+						<para><literal>useAction</literal> is mandatory and names the Real Action to use. You'll find a
+						list of all allowed Real Actions right below.
+						</para>
+						<para><literal>defaultPid</literal> is the pid where this action is typically shown. This property
+						is used	by a viewHelper to ease linking.</para>
+						<para>Additional configuration options are available depending on the selected Real Action.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+				
+			
+			
+			
+			<section xml:id="chapter.configuration.typoscript.EventIndex.list">
+				<title><literal>list</literal> action</title>
+				<para>
+					This action is used to display a list of timely connected events.
+				</para>
+				<para>
+					Examples would be to show upcoming events, the last events or all events on a certain month. 
+				</para>
+				<variablelist>
+					<varlistentry>
+						<term>startDate<sbr />(type: <literal>date</literal>)</term>
+						<listitem>
+							<para>
+								The start of the event list.<sbr />
+								By default this list contains only events that start <emphasis>after</emphasis> this point.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>endDate<sbr />(type: <literal>date</literal>)</term>
+						<listitem>
+							<para>
+								The end of the event list.<sbr />
+								By default this list contains only events that end <emphasis>before</emphasis> this point.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>includeStartedEvents<sbr />(type: <literal>boolean</literal>)</term>
+						<listitem>
+							<para>
+								When enabled, events that were already started on <literal>startDate</literal>
+								(but not yet finished) are also shown.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>excludeOverlongEvents<sbr />(type: <literal>boolean</literal>)</term>
+						<listitem>
+							<para>
+								When enabled, events that are not yet finished on <literal>endDate</literal>
+								(but already started) are also shown.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>order<sbr />(type: "<literal>asc</literal>" or "<literal>desc</literal>")</term>
+						<listitem>
+							<para>
+								Sort the resulting EventIndexes ascending (<literal>asc</literal>) or descending (<literal>desc</literal>).
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>orderBy<sbr />(type: "<literal>start</literal>" or "<literal>end</literal>")</term>
+						<listitem>
+							<para>
+								If the resulting events should be sorted by their <literal>start</literal> or <literal>end</literal> date. 
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>maxEvents<sbr />(type: <literal>positive integer</literal>)</term>
+						<listitem>
+							<para>
+								The maximum of events to return. 
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>filter.[field]<sbr />(type: <literal>array</literal>)</term>
+						<listitem>
+							<para>
+								 Filter the resulting events by a value from the database. You can assign multiple
+								 values seperated by comma.
+							</para>
+							<para>
+								 If you give multiple fields, all conditions must be fullfilled for a record to show up
+								 ("<literal>AND</literal>" when speaking in terms of SQL).
+							</para>
+							<example>
+								<title>Usage of filters</title>
+								<programlisting>filter.category = 42</programlisting>
+								selects only events of the category with uid <literal>42</literal>.
+								<programlisting>filter.organizer = 4,2</programlisting>
+								selects only events of the organizers with uids <literal>4</literal> and <literal>2</literal>.
+								<programlisting>filter.category = 4
+filter.location = 2</programlisting>
+								selects only events of the organizer with uid <literal>4</literal> at the location with 
+								uid <literal>2</literal>.
+							</example>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>getDate<sbr />(type: <literal>date</literal>)</term>
+						<listitem>
+							<para>
+								The date given here will be asumed to be <literal>now</literal> for relative dates in
+								<literal>startDate</literal> and <literal>endDate</literal>.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>getPostAllowed<sbr />(type: <literal>comma seperated values</literal>)</term>
+						<listitem>
+							<para>
+								Comma seperated names of the above settings that are allowed to be overriden by GET and POST
+								variables.
+							</para>
+						</listitem>
+					</varlistentry>
+				</variablelist>
+			</section>
+			<section xml:id="chapter.configuration.typoscript.EventIndex.countEvents">
+				<title><literal>countEvents</literal> action</title>
+				<para>
+					This action is used to display a number of available request without giving any information on the events.
+				</para>
+				<para>
+					An example would be the usage for a minicalender where you show the numbers of events of a day.
+				</para>
+				<variablelist>
+					<varlistentry>
+						<term>startDate<sbr />(type: <literal>date</literal>)</term>
+						<listitem>
+							<para>
+								The start of the event list.<sbr />
+								By default this list contains only events that start <emphasis>after</emphasis> this point.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>endDate<sbr />(type: <literal>date</literal>)</term>
+						<listitem>
+							<para>
+								The end of the event list.<sbr />
+								By default this list contains only events that end <emphasis>before</emphasis> this point.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>includeStartedEvents<sbr />(type: <literal>boolean</literal>)</term>
+						<listitem>
+							<para>
+								When enabled, events that were already started on <literal>startDate</literal>
+								(but not yet finished) are also shown.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>excludeOverlongEvents<sbr />(type: <literal>boolean</literal>)</term>
+						<listitem>
+							<para>
+								When enabled, events that are not yet finished on <literal>endDate</literal>
+								(but already started) are also shown.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>order<sbr />(type: "<literal>asc</literal>" or "<literal>desc</literal>")</term>
+						<listitem>
+							<para>
+								Sort the resulting EventIndexes ascending (<literal>asc</literal>) or descending (<literal>desc</literal>).
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>orderBy<sbr />(type: "<literal>start</literal>" or "<literal>end</literal>")</term>
+						<listitem>
+							<para>
+								If the resulting events should be sorted by their <literal>start</literal> or <literal>end</literal> date. 
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>maxEvents<sbr />(type: <literal>positive integer</literal>)</term>
+						<listitem>
+							<para>
+								The maximum of events to return. 
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>filter.[field]<sbr />(type: <literal>array</literal>)</term>
+						<listitem>
+							<para>
+								 Filter the resulting events by a value from the database. You can assign multiple
+								 values seperated by comma.
+							</para>
+							<para>
+								 If you give multiple fields, all conditions must be fullfilled for a record to show up
+								 ("<literal>AND</literal>" when speaking in terms of SQL).
+							</para>
+							<example>
+								<title>Usage of filters</title>
+								<programlisting>filter.category = 42</programlisting>
+								selects only events of the category with uid <literal>42</literal>.
+								<programlisting>filter.organizer = 4,2</programlisting>
+								selects only events of the organizers with uids <literal>4</literal> and <literal>2</literal>.
+								<programlisting>filter.category = 4
+filter.location = 2</programlisting>
+								selects only events of the organizer with uid <literal>4</literal> at the location with 
+								uid <literal>2</literal>.
+							</example>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>groupBy<sbr /></term>
+						<listitem>
+							<para>
+								The timespan for which to group the events.
+							</para>
+							<para>
+								Allowed values are <literal>day</literal>, <literal>week</literal>, <literal>month</literal> and <literal>year</literal>. 
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>getDate<sbr />(type: <literal>date</literal>)</term>
+						<listitem>
+							<para>
+								The date given here will be asumed to be <literal>now</literal> for relative dates in
+								<literal>startDate</literal> and <literal>endDate</literal>.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>getPostAllowed<sbr />(type: <literal>comma seperated values</literal>)</term>
+						<listitem>
+							<para>
+								Comma seperated names of the above settings that are allowed to be overriden by GET and POST
+								variables.
+							</para>
+						</listitem>
+					</varlistentry>
+				</variablelist>
+			</section>	
+			<section xml:id="chapter.configuration.typoscript.EventIndex.show">
+				<title><literal>show</literal> action</title>
+				<para>This action is just showing an EventIndex.</para>
+				<para>To explain the difference between the <literal>EventIndex</literal> and the <literal>Event</literal> action <literal>show</literal>:</para>
+				<para>
+					If you'd try to model a dancing class that meets once a week for three months, the <literal>Event</literal> action
+					<literal>show</literal> would represent the whole dancing class, an <literal>EventIndex</literal> action would, for instance, represent
+					the dancing hour on Thursday, 13th of January at 18:00.
+				</para>
+				<para>No further configuration available.</para>
+			</section>	
+		</section>
+		<section xml:id="chapter.configuration.typoscript.Event">
+			<title><literal>Event configuration</literal></title>
+			<variablelist>
+				<varlistentry>
+					<term>allowedActions<sbr/>(type: <literal>comma seperated values</literal>)</term>
+					<listitem>
+						<para>
+							A comma seperated list of the actions that are enabled.
+						</para>
+						<note>
+							<para>
+								The TypoScript functions <literal>addToList</literal> and <literal>removeFromList</literal>
+								could come in handy here. They allow to add and remove values from a csv-list when not knowing
+								which values are already present.
+							</para>
+							<example>
+								<title>Using TypoScript functions</title>
+								<programlisting>plugin.tx_czsimplecal.settings.EventIndex {
+  allowedActions = foo,bar
+  allowedActions := addToList(baz)
+  allowedActions := removeFromList(foo)
+}</programlisting> will leave <literal>bar,baz</literal> as value of <literal>allowedActions</literal>.
+							</example>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>actions.[action]</term>
+					<listitem>
+						<para>Configure your Fake Actions here. There are two properties each configuration understands:</para>
+						<para><literal>useAction</literal> is mandatory and names the Real Action to use. You'll find a
+						list of all allowed Real Actions right below.
+						</para>
+						<para><literal>defaultPid</literal> is the pid where this action is typically shown. This property
+						is used	by a viewHelper to ease linking.</para>
+						<para>Additional configuration options are available depending on the selected Real Action.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			
+			<section xml:id="chapter.configuration.typoscript.Event.show">
+				<title><literal>show</literal> action</title>
+				<para>This action is just showing a single event.</para>
+				<variablelist>
+					<varlistentry>
+						<term>getDate<sbr />(type: <literal>date</literal>)</term>
+						<listitem>
+							<para>
+								The date given here will be asumed to be <literal>now</literal> for relative dates in
+								<literal>startDate</literal> and <literal>endDate</literal>.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>getPostAllowed<sbr />(type: <literal>comma seperated values</literal>)</term>
+						<listitem>
+							<para>
+								Comma seperated names of the above settings that are allowed to be overriden by GET and POST
+								variables.
+							</para>
+						</listitem>
+					</varlistentry>
+				</variablelist>
+			</section>
+		</section>
 	</section>
+	
 	
 </chapter>

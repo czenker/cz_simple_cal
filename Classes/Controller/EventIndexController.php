@@ -84,6 +84,9 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_CzSimpleCal_Cont
 		);
 	}
 	
+	/**
+	 * count events and group them by an according timespan
+	 */
 	public function countEventsAction() {
 		$start = $this->getStartDate();
 		$end = $this->getEndDate();

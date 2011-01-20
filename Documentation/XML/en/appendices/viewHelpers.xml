@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xml:id="appendix.viewHelpers"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:ns="http://docbook.org/ns/docbook"
+     xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+
+	<title>ViewHelpers</title>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Array_&#x200B;JoinViewHelper</classname></title>
+		<para>
+			Join multiple values from an array into a string (kind of <productname>PHP</productname>'s <methodname>implode()</methodname>).
+		</para>
+		<para>
+			You might use the item property as well as the <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Array_&#x200B;JoinItemViewHelper</classname>
+ 			to give the items to be joined.
+ 		</para>
+		<variablelist>
+			<varlistentry>
+				<term>items<sbr/>(type: <literal>array</literal>)</term>
+				<listitem>
+					<para>an array of strings that need to be joined</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>by<sbr/>(type: <literal>string</literal>)</term>
+				<listitem>
+					<para>the string used to glue the items together</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>removeEmpty<sbr/>(type: <literal>boolean</literal>)</term>
+				<listitem>
+					<para>if true, empty items will be removed</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		
+
+ 		<example>
+ 			<title>
+ 				Using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Array_&#x200B;JoinViewHelper</classname> and
+ 				<classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Array_&#x200B;JoinItemViewHelper</classname>
+ 			</title>
+ 			<para>
+ 				<programlisting><![CDATA[<cal:array.join>
+  <cal.array.joinItem>foo</cal.array.joinItem>
+  <cal.array.joinItem>bar</cal.array.joinItem>
+  <cal.array.joinItem>baz</cal.array.joinItem>
+</cal:array.join>]]></programlisting> renders as
+ 				<computeroutput>foo, bar, baz</computeroutput>.
+ 			</para>
+ 		</example>
+ 		 		
+ 		<example>
+ 			<title>Using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Array_&#x200B;JoinViewHelper</classname> shorthand-syntax</title>
+ 			<para>
+ 				<programlisting><![CDATA[<cal:array.join items="{0:'foo', 1:'bar', 2:'baz'}" by=", " /]]>></programlisting> renders as
+ 				<computeroutput>foo, bar, baz</computeroutput>.
+ 			</para>
+ 		</example>
+	</section>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Calendar_&#x200B;CreateDateTimeViewHelper</classname></title>
+		<para>create a <classname>Tx_CzSimpleCal_&#x200B;Utility_&#x200B;DateTime</classname> object.</para>
+		<variablelist>
+			<varlistentry>
+				<term>dateTime<sbr/>(type: <literal>date</literal>)</term>
+				<listitem>
+					<para>some string of the type <literal>date</literal></para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		<example>
+ 			<title>
+ 				Using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Array_&#x200B;JoinViewHelper</classname> and
+ 				<classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Array_&#x200B;JoinItemViewHelper</classname>
+ 			</title>
+ 			<programlisting><![CDATA[<f:map alias="foo:{cal:calendar.dateTime(dateTime:'now')}">
+  <f:debug>{foo}</f:debug>
+</f:map>]]></programlisting>
+ 		</example>
+	</section>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Calendar_&#x200B;OnNewDayViewHelper</classname></title>
+		<para>renders its content if the submitted event is on a different date then the previous one</para>
+		<variablelist>
+			<varlistentry>
+				<term>event<sbr/>(type: <literal>Tx_CzSimpleCal_&#x200B;Domain_&#x200B;Model_&#x200B;EventIndexer</literal>)</term>
+				<listitem>
+					<para>the event to compare to the previously submitted one</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>label<sbr/>(type: <literal>string</literal>)</term>
+				<listitem>
+					<para>if you need multiple irrelated instances set this to something unique</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		<example>
+			<title>Using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Calendar_&#x200B;OnNewDayViewHelper</classname></title>
+			<programlisting><![CDATA[<f:for each="{events}" as="event">
+  <cal:calendar.onNewDay event="{event}">
+    Good morning. This is a new day.
+  </cal:calendar.onNewDay>
+  {event.title}
+</f:for>]]></programlisting>
+		</example>
+	</section>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Condition_&#x200B;CompareViewHelper</classname></title>
+		<para>Compare two values. Best used in conjunction with <classname>Tx_Fluid_&#x200B;ViewHelpers_&#x200B;IfViewHelper</classname>.</para>
+		<variablelist>
+			<varlistentry>
+				<term>value1<sbr/>(type: <literal>mixed</literal>)</term>
+				<listitem><para>first value</para></listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>value2<sbr/>(type: <literal>mixed</literal>)</term>
+				<listitem><para>second value</para></listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>operation<sbr/>(type: <literal>string</literal>)</term>
+				<listitem>
+					<para>The following operations are supported:</para>
+					<variablelist>
+						<varlistentry>
+							<term><literal>=</literal>, <literal>==</literal> (default)</term>
+							<listitem><para>check if both values are equal (integer 10 would be equal to string "10").</para></listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><literal>===</literal></term>
+							<listitem><para>check if both values are identical (integer 10 would <emphasis>not</emphasis> be equal to string "10")</para></listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><literal>!=</literal>, <literal>&lt;&gt;</literal></term>
+							<listitem><para>check if both values are not equal</para></listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><literal>!==</literal></term>
+							<listitem><para>check if both values are not equal and do an additional type check</para></listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><literal>&gt;</literal></term>
+							<listitem><para>check if the first value is larger than the second one</para></listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><literal>&gt;=</literal>, <literal>=&gt;</literal></term>
+							<listitem><para>check if the first value is larger or equal than the second one</para></listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><literal>&lt;</literal></term>
+							<listitem><para>check if the first value is smaller than the second one</para></listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><literal>&lt;=</literal>, <literal>=&lt;</literal></term>
+							<listitem><para>check if the first value is smaller or equal than the second one</para></listitem>
+						</varlistentry>
+					</variablelist> 
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		
+		<example>
+			<title>Usage of <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Condition_&#x200B;CompareViewHelper</classname></title>
+			<programlisting><![CDATA[<f:if
+  condition="{x:condition.compare(value1: 10, value2: 10)}">
+  Both values are equal</f:if>
+<f:if
+  condition="{x:condition.compare(value1: 10, value2: '10', operation:'=')}">
+  Both values are equal</f:if>
+<f:if
+  condition="{x:condition.compare(value1: 10, value2: '10', operation:'===')}">
+  Both values are equal</f:if>
+<f:if
+  condition="{x:condition.compare(value1: person.age, value2: 18, operation='&lt;')}">
+  You are too young</f:if>]]></programlisting>
+			<para>The first expression would be true, as <literal>=</literal> is the default comparison.</para>
+			<para>The second expression would be true as the integer <literal>10</literal> is equal to the string "<literal>10</literal>" in <productname>PHP</productname>.</para>
+			<para>The third expression would be false as the types (integer and string) won't match.</para>
+			<para>The fourth expression would evaluate depending on the value of the <literal>age</literal> property of the <literal>person</literal> object.</para>
+		</example>
+	</section>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Condition_&#x200B;OneNotEmptyViewHelper</classname></title>
+		<para>A view helper to return true if one of the values is not empty.</para>
+		<variablelist>
+			<varlistentry>
+				<term>values<sbr/>(type: <literal>array</literal>)</term>
+				<listitem><para>the values</para></listitem>
+			</varlistentry>
+		</variablelist>
+		<example>
+			<title>Usage of <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Condition_&#x200B;OneNotEmptyViewHelper</classname></title>
+			<programlisting><![CDATA[<f:if condition="{x:condition.oneNotEmpty(0:'', 1:0, 2:{})}">
+  Hello World</f:if>
+<f:if condition="{x:condition.oneNotEmpty(0:foo.bar, 1:foo.baz)}">
+  {foo.bar} {foo.baz}</f:if>]]></programlisting>
+			<para>The first expression would evaluate to false as all these given values are considered empty.</para>
+			<para>The second expression evaluates to true if eiter <literal>foo.bar</literal> or <literal>foo.baz</literal> returns a non-empty value.</para>
+		</example>
+	</section>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Format_&#x200B;DateTimeViewHelper</classname></title>
+		<para>Formats a unix timestamp or <classname>DateTime</classname> object to a human-readable, localized string.</para>
+		<variablelist>
+			<varlistentry>
+				<term>timestamp<sbr/>(type: <literal>integer</literal> | <literal>date</literal> | <literal>DateTime</literal>)</term>
+				<listitem><para>This might be either
+					<itemizedlist>
+						<listitem><para>a unix timestamp</para></listitem>
+						<listitem><para>a <classname>DateTime</classname> object (this includes <classname>Tx_CzSimpleCal_&#x200B;Utility_&#x200B;DateTime</classname>)</para></listitem>
+						<listitem><para>some string of the type <literal>date</literal></para></listitem>
+					</itemizedlist>
+				</para></listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>format<sbr/>(type: <literal>string</literal></term>
+				<listitem>
+					<para>Formatting string to be parsed by <methodname>strftime()</methodname>. See the 
+						<link xlink:href="http://www.php.net/manual/en/function.strftime.php"><productname>PHP</productname> documentation on <methodname>strftime()</methodname></link> for details.
+					</para>
+					<warning><para>
+						The <productname>Fluid</productname> <classname>Tx_Fluid_&#x200B;ViewHelpers_&#x200B;Format_&#x200B;DateViewHelper</classname>
+						uses a different syntax for the <literal>format</literal> property. 
+					</para>
+					<para>
+						That is because we use a different <productname>PHP</productname> function to format the date and
+						time as this function has the advantage of using localized names for months and weekdays. 
+					</para>
+					</warning>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>get<sbr/>(type: <literal>date</literal></term>
+				<listitem>
+					<para>Get some related date.</para>
+					<para>
+						You should usually use a relative format here. This is applied to the date given in <literal>timestamp</literal>.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		
+		<example>
+			<title>Using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Format_&#x200B;DateTimeViewHelper</classname></title>
+			<programlisting><![CDATA[<cal:format.dateTime timestamp="1234567890" /></programlisting>
+<cal:format.dateTime timestamp="2009-02-13 20:31:30GMT" />
+<cal:format.dateTime timestamp="dateTimeObject" />
+<cal:format.dateTime format="%a, %e. %B %G" timestamp="1234567890" />
+<cal:format.dateTime timestamp="1234567890" get="+1 day"/>
+<cal:format.dateTime timestamp="1234567890" get="first of this month"/>]]></programlisting>
+			<para>
+				The first two examples would output <computeroutput>2009-02-13</computeroutput> as this is the default
+				formatting option.
+			</para>
+			<para>
+				The third example would output the date in the <literal>YYYY-MM-DD</literal> format of the given
+				<classname>DateTime</classname> object.
+			</para>
+			<para>The fourth example would output <computeroutput>Fre, 13. Februar 2009</computeroutput> for german localization.</para>
+			<para>The fifth example outputs <computeroutput>2009-02-14</computeroutput>.</para>
+			<para>The sixth example outputs <computeroutput>2009-02-01</computeroutput>.</para>
+		</example>
+	</section>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Format_&#x200B;NumberChoiceViewHelper</classname></title>
+		<para>Renders a string based on a given number.</para>
+		<para>Usefull for localization of singular and plural and many other things.</para>
+		<variablelist>
+			<varlistentry>
+				<term>number<sbr/>(type: <literal>integer</literal>)</term>
+				<listitem><para>The number that determines which text to use.</para></listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>format<sbr/>(type: <literal>numberChoice format</literal>)</term>
+				<listitem><para>The <literal>numberChoice format</literal> will be explained in more detail a few lines below.</para></listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>arguments<sbr/>(type: <literal>array</literal>)</term>
+				<listitem><para>Values for the markerst. The array key is the name of the marker, its value the value to substitude.</para></listitem>
+			</varlistentry>
+		</variablelist>
+		<section>
+			<title>The <literal>numberChoice format</literal></title>
+			<note>
+				<para>
+					The syntax is identical to the <methodname>format_&#x200B;number_&#x200B;choice()</methodname> helper of
+					<productname>symfony</productname> - and they took the class from the <productname>PRADO</productname> project.
+					If you are familiar with either, there is nothing new to learn for you here.
+				</para>
+			</note>
+			<para>The basic idea is to define intervals of numbers and a corresponding string to use. 
+				Intervals are closed when using square brackets (<literal>[</literal> and <literal>]</literal>) meaning, they include
+ 				the given number or open when using round brackets (<literal>(</literal> and <literal>)</literal>) meaning, they exclude 
+ 				the given number.
+ 			</para>
+ 			<example>
+ 				<title>Examples for intervals</title>
+ 				<itemizedlist>
+					<listitem><para><literal>[0]</literal> would match 0.</para></listitem>
+					<listitem><para><literal>[0,1]</literal> would match 0 and 1.</para></listitem>
+					<listitem><para><literal>[0,2)</literal> would match 0 and 1, not 2.</para></listitem>
+					<listitem><para><literal>[0,+Inf]</literal> would match every non-negative number.</para></listitem>
+					<listitem><para><literal>(0,+Inf]</literal> would match every positive number.</para></listitem>
+					<listitem><para><literal>[-Inf,+Inf]</literal> would match any number</para></listitem>
+				</itemizedlist>
+ 			</example>
+ 			<para>You can combine different conditions using the pipe (<literal>|</literal>.
+				The conditions are parsed from left to right using the first matching,
+				so your conditions won't have to be distinct, although it is considered
+				a good practice.
+			</para>
+			<example>
+				<title>Examples for <literal>numberChoice format</literal></title>
+ 				<itemizedlist>
+					<listitem><para><literal>[0] no eggs|[1,+Inf] there are eggs</literal></para></listitem>
+					<listitem><para><literal>[0] no eggs|[1,12) some eggs|[12] one dozen eggs|(12,+Inf]lots of eggs</literal></para></listitem>
+				</itemizedlist>
+			</example>
+			<para>
+				And of course you can use placeholders using the <literal>###foobar###</literal> syntax.
+				Those placeholders are substituted with the settings used in <literal>arguments</literal>.
+			</para>
+			<example>
+				<title>Example for <literal>numberChoice format</literal> with placeholder</title>
+ 				<literal>[0] no eggs|[1] 1 egg|[2,+Inf] ###number### eggs</literal>
+			</example>
+		</section>
+		<example>
+			<title>Basic usage of <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Format_&#x200B;NumberChoiceViewHelper</classname></title>
+			<programlisting><![CDATA[<f:format.numberChoice text="[0] no eggs|[1,+Inf] eggs" number="1"/>
+<f:format.numberChoice number="1">
+  [0] no eggs|[1,+Inf] eggs
+</f:format.numberChoice>]]></programlisting>
+			<para>Both of these version are interchangeable and would output <computeroutput>eggs</computeroutput>.</para>
+		</example>
+		
+		<example>
+			<title>Using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Format_&#x200B;NumberChoiceViewHelper</classname> with placeholders</title>
+			<programlisting><![CDATA[<f:format.numberChoice number="42" arguments="{number:42}">
+  [0] no eggs|[1] 1 egg|[2,+Inf] ###number### eggs
+</f:format.numberChoice>]]></programlisting>
+			<para>will output <computeroutput>42 eggs</computeroutput>.</para>
+		</example>
+		
+		<example>
+			<title>Using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Format_&#x200B;NumberChoiceViewHelper</classname> with localization</title>
+			<programlisting><![CDATA[<f:format.numberChoice number="42" arguments="{number:42}">
+  <f:translate key="foobar">
+</f:format.numberChoice>]]></programlisting>
+		</example>
+	</section>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Format_&#x200B;TimespanToWordsViewHelper</classname></title>
+		<para>Renders a readable version for a timespan for days with as little repetition as possible.</para>
+		<variablelist>
+			<varlistentry>
+				<term>start<sbr/>(type: <literal>Tx_CzSimpleCal_&#x200B;Utility_&#x200B;DateTime</literal>)</term>
+				<listitem><para>the start day</para></listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>end<sbr/>(type: <literal>Tx_CzSimpleCal_&#x200B;Utility_&#x200B;DateTime</literal>)</term>
+				<listitem><para>the end day</para></listitem>
+			</varlistentry>
+		</variablelist>
+		
+		<example>
+			<title>Example using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Format_&#x200B;TimespanToWordsViewHelper</classname></title>
+			<para>
+				<programlisting><![CDATA[<cal:format.timespan start="{christmasEve2010}" end="{newYearsEve2010}" />]]></programlisting>
+				outputs <computeroutput>Dec 24 to 31, 2010</computeroutput>.
+			</para>
+		</example>
+	</section>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Link_&#x200B;ActionViewHelper</classname></title>
+		<para>
+			Identical to the <classname>Tx_Fluid_&#x200B;ViewHelpers_&#x200B;Link_&#x200B;ActionViewHelper</classname>, but
+			it determines the correct pageUid to use based on the actions configuration in TypoScript.
+		</para>
+	</section>
+	
+</appendix>

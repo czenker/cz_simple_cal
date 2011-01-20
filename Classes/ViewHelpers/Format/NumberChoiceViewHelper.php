@@ -105,9 +105,9 @@ class Tx_CzSimpleCal_ViewHelpers_Format_NumberChoiceViewHelper extends Tx_Fluid_
 	/**
 	 * render a string based on a given number
 	 * 
-	 * @param integer  $number     the number that needs some text
+	 * @param integer  $number     the number that determines which text to use
 	 * @param string   $text       the text configuration
-	 * @param array    $arguments  markers that need to be substituted
+	 * @param array    $arguments  values for the markers
 	 * @return string Formatted string
 	 * @author Christian Zenker <christian.zenker@599media.de>
 	 */

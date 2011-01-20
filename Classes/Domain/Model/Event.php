@@ -298,6 +298,11 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 		return $this->exceptions_;
 	}
 
+	/**
+	 * get all recurrances of this event
+	 * 
+	 * @return array
+	 */
 	public function getRecurrances() {
 		$factory = new Tx_CzSimpleCal_Recurrance_Factory();
 		return $factory->buildRecurranceForEvent($this);
@@ -494,6 +499,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * get a list of next appointments
 	 * 
 	 * @param $limit
+	 * @return array
 	 */
 	public function getNextAppointments($limit = 3) {
 		if(is_null($this->nextAppointments) || $this->nextAppointmentsCount < $limit) {
@@ -509,6 +515,11 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 		}
 	}
 	
+	/** 
+	 * get the next appointment of this event if any
+	 * 
+	 * @return Tx_CzSimpleCal_Domain_Model_EventIndex | null
+	 */
 	public function getNextAppointment() {
 		$appointments = $this->getNextAppointments(1);
 		return empty($appointments) ? null : current($appointments);

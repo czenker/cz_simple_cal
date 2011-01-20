@@ -24,7 +24,7 @@
  * 	* "=" or "=="    check if both values are equal (integer 10 would be equal to string "10")
  *  * "==="          check if both values are identical (integer 10 would NOT be equal to string "10")
  *  * "!=" or "<>"   check if both values are not equal
- *  * "!=="          do an additional type chekc
+ *  * "!=="          do an additional type check
  *  * ">"            check if the first value is larger than the second one
  *  * ">=" or "=>"   check if the first value is larger or equal than the second one
  *  * "<"            check if the first value is smaller than the second one
@@ -60,10 +60,7 @@
  *
  * <code title="comparing object method results">
  *     <f:if condition="{x:condition.compare(value1: person.age, value2: 18, operation='&lt;')}">You are too young</f:if>
- * </code>   
- *  Condition would evaluate to false as "===" does a type check.
- * 
- *   
+ * </code>  
  *   
  * @license WTFPL, Version 2
  * @author Christian Zenker <christian.zenker@599media.de>

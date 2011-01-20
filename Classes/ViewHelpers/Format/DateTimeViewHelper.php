@@ -82,8 +82,8 @@ class Tx_CzSimpleCal_ViewHelpers_Format_DateTimeViewHelper extends Tx_Fluid_Core
 	/**
 	 * Render the supplied unix timestamp in a localized human-readable string.
 	 *
-	 * @param integer|string|DateTime $timestamp unix timestamp
-	 * @param string $format Format String to be parsed by strftime
+	 * @param integer|string|DateTime $timestamp unix timestamp, a DateTime object or type "date"
+	 * @param string $format Formatting string to be parsed by strftime
 	 * @param string $get get some related date (see class doc)
 	 * @return string Formatted date
 	 * @author Christian Zenker <christian.zenker@599media.de>
@@ -109,7 +109,7 @@ class Tx_CzSimpleCal_ViewHelpers_Format_DateTimeViewHelper extends Tx_Fluid_Core
 		} elseif(is_numeric($timestamp)) {
 			$timestamp = intval($timestamp);
 		} elseif(is_string($timestamp)) {
-			$timestamp = strtotime($timestamp);
+			$timestamp = Tx_CzSimpleCal_Utility_StrToTime::strtotime($timestamp);
 		} elseif($timestamp instanceof DateTime) {
 			$timestamp = $timestamp->format('U');
 		} else {
@@ -119,7 +119,7 @@ class Tx_CzSimpleCal_ViewHelpers_Format_DateTimeViewHelper extends Tx_Fluid_Core
 	}
 	
 	/**
-	 * do the modification do a relative date
+	 * do the modification to a relative date
 	 * 
 	 * @param $timestamp
 	 * @param $get

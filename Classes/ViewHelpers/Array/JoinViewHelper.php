@@ -21,22 +21,46 @@
  *                                                                        */
 
 /**
+ * join multiple values from an array into a string
+ * (kind of PHP's implode())
  * 
- *
+ * you might use the item property as well as the 
+ * Tx_CzSimpleCal_ViewHelpers_Array_JoinItemViewHelper
+ * to give the items to be joined
+ * 
+ * <example>
+ *   <cal:array.join items="{0:'foo', 1:'bar', 2:'baz'}" by=", " />
+ *   
+ *   renders as 
+ *   
+ *   "foo, bar, baz"
+ * </example>
+ * 
+ * <example>
+ *   <cal:array.join>
+ *     <cal.array.joinItem>foo</cal.array.joinItem>
+ *     <cal.array.joinItem>bar</cal.array.joinItem>
+ *     <cal.array.joinItem>baz</cal.array.joinItem>
+ *   </cal:array.join>
+ *   
+ *   renders as
+ *   
+ *   "foo, bar, baz"
+ * </example>
+ * 
  * @version $Id: JoinViewHelper.php$
  * @package Fluid
  * @subpackage ViewHelpers
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @api
  * @scope prototype
- *
  */
 class Tx_CzSimpleCal_ViewHelpers_Array_JoinViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * @param array $items
-	 * @param string $by
-	 * @param boolean $removeEmpty
+	 * @param array $items an array of strings that need to be joined
+	 * @param string $by the string used to glue the items together
+	 * @param boolean $removeEmpty if true, empty items will be removed
 	 * @return string Rendered result
 	 */
 	public function render($items=null, $by=', ', $removeEmpty = false) {

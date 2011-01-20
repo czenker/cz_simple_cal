@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="chapter.faq"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:ns="http://docbook.org/ns/docbook"
+     xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+
+	<title>FAQs</title>
+	
+	<qandaset>
+		<qandaentry>
+			<question>
+				<para>Why isn't [name any feature here] implemented?</para>
+			</question>
+			<answer>
+				<para>Most likely because no one has needed it yet.</para>
+				<para>
+					Following the <emphasis>YAGNI</emphasis> (= &quot;You Ain't Gonna Need It&quot;) principle of programming,
+					features are implemented as soon as they are needed. If you miss a feature, it might be because no one has
+					programmed or at least requested it.
+				</para>
+				<para>
+					The best way to get your feature added is by opening a ticket, doing the coding and submitting your work.<sbr/>
+					If you are not a coder please submit a feature request to the bugtracker. If you find, someone else has already
+					requested that feature, please comment on it and state that you'd like to have that feature, too. This way
+					we can easily decide which are the most desired features.<sbr/>
+					And last but not least you could consider sponsoring the development of a feature. Get in touch with us if you
+					wish to do so.
+				</para>
+			</answer>
+		</qandaentry>
+		<qandaentry>
+			<question>
+				<para>I'm a programmer, how can I dive into the code?</para>
+			</question>
+			<answer>
+				<para>
+					You should be familiar with <productname>Extbase</productname> and <productname>Fluid</productname>.
+					The source code itself is documented inline, so there should be a brief explanation on what each class and 
+					method is used for. Read the according section to understand the <link linkend="chapter.administration.concepts">
+					basic concepts and philosophies of the extension</link>.
+				</para>
+				<para>
+					If you have any difficulties on understanding the code, you can contact the developer through the email-adressen
+					given in <productname>TYPO3 Forge</productname>. 
+				</para>
+			</answer>
+		</qandaentry>
+	</qandaset>
+	
+</chapter>

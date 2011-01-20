@@ -9,4 +9,16 @@
 
 	<title>Known problems</title>
 	
+	<itemizedlist>
+		<listitem>
+			<para>Only compatible with <productname>Extbase</productname> 1.2 (shipped with <productname>TYPO3</productname> 4.4) right now.</para>
+			<para>
+				As the minor versions of <productname>Extbase</productname> usually introduce breaking changes, you won't be
+				able to run this extension with <productname>TYPO3</productname> 4.5. We try on fixing that soon, but we can't guarantee there are no breaking
+				changes in this extension, too.
+			</para>
+		</listitem>
+	</itemizedlist>
+	
+	<para>Any known bugs can be found in the <link xlink:href="http://forge.typo3.org/projects/extension-cz_simple_cal/issues">official bugtracker for <productname>cz_simple_cal</productname></link>.</para>
 </chapter>

@@ -8,81 +8,77 @@
      xmlns:mathml="http://www.w3.org/1998/Math/MathML">
 
 	<title>Concepts</title>
-		<para>This section tries to explain some of the basic concepts behind the calendar.</para>
+	<para>This section tries to explain some of the basic concepts of the calendar.</para>
+	
+	<section xml:id="chapter.concepts.eventindex">
+		<title>Event Index</title>
+		<para>
+			<productname>Calendar Base</productname> introduced something called <emphasis>New Recurring Event Model</emphasis>.
+			This concept was borrowed and applied to all of <productname>cz_simple_cal</productname> events by default. The index is automatically updated if you modify
+			an event. So depending on how many recurrances and exceptions you've set up, storing might take a while longer.
+		</para>
+		<note>
+			The extension is smart enough to notify if you changed some values that actually require indexing to run again.
+			So if you only change the title or a description, no indexing is done.
+		</note>
+		<note>
+			<para>You can use the <productname>scheduler</productname> extension to re-index all your events. This 
+			should be done if you updated Exceptions that are applied to multiple Events, moved records around or if you 
+			changed the <code>recurrenceEnd</code> setting. The <productname>scheduler</productname> is a core extension
+			and shipped with <productname>TYPO3</productname>, but you might have to install it in the extension manager.
+			</para>
+		</note>
 		
-		<section xml:id="chapter.concepts.eventindex">
-			<title>Event Index</title>
-			<para>
-				<productname>Calendar Base</productname> introduced something called <literal>New Recurring Event Model</literal>.
-				This concept was borrowed and applied to all events by default. The index is automatically updated if you modify
-				an event. So depending on how many recurrances and exceptions you've set up, storing might take a while longer.
-			</para>
-			<note>
-				The extension is smart enough to notify if you changed some values that actually require indexing to run again.
-				So if you only change the title or a description, no indexing is done.
-			</note>
-			<note>
-				<para>You can use the <productname>scheduler</productname> extension to re-index all your events. This 
-				should be done if you updated Exceptions that are applied to multiple Events, moved records around or if you 
-				changed the <code>recurrenceEnd</code> setting. The <productname>scheduler</productname> is a core extension
-				and shipped with <productname>TYPO3</productname>, but you might have to install it in the extension manager.
-				</para>
-			</note>
-			
-			<para>
-				Due to the indexing of events you usually deal with <link linkend="glossary.eventindex">EventIndices</link> in your
-				templates. But the objects are smart enough to tunnel unknown methods to the <link linkend="glossary.eventindex">Event</link>
-				they belong to. So you can work with <literal>EventIndices</literal> as if they were Events.   
-			</para>
-		</section>
-		
-		<section xml:id="chapter.concepts.fake-actions">
-			<title>Fake Actions</title>
-			<para>
-				To make the extension as flexible as possible you can add <link linkend="glossary.fake-actions">fake actions</link>
-				to the controllers in your TypoScript.
-			</para>
-			<para>
-				At the moment the only <link linkend="glossary.real-actions">real actions</link> are <literal>listAction</literal>, <literal>showAction</literal> and
-				<literal>countEventsAction</literal>. <literal>DispatchAction</literal> serves as a fallback and default action.
-			</para>
-			<para>See <link linkend="chapter.howto.add-fake-action">HowTo: Add a fake action</link> to learn - guess what - how to add a fake action.</para>
-		</section>
-		
-		<section xml:id="chapter.concepts.date-type">
-			<title>The type <literal>date</literal></title>
-			<para>
-				This type is quite heavily used in the extension. It allowes for a very flexible and simple calculation of dates
-				and times. It is based on the english language and international date and time formats.
-			</para>
-			<para>
-				The recommended way of setting a fixed day and time is the <literal>YYYY-MM-DD (HH:MM:SS[T]?)?</literal> syntax, but
-				there are also different valid syntaxes:
-			</para>
-			<example>
-				<title>Examples of valid dates and times</title>
-				<itemizedlist>
-					<listitem><para><userinput>2009-02-13</userinput></para></listitem>
-					<listitem><para><userinput>2009-02-13 23:31:30</userinput></para></listitem>
-					<listitem><para><userinput>2009-02-13 23:31:30UTC</userinput></para></listitem>
-					<listitem><para><userinput>13.2.09 23.31.30+00:00</userinput></para></listitem>
-					<listitem><para><userinput>February 13th, 2009 11 pm</userinput></para></listitem>
-				</itemizedlist>
-			</example>
-			<note><para>Note that you can't use localized month names here.</para></note>
-			<para>Additionally you can use relative dates and chaining of different relative dates.</para>
-			<example>
-				<title>Examples of valid relative dates</title>
-				<itemizedlist>
-					<listitem><para><userinput>yesterday</userinput></para></listitem>
-					<listitem><para><userinput>last monday</userinput></para></listitem>
-					<listitem><para><userinput>+1 month -1 day</userinput></para></listitem>
-					<listitem><para><userinput>first day this month|monday this week</userinput></para></listitem>
-				</itemizedlist>
-			</example>
-			<para>See <link linkend="appendix.date">the appendix for the complete syntax.</link></para>
-		</section>
+		<para>
+			Due to the indexing of events you usually deal with <link linkend="glossary.eventindex">EventIndices</link> in your
+			templates. But the objects are smart enough to tunnel unknown methods to the <link linkend="glossary.eventindex">Event</link>
+			they belong to. So you can work with <literal>EventIndices</literal> as if they were Events.   
+		</para>
+	</section>
+	
+	<section xml:id="chapter.concepts.fake-actions">
+		<title>Fake Actions</title>
+		<para>
+			To make the extension as flexible as possible you can add <link linkend="glossary.fake-actions">fake actions</link>
+			to the controllers in your TypoScript.
+		</para>
+		<para>
+			Fake Actions are actions you can add to a Controller solely through TypoScript.
+		</para>
+		<para>See <link linkend="chapter.howto.add-fake-action">HowTo: Add a fake action</link> to learn - guess what - how to add a fake action.</para>
+	</section>
+	
+	<section xml:id="chapter.concepts.date-type">
+		<title>The type <literal>date</literal></title>
+		<para>
+			This type is quite heavily used in the extension. It allowes for a very flexible and simple calculation of dates
+			and times. It is based on the english language and international date and time formats.
+		</para>
+		<para>
+			The recommended way of setting a fixed day and time is the <literal>YYYY-MM-DD (HH:MM:SS[T]?)?</literal> syntax, but
+			there are also different valid syntaxes:
+		</para>
+		<example>
+			<title>Examples of valid dates and times</title>
+			<itemizedlist>
+				<listitem><para><userinput>2009-02-13</userinput></para></listitem>
+				<listitem><para><userinput>2009-02-13 23:31:30</userinput></para></listitem>
+				<listitem><para><userinput>2009-02-13 23:31:30UTC</userinput></para></listitem>
+				<listitem><para><userinput>13.2.09 23.31.30+00:00</userinput></para></listitem>
+				<listitem><para><userinput>February 13th, 2009 11 pm</userinput></para></listitem>
+			</itemizedlist>
+		</example>
+		<note><para>Note that you can't use localized month names here.</para></note>
+		<para>Additionally you can use relative dates and chaining of different relative dates.</para>
+		<example>
+			<title>Examples of valid relative dates</title>
+			<itemizedlist>
+				<listitem><para><userinput>yesterday</userinput></para></listitem>
+				<listitem><para><userinput>last monday</userinput></para></listitem>
+				<listitem><para><userinput>+1 month -1 day</userinput></para></listitem>
+				<listitem><para><userinput>first day this month|monday this week</userinput></para></listitem>
+			</itemizedlist>
+		</example>
+		<para>See <link linkend="appendix.date">the appendix for the complete syntax.</link></para>
+	</section>
 </chapter>
-
-
-

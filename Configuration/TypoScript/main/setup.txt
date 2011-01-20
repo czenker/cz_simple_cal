@@ -31,7 +31,7 @@ plugin.tx_czsimplecal {
 					maxEvents = 9999
 					orderBy   = start
 					order     = ASC
-					filterCategories = 
+					# filter.categories = 42
 					
 					# excludeOverlongEvents = 0
 					# includeStartedEvents = 0
@@ -105,6 +105,10 @@ plugin.tx_czsimplecal {
 				show {
 				}
 			}
+		}
+		
+		# this is where you can put your customized options 
+		custom {
 		}
 	}
 }

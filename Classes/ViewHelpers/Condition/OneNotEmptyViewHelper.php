@@ -23,9 +23,7 @@
 class Tx_CzSimpleCal_ViewHelpers_Condition_OneNotEmptyViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Compare two values
-	 *
-	 * @param array $value
+	 * @param array $values the values
 	 * @return boolean if the condition is met
 	 * @author Christian Zenker <christian.zenker@599media.de>
 	 */

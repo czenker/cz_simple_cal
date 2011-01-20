@@ -19,7 +19,14 @@
 
 
 /**
+ * create a Tx_CzSimpleCal_Utility_DateTime object
  * 
+ * Usage example
+ * <example>
+ *   <f:map alias="foo:{cal:calendar.dateTime(dateTime:'now')}">
+ *     <f:debug>{foo}</f:debug>
+ *   </f:map>
+ * </example>
  *  
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @author Christian Zenker <christian.zenker@599media.de>
@@ -27,8 +34,8 @@
 class Tx_CzSimpleCal_ViewHelpers_Calendar_CreateDateTimeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 	
 	/**
-	 * @param string DateTime
-	 * @return string
+	 * @param string $dateTime some string of the type date
+	 * @return Tx_CzSimpleCal_Utility_DateTime
 	 */
 	public function render($dateTime) {
 		return new Tx_CzSimpleCal_Utility_DateTime($dateTime);

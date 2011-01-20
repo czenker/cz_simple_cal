@@ -58,6 +58,11 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 		return $object;
 	}
 	
+	/**
+	 * find all records regardless of their storage page, enable fields or language
+	 * 
+	 * @return array <Tx_CzSimpleCal_Domain_Model_Event>
+	 */
 	public function findAllEverywhere() {
 		$query = $this->createQuery();
 		$query->getQuerySettings()->
@@ -69,6 +74,14 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 		return $query->execute();
 	}
 	
+	/**
+	 * make a given slug unique
+	 * returns a unique slug
+	 * 
+	 * @param $slug
+	 * @param $uid
+	 * @return string
+	 */
 	public function makeSlugUnique($slug, $uid) {
 		$query = $this->createQuery();
 		$query->getQuerySettings()->

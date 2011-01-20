@@ -9,4 +9,241 @@
 
 	<title>Administration</title>
 	
+	<section xml:id="chapter.administration.concepts">
+		<title>Concepts</title>
+		<para>This section tries to explain some of the basic concepts of the calendar.</para>
+		
+		<xi:include href="concepts.xml" xpointer="xpointer(/chapter/section)"  />
+	</section>
+	<section xml:id="chapter.administration.example">
+		<title>Learning by example</title>
+		<para>
+			We will go through the default template and comment on how and why things work. You'll find the default template
+			at <filename>EXT:cz_simple_cal/Configuration/TypoScript/main/setup.txt</filename>.
+		</para>
+		<programlisting>01 plugin.tx_czsimplecal {
+02   #@description: the pid the records are stored in
+03   persistence.storagePid = {$plugin.tx_czsimplecal.pidList}
+04   # [...]	
+05   settings {
+06     EventIndex {
+07       # first one is the default action
+08       allowedActions = list,minimonth,day,week,show,next
+09       actions {
+10         list {
+11           defaultPid = {$plugin.tx_czsimplecal.pids.default}
+12           startDate  = today
+13           endDate    = today +1 month
+14           maxEvents = 9999
+15           orderBy   = start
+16           order     = ASC
+17           # filter.categories = 42
+18           # excludeOverlongEvents = 0
+19           # includeStartedEvents = 0
+20         }
+21         show {
+22           defaultPid = {$plugin.tx_czsimplecal.pids.default}
+23         }
+24         next {
+25           defaultPid = {$plugin.tx_czsimplecal.pids.default}
+26           useAction = list
+27           startDate  = now
+28           endDate    = now +1 month
+29           maxEvents = 1
+30           orderBy   = start  
+31           order     = ASC
+32         }
+33         week {
+34           defaultPid = {$plugin.tx_czsimplecal.pids.default}
+35           useAction = list
+36           startDate = monday this week
+37           endDate   = sunday this week 23:59:59
+38           getPostAllowed = getDate
+39           maxEvents = 999
+40           orderBy = start
+41           order   = ASC
+42         }
+43         minimonth {
+44           defaultPid = {$plugin.tx_czsimplecal.pids.default}
+45           useAction = countEvents
+46           getPostAllowed = getDate
+47           startDate  = first day of this month|monday this week
+48           endDate    = last day of this month|monday next week -1 second
+49           groupBy    = day
+50         }
+51         day {
+52           defaultPid = {$plugin.tx_czsimplecal.pids.default}
+53           useAction = list
+54           startDate = today
+55           endDate   = today 23:59:59
+56           getPostAllowed = getDate
+57           maxEvents = 999
+58           orderBy = start
+59           order   = ASC
+60         }
+61       }
+62     }
+63     Event {
+64       allowedActions = show
+65       actions {
+66         show {
+67           defaultPid = {$plugin.tx_czsimplecal.pids.default}	
+68         }
+69       }
+70     }
+71     # this is where you can put your customized options 
+72     custom {
+73     }
+74   } 
+75 }</programlisting>
+	<para>
+		Line <literal>03</literal> holds the comma-seperated list of uids of the pages all relevant records are stored. Don't
+		forget to give the pages of your tt_address records if you plan on using them for organizers and locations.
+	</para>
+	<para>
+		Lines <literal>06</literal> to <literal>62</literal> hold configuration for the <literal>EventIndex</literal>-Controller.
+	</para>
+	<para>
+		Line <literal>08</literal> lists all the actions of the <literal>EventIndex</literal>-Controller that might be called.
+		You can use this field to disable actions without the need to delete their configuration.<sbr/>
+		The first named action is automatically the default action. So by setting <literal>allowedAction = minimonth</literal>
+		this page was only able to show the minimonth-view.
+	</para>
+	<para>
+		Lines <literal>09</literal> to <literal>61</literal> holds the configuration of the different available Views. Each
+		entry defines a View. Its key is the name of the view. In the example we define the <literal>list</literal>, <literal>show</literal>,
+		<literal>next</literal>, <literal>minimonth</literal>, <literal>week</literal> and <literal>day</literal>-Views.
+	</para>
+	<para>
+		Lines <literal>10</literal> to <literal>20</literal> hold the configuration for the <literal>list</literal> Action.<sbr/>
+		The list action is used to show events from a certain timespan, like all events from one day or from one week.
+	</para>
+	<para>
+		In line <literal>11</literal> the default pid for this action is set. This is only used by the <literal>Tx_CzSimpleCal_ViewHelpers_Link_ActionViewHelper</literal> 
+		to allow easy linking of your whole calender is not shown on only one pid, but split over multiple pages.<sbr/>
+		If you link to the <literal>list</literal> View from another view, you don't have to set the <literal>pageUid</literal> property of the
+		<literal>Tx_Fluid_ViewHelpers_Link_ActionViewHelper</literal>.
+	</para>
+	<para>
+		In lines <literal>12</literal> and <literal>13</literal> the start and end dates for the list are defined. In this
+		example the list view shows all events from (midnight) today up to one month from today.  
+	</para>
+	<note>
+		<para>
+			Only the start date of an event is taken into account, when deciding if an event is in that interval by default.
+			So an event, that started yesterday but is still running today, won't be shown in that list. But an event that starts
+			today and runs for the next three months would be displayed.
+		</para>
+		<para>
+			You can change that behaviour by using <literal>excludeOverlongEvents</literal> and <literal>includeStartedEvents</literal> as
+			seen in lines <literal>18</literal> and <literal>19</literal>.
+		</para>
+	</note>
+	<para>Line <literal>14</literal> defines how many events are selected at max.</para>
+	<para>
+		Lines <literal>15</literal> and <literal>16</literal> define how the selected <literal>EventIndices</literal> are
+		returned. In this example they are ordered ascending by their start date.
+	</para>
+	<para>
+		Line <literal>17</literal> shows how you could filter the selected Events by their category. <sbr/>
+		If you would uncomment that line, you would only select events in the category with the uid <literal>42</literal>.
+	</para>
+	<note>
+		<para>
+			The filter array is quite powerfull. You can also use it to filter by organizer, location or even an events name.
+			See the <link linkend="chapter.configuration.typoscript.EventIndex.list">configuration documentation</link> for more details. 
+		</para>
+	</note>
+	<para>
+		Lines <literal>18</literal> and <literal>19</literal> allow you to also include already started but not
+		yet finished events to your results (<literal>includeStartedEvents</literal>) as well as exclude events
+		that aren't yet finished on <literal>endDate</literal> (<literal>excludeOverlongEvents</literal>).
+	</para>
+	<para>
+		Lines <literal>21</literal> to <literal>23</literal> hold the configuration for another action - the 
+		<literal>show</literal> action. It is used to show a single <emphasis>EventIndex</emphasis>! So if you 
+		had a dance course that meets once a week, this action would show the dance cours on Thursday, 13th January at 18:00, for
+		instance. The dance course as a whole could be represented by the <literal>Event</literal>-Controllers <literal>show</literal> action.
+	</para>
+	<para>
+		Lines <literal>24</literal> to <literal>32</literal> define an other action. It is thought to show the 
+		next event in the calendar. This is done by utilizing the already known settings <literal>startDate</literal>,
+		<literal>endDate</literal> and <literal>maxEvents</literal>.
+	</para>
+	<para>
+		But there is a twist to that action: It does not really exist in the <literal>EventIndex</literal> Cotroller.
+		It's something we call a Fake Action. We define which Real Action this action should inherit from
+		in line <literal>26</literal> with the <literal>useAction</literal> setting. So this action just behaves
+		as if it was a <literal>list</literal> action, but with different settings and it uses the <literal>next</literal>
+		template for its view.
+	</para>
+	<para>
+		Lines <literal>33</literal> to <literal>42</literal> define another fake action for a week view. 
+		The first notable thing to mark, are the <literal>startDate</literal> and the <literal>endDate</literal>
+		settings here: You can use some phrases like <literal>monday this week</literal> as part of the <link linkend="chapter.concepts.date-type">type <literal>date</literal></link>.
+		You find a full <link linkend="appendix.date">reference of the <literal>date</literal> type</link> in the appendix.
+	</para>
+	<para>
+		Line <literal>38</literal> defines which GET-parameters might override some of the settings of this action.
+		In this case we allow the user to override the <literal>getDate</literal> setting. <literal>getDate</literal> is 
+		the date we asume to be &quot;now&quot; before calculating the <literal>startDate</literal> and <literal>endDate</literal>.
+		So with this setting enabled, we create pages for each week.
+	</para>
+	<para>
+		In lines <literal>43</literal> to <literal>50</literal> we define an other Fake Action. But this
+		time it inherits from the <literal>countEvents</literal> action. This action counts all events instead of
+		listing them and groups them by their day (line <literal>49</literal>).
+	</para>
+	<para>
+		Line <literal>48</literal> shows another (rather ugly) statement for the type <literal>date</literal>.
+		It uses a technique, we call <emphasis>chaining</emphasis> (through the pipe character <literal>|</literal>)to evaluate complex date calculations.
+		The end date is calculated by first finding the <literal>first day of this month</literal>, then looking
+		for the <literal>first monday next week</literal> (that is the first monday in the next month) and then
+		subtracting one second. 
+	</para>
+	<para>
+		Lines <literal>63</literal> to <literal>70</literal> hold configuration for the <literal>Event</literal>-Controller.
+		The configuration is similar to that of the <literal>EventIndex</literal> controller.
+	</para>
+	<para>
+		Lines <literal>66</literal> to <literal>68</literal> configurate the only Real action of the <literal>Event</literal> 
+		controller - the <literal>show</literal> action.  
+	</para>
+	<para>
+		Lines <literal>72</literal> to <literal>73</literal> is the <literal>custom</literal>-array where you can store
+		whichever values you like. There are no conventions whatsoever.
+	</para>
+	</section>
+	<section xml:id="chapter.administration.templating">
+		<title>Templating</title>
+		<para>
+			As an <productname>Extbase</productname> extension, <productname>cz_simple_cal</productname> makes use
+			of the <productname>Fluid</productname> templating engine.
+		</para>
+		<para>
+			Here are some resources to get you started with <productname>Fluid</productname>:
+			<itemizedlist>
+				<listitem><simpara><link xlink:href="http://flow3.typo3.org/documentation/manuals/fluid/" /></simpara></listitem>
+				<listitem><simpara><link xlink:href="http://www.typovision.de/cheatsheet/" /></simpara></listitem>
+				<listitem><simpara><link xlink:href="http://forge.typo3.org/projects/typo3v4-mvc/wiki/Collection_of_Documentation" /></simpara></listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			You find the default templates and partials in <filename>typo3conf/ext/cz_simple_cal/Resources/Private/Templates</filename> or <filename>Resources/Private/Partials</filename>
+			respectively. 
+		</para>
+		<para>
+			To customize these templates, first copy the two folders <filename>Templates</filename> and <filename>Partials</filename>
+			to a different location, like <filename>fileadmin/template/cz_simple_cal/</filename>.
+			After that you just have to point <productname>Fluid</productname> to the new template files by setting
+			the following in your TypoScript:
+		</para>
+		<programlisting>plugin.tx_czsimplecal {
+  view.templateRootPath = fileadmin/template/cz_simple_cal/Templates/
+  view.partialRootPath = fileadmin/template/cz_simple_cal/Partials/</programlisting>
+  		<para>
+  			After doing that you are free to modify the templates as desired. The <link linkend="appendix.viewHelpers">viewHelpers shipped with <productname>cz_simple_cal</productname>
+  			are described in an appendix</link>.
+  		</para>
+	</section>
 </chapter>

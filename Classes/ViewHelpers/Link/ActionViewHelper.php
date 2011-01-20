@@ -14,7 +14,8 @@
  *                                                                        */
 
 /**
- *
+ * an enhanced Link_ActionViewHelper that sets the pageUid to link to 
+ * automatically by a setting in the settings array
  */
 class Tx_CzSimpleCal_ViewHelpers_Link_ActionViewHelper extends Tx_Fluid_ViewHelpers_Link_ActionViewHelper {
 

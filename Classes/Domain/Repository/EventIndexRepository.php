@@ -31,6 +31,11 @@
  */
 class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_Persistence_Repository {
 	
+	/**
+	 * find all records and return them ordered by the start date ascending
+	 * 
+	 * @return array
+	 */
 	public function findAll() {
 		$query = $this->createQuery();
 		$query->setOrderings(array('start' => 'ASC'));
@@ -53,6 +58,16 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		return $query->execute();
 	}
 	
+	/**
+	 * find all events matching some settings and count them
+	 * 
+	 * for all options for the settings see setupSettings()
+	 * 
+	 * @see setupSettings()
+	 * @see doCountAllWithSettings()
+	 * @param $settings
+	 * @return array
+	 */
 	public function countAllWithSettings($settings = array()) {
 		$settings = $this->cleanSettings($settings);
 		return $this->doCountAllWithSettings($settings);
@@ -113,11 +128,14 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 	 * 
 	 * possible restrictions are:
 	 * 
-	 *  * startDate integer timestamp of the start
-	 *  * endDate   integer timestamp of the end
-	 *  * limit     integer how many events to select at max
-	 *  * order     string  the mode to sort by (could be 'asc' or 'desc')
-	 *  * orderBy   string  the field to sort by (could be 'start' or 'end')
+	 *  * startDate             integer timestamp of the start
+	 *  * endDate               integer timestamp of the end
+	 *  * order                 string  the mode to sort by (could be 'asc' or 'desc')
+	 *  * orderBy               string  the field to sort by (could be 'start' or 'end')
+	 *  * maxEvents             integer the maximum of events to return
+	 *  * includeStartedEvents  boolean if events that were in progress on the startDate should be shown
+	 *  * excludeOverlongEvents boolean if events that were not yet finished on the endDate should be excluded
+	 *  * filter                array   key is field name and value the desired value, multiple filters are concated with "AND"
 	 * 
 	 * all given values must be sanitized
 	 * 
@@ -202,6 +220,11 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		return $query;
 	}
 	
+	/**
+	 * filter settings for all allowed properties for setupSettings()
+	 * 
+	 * @var array
+	 */
 	protected static $filterSettings = array(
 		'startDate' => array(
 			'filter' => FILTER_VALIDATE_INT,
@@ -242,6 +265,12 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		),
 	);
 	
+	/**
+	 * do the cleaning of the values so that no wrong variable type or value will be used
+	 * 
+	 * @param $settings
+	 * @return array 
+	 */
 	protected function cleanSettings($settings) {
 
 		// unset unknown fields 
@@ -257,6 +286,12 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		return $settings;
 	}
 	
+	/**
+	 * sanitize the "order" setting
+	 * 
+	 * @param $value
+	 * @return string|null
+	 */
 	protected static function sanitizeOrder($value) {
 		if(!is_string($value)) {
 			return null;
@@ -270,6 +305,12 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		return null;
 	}
 	
+	/**
+	 * sanitize something to be a valid string
+	 * (only ASCII letters, numbers, ".", "_" and "-")
+	 * 
+	 * @param $value
+	 */
 	protected static function sanitizeString($value) {
 		$value = trim($value);
 		if(!is_string($value) || empty($value)) {
@@ -283,6 +324,12 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		}
 	}
 	
+	/**
+	 * sanitizing the a value for the "filter" setting.
+	 * If multiple values are given return an array
+	 * 
+	 * @param $filter
+	 */
 	protected static function sanitizeFilter($filter) {
 		if(!is_array($filter)) {
 			$filter = t3lib_div::trimExplode(',', $filter, true);
@@ -297,6 +344,13 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		return empty($out) ? null : $out;
 	}
 	
+	/**
+	 * sanitizing the given filters
+	 * 
+	 * @param $filters
+	 * @param $prefix
+	 * @return array
+	 */
 	protected function setupFilters($filters, $prefix = '') {
 		if(!is_array($filters)) {
 			return null;
@@ -322,10 +376,22 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		return $return;
 	}
 	
+	/**
+	 * check if a given value is a filter
+	 * 
+	 * @param unknown_type $filter
+	 */
 	protected function isFilter($filter) {
 		return !is_array($filter);
 	}
 	
+	/**
+	 * make a given slug unique among all records
+	 * 
+	 * @param $slug
+	 * @param $uid
+	 * @return string the unique slug
+	 */
 	public function makeSlugUnique($slug, $uid) {
 		$query = $this->createQuery();
 		$query->getQuerySettings()->
@@ -366,7 +432,11 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		}
 	}
 	
-	
+	/**
+	 * call an event before adding an event to the repo
+	 * 
+	 * @see Classes/Persistence/Tx_Extbase_Persistence_Repository::add()
+	 */
 	public function add($object) {
 		$object->preCreate();
 		parent::add($object);
@@ -389,7 +459,5 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		
 		return $query->execute();
 	}
-	
-	
 }
 ?>

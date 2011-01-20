@@ -12,7 +12,7 @@ class Tx_CzSimpleCal_ViewHelpers_UseMicroformatViewHelper extends Tx_Fluid_Core_
 	/**
 	 * add a microformat definition to the pages head
 	 * 
-	 * @param string $format
+	 * @param string $format you might give the uri of the microformat or use the predefined strings "hcard" or "hcalendar"
 	 */
 	public function render($format) {
 		if(array_key_exists($format, self::$knownMicroformats)) {

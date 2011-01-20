@@ -20,6 +20,15 @@
 
 /**
  * renders its content if the submitted event is on a different date then the previous one
+ * 
+ * <example>
+ * <f:for each="{events}" as="event">
+ *   <cal:calendar.onNewDay event="{event}">
+ *     Good morning. This is a new day.
+ *   </cal:calendar.onNewDay>
+ *   {event.title}
+ * </f:for>
+ * </example>
  *  
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @author Christian Zenker <christian.zenker@599media.de>
@@ -28,7 +37,7 @@ class Tx_CzSimpleCal_ViewHelpers_Calendar_OnNewDayViewHelper extends Tx_Fluid_Co
 	
 	/**
 	 * 
-	 * @param Tx_CzSimpleCal_Domain_Model_EventIndexer $event
+	 * @param Tx_CzSimpleCal_Domain_Model_EventIndexer $event the event to compare to the previously submitted one
 	 * @param string $label if you need multiple irrelated instances set this to something unique
 	 * @return string
 	 */

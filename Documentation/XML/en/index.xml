@@ -34,17 +34,18 @@
   <!-- Chapters -->
 
   <xi:include href="chapters/introduction.xml" />  
-<!--  <xi:include href="chapters/concepts.xml" />-->
-  <xi:include href="chapters/usersmanual.xml" />
+  <!-- <xi:include href="chapters/usersmanual.xml" /> -->
   <xi:include href="chapters/administration.xml" />
   <xi:include href="chapters/configuration.xml" />
   <xi:include href="chapters/howto.xml" />
   <xi:include href="chapters/knownproblems.xml" />
-  <xi:include href="chapters/todo.xml" />
-  <xi:include href="chapters/changelog.xml" />
+  <xi:include href="chapters/faq.xml" />
+  <!-- <xi:include href="chapters/todo.xml" /> -->
+  <!-- <xi:include href="chapters/changelog.xml" /> -->
   <xi:include href="chapters/copyrights.xml" />
   <xi:include href="chapters/glossary.xml" />
   
   <xi:include href="appendices/date.xml" />
+  <xi:include href="appendices/viewHelpers.xml" />
 
 </book>
