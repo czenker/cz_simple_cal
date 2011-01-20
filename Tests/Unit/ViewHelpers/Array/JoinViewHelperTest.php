@@ -17,11 +17,16 @@ class Array_JoinViewHelperTest extends Tx_Fluid_ViewHelpers_ViewHelperBaseTestca
 	}
 	
 	public function testBasic() {
-		self::assertEquals('foobar',$this->viewHelper->render(array('foo', 'bar')), 'default imploder is "null"');
+		self::assertEquals('foo, bar',$this->viewHelper->render(array('foo', 'bar')), 'default imploder is ", "');
 	}
 	
 	public function testByParameter() {
-		self::assertEquals('foo,bar',$this->viewHelper->render(array('foo', 'bar'), null, ','), 'parameter is recognized');
+		self::assertEquals('foo#bar',$this->viewHelper->render(array('foo', 'bar'), '#'), '"by" parameter is recognized');
+	}
+	
+	public function testRemoveEmptyParameter() {
+		self::assertEquals('foo##bar',$this->viewHelper->render(array('foo', '', 'bar'), '#'), 'empty values are not removed by default');
+		self::assertEquals('foo#bar',$this->viewHelper->render(array('foo', '', 'bar'), '#', true), 'empty values can be removed');
 	}
 	
 }
