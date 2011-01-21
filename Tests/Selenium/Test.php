@@ -19,22 +19,22 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 		
 		$this->assertElementPresent('css=div.vcalendar-list', 'default view is list-view');
 		
-		$this->assertElementPresent('link=Bongo Day', 'allday event is present');
-		$this->assertElementPresent('link=Playing Golf', 'event with only start is present');
-		$this->assertElementPresent('link=Going fishing', 'event with start and end on different days is present');
-		$this->assertElementPresent('link=Jogging with friends', 'event with start and end on same day is present');
+		$this->assertElementPresent('//h5[. = "Bongo Day"]', 'allday event is present');
+		$this->assertElementPresent('//h5[. = "Playing Golf"]', 'event with only start is present');
+		$this->assertElementPresent('//h5[. = "Going fishing"]', 'event with start and end on different days is present');
+		$this->assertElementPresent('//h5[. = "Jogging with friends"]', 'event with start and end on same day is present');
 		
-		$this->assertElementNotPresent('link=Hidden event', 'hidden event is not present');
-		$this->assertElementNotPresent('link=Deleted event', 'deleted event is not present');
+		$this->assertElementNotPresent('//h5[. = "Hidden event"]', 'hidden event is not present');
+		$this->assertElementNotPresent('//h5[. = "Deleted event"]', 'deleted event is not present');
 		
 		//default for startDate
 		$this->assertGreaterThan(strtotime('2010-01-01 00:00:00UTC'), strtotime($this->selenium->getAttribute('//div[@class="dtstart"]@title')), 'default for startDate');
 		//default for endDate
 		$this->assertLessThan(strtotime('2010-01-07 23:59:59UTC'), strtotime($this->selenium->getAttribute('//div[@class="vevent"][last()]/div[@class="dtstart"]@title')), 'default for endDate');
 		//default for excludeOverlongEvents
-		$this->assertElementPresent('link=overlong event', 'default for excludeOverlongEvents is false');
+		$this->assertElementPresent('//h5[. = "overlong event"]', 'default for excludeOverlongEvents is false');
 		//default for includeStartedEvents
-		$this->assertElementNotPresent('link=already started event', 'default for includeStartedEvents is false');
+		$this->assertElementNotPresent('//h5[. = "already started event"]', 'default for includeStartedEvents is false');
 		
 		
 		// day wrapper
@@ -46,13 +46,13 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 
 		// check setting: startDate
 		$this->openPageAlias('action-list-startdate');
-		$this->assertElementNotPresent('link=Going fishing', 'testing setting startDate');
+		$this->assertElementNotPresent('//h5[. = "Going fishing"]', 'testing setting startDate');
 		
 		
 		
 		// check setting: endDate
 		$this->openPageAlias('action-list-enddate');
-		$this->assertElementNotPresent('link=Playing Golf', 'testing setting endDate');
+		$this->assertElementNotPresent('//h5[. = "Playing Golf"]', 'testing setting endDate');
 		
 		
 		
@@ -76,19 +76,19 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 		
 		//check setting: filterCategories
 		$this->openPageAlias('action-list-filtercategories');
-		$this->assertEquals(2, $this->selenium->getXpathCount('//*[contains(@class, "vevent")]'), 'testing setting filterCategories');
+		$this->assertEquals(2, $this->selenium->getXpathCount('//*[contains(@class, "vevent")]'), 'testing setting filter.categories');
 		
 		
 		
 		// check setting: excludeOverlongEvents
 		$this->openPageAlias('action-list-excludeoverlong');
-		$this->assertElementNotPresent('link=overlong event', 'testing setting excludeOverlongEvents');
+		$this->assertElementNotPresent('//h5[. = "overlong event"]', 'testing setting excludeOverlongEvents');
 		
 		
 		
 		// check setting: includeStartedEvents
 		$this->openPageAlias('action-list-includestartedevents');
-		$this->assertElementPresent('link=already started event', 'testing setting includeStartedEvents');
+		$this->assertElementPresent('//h5[. = "already started event"]', 'testing setting includeStartedEvents');
 		
 	}
 	
