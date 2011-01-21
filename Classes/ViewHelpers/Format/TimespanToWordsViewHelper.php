@@ -42,7 +42,6 @@ class Tx_CzSimpleCal_ViewHelpers_Format_TimespanToWordsViewHelper extends Tx_Flu
 	 * @author Christian Zenker <christian.zenker@599media.de>
 	 */
 	public function render($start, $end) {
-		$this->extensionName = $this->controllerContext->getRequest()->getControllerExtensionName();
 		
 		if($start->format('Y') != $end->format('Y')) {
 			return
@@ -88,6 +87,9 @@ class Tx_CzSimpleCal_ViewHelpers_Format_TimespanToWordsViewHelper extends Tx_Flu
 	 * @return string
 	 */
 	protected function getLL($key) {
+		if(is_null($this->extensionName)) {
+			$this->extensionName = $this->controllerContext->getRequest()->getControllerExtensionName();
+		}
 		return Tx_Extbase_Utility_Localization::translate($key, $this->extensionName);
 	}
 	

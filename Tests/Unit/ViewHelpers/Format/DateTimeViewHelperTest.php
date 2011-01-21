@@ -2,7 +2,7 @@
 require_once(t3lib_extmgm::extPath('fluid') . 'Tests/Unit/ViewHelpers/ViewHelperBaseTestcase.php');
  
 /**
- * testing the features of the Condition_CompareViewHelper
+ * testing the features of the Format_DateTimeViewHelper
  * 
  * @author Christian Zenker <christian.zenker@599media.de>
  */
