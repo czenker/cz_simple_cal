@@ -24,7 +24,7 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	location int(11) DEFAULT 0,
 	organizer_name tinytext DEFAULT '',
 	organizer int(11) DEFAULT 0,
-	category int(11) unsigned DEFAULT '0' NOT NULL,
+	categories int(11) unsigned DEFAULT '0' NOT NULL,
 	exceptions int(11) unsigned DEFAULT '0' NOT NULL,
 	slug varchar(250) DEFAULT NULL,
 
