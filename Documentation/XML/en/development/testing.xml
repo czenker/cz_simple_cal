@@ -24,6 +24,8 @@
 			<para>
 				After successful installation you should see the PHPUnit module in the Admin Section. Click it and select 
 				<productname>cz_simple_cal</productname> as extension to run the unit tests. 
+				Make sure that all the options <literal>Success</literal>,  <literal>Failure</literal>, <literal>Skipped</literal> and <literal>Error</literal>
+				are checked. Otherwise you might miss a faulty behaviour.
 				Click <computeroutput>Run all tests</computeroutput> and all the tests should be run. If the bar is not green
 				after running all tests or the word "Success" is not displayed at the bottom of the list, something went wrong.  
 			</para>
@@ -37,42 +39,94 @@
 					for testing.
 				</para>
 			</tip>
-			<para>
-				You should have the extension <productname>phpunit</productname> installed as described in the last section.
-				All Selenium Tests are run inside PHPUnit, so this is vital.
-			</para>
-			<note>
-				<para>
-					If the selenium extension is not enabled, all Selenium Tests will be skipped automatically.
-				</para>
-			</note>
-			<para>
-				Now install <productname>Selenium Remote Control (RC)</productname> - if you don't have it running already.<sbr/>
-				Download it at <link xlink:href="http://seleniumhq.org/download/">selenium.org</link> and unpack. All you need is 
-				the <filename class="directory">selenium-remote-control-1.x.x/selenium-server-1.x.x</filename> folder - you might as well delete
-				all the others.<sbr/>
-				Run the <filename>selenium-server.jar</filename> using <productname>JAVA</productname>, for example by typing
-				<userinput>java -jar selenium-server.jar</userinput> on your console.
-			</para>
-			<para>
-				Import the data stored in <filename>Tests/Selenium/typo3_testing.sql</filename> to your database.
-			</para>
-			<para>
-				Use the <productname>scheduler</productname> to create a <literal>Index all events (cz_simple_cal)</literal>-task and run it to
-				create all the recurring events.
-			</para>
-			<note>
-				<para>The extension <productname>scheduler</productname> is shipped with the <productname>TYPO3</productname> core but disabled by default.</para>
-			</note>
-			<para>
-				If you have done that install the extension <link xlink:href="http://typo3.org/extensions/repository/view/selenium/current/"><productname>selenium</productname> from TER</link>.
-				You can ignore the backend module created by that extension and jump back to the PHPUnit module.<sbr/>
-				Now if you run the tests again a browser window should pop up and magically call some pages of the frontend. 
-			</para>
-			
+			<procedure>
+				<title>Setting up Selenium Tests</title>
+				<step>
+					<para>
+						You should have the extension <productname>phpunit</productname> installed as described in the last section.
+						Additionally you need the extension <productname>selenium</productname>. You can ignore the installed module
+						in the Admin Tools as even the selenium tests are run inside PHPUnit.
+					</para>
+					<note>
+						<para>
+							If the <productname>selenium</productname> extension is not enabled, all Selenium Tests will be skipped automatically.
+						</para>
+					</note>
+				</step>
+				<step>
+					<para>
+						Now install <productname>Selenium Remote Control (RC)</productname> - if you don't have it running already.<sbr/>
+						Download it at <link xlink:href="http://seleniumhq.org/download/">selenium.org</link> and unpack. All you need is 
+						the <filename class="directory">selenium-remote-control-1.x.x/selenium-server-1.x.x</filename> folder - you might as well delete
+						all the others.<sbr/>
+						Run the <filename>selenium-server.jar</filename> using <productname>JAVA</productname>, for example by typing
+						<userinput>java -jar selenium-server.jar</userinput> on your console.
+					</para>
+				</step>
+				<step>
+					<para>Import the data using the t3d-Importer.</para>
+					<substeps>
+						<step>
+							<para>
+								Therefore enter the backend and click the <productname>TYPO3</productname>-Icon in the pagetree.
+								The context menu holds the option <literal>Import from .t3d</literal>.
+							</para>
+						</step>
+						<step>
+							<para>
+								In the tab labeled <literal>Import</literal> select the option <literal>Force ALL UIDs values</literal>.
+							</para>
+							<note>
+								<para>
+									If you decide to <emphasis>not</emphasis> set this option, all you have to do is set the TypoScript 
+									constants in the root template with the pid of your <literal>data</literal> folder.
+								</para>
+								<para>
+									But if you force all uids, updating the test data for newer versions of this extension might
+									turn out a little easier.
+								</para>
+							</note>
+						</step>
+						<step>
+							<para>
+								Select the file <filename>EXT:cz_simple_cal/Resources/Private/Tests/selenium-data.t3d</filename>
+								in the <literal>Upload</literal> tab.
+							</para>
+						</step>
+						<step>
+							<para>
+								Hit the <literal>upload files button</literal>.
+							</para>
+						</step>
+						<step>
+							<para>
+								Jump back to the <literal>Import</literal> tab and hit the <literal>Import</literal> button.
+							</para>
+						</step>
+					</substeps>
+				</step>
+				<step>
+					<para>
+						Delete the event labeled <literal>Deleted event</literal> on the <literal>data</literal> page.
+					</para>
+				</step>
+				<step>
+					<para>
+						Use the <productname>scheduler</productname> to create a <literal>Index all events (cz_simple_cal)</literal>-task and run it to
+						create all the recurring events.
+					</para>
+					<note>
+						<para>The extension <productname>scheduler</productname> is shipped with the <productname>TYPO3</productname> core but disabled by default.</para>
+					</note>
+				</step>
+				<step>
+					<para>
+						Run the test by selecting the <literal>PHPUnit</literal> module in the backend, select <literal>cz_simple_cal</literal>
+						as extension and <literal>Tx_CzSimpleCalTests_Selenium_Tests</literal> as test case and hit
+						<literal>Run test case file</literal>.
+					</para>
+				</step>
+			</procedure>
 		</section>
 		
 </chapter>
-
-
-
