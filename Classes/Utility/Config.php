@@ -36,7 +36,7 @@ class Tx_CzSimpleCal_Utility_Config {
 	 */
 	public static function exists($name) {
 		self::init();
-		return array_key_exists($name, self::$data);
+		return is_array(self::$data) && array_key_exists($name, self::$data);
 	}
 	
 	/**
