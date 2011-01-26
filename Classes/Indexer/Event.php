@@ -23,14 +23,27 @@ class Tx_CzSimpleCal_Indexer_Event {
 	protected $eventIndexRepository = null;
 	
 	/**
-	 * constructor
+	 * @var Tx_Extbase_Persistence_ManagerInterface
 	 */
-	public function __construct() {
+	protected $persistenceManager = null;
+	
+	/**
+	 * constructor
+	 * 
+	 * @param Tx_CzSimpleCal_Domain_Repository_EventRepository $eventRepository
+	 * @param Tx_CzSimpleCal_Domain_Repository_EventIndexRepository $eventIndexRepository
+	 * @param Tx_Extbase_Persistence_ManagerInterface $persistenceManager
+	 */
+	public function __construct(
+		Tx_CzSimpleCal_Domain_Repository_EventRepository $eventRepository,
+		Tx_CzSimpleCal_Domain_Repository_EventIndexRepository $eventIndexRepository,
+		Tx_Extbase_Persistence_ManagerInterface $persistenceManager
+	) {
 		t3lib_div::makeInstance('Tx_Extbase_Dispatcher');
 		
-		
-		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
-		$this->eventIndexRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository');
+		$this->eventRepository = $eventRepository;
+		$this->eventIndexRepository = $eventIndexRepository;
+		$this->persistenceManager = $persistenceManager;
 	}
 	
 	/**
@@ -39,7 +52,7 @@ class Tx_CzSimpleCal_Indexer_Event {
 	 * this will persist all changes
 	 */
 	public function __destruct() {
-		Tx_Extbase_Dispatcher::getPersistenceManager()->persistAll();
+		$this->persistenceManager->persistAll();
 	}
 	
 	/**
@@ -117,7 +130,7 @@ class Tx_CzSimpleCal_Indexer_Event {
 		}
 		
 		// store everything to database manually to allow correct unique hash creation when using scheduler
-		Tx_Extbase_Dispatcher::getPersistenceManager()->persistAll();
+		$this->persistenceManager->persistAll();
 	}
 	
 	/**

@@ -142,25 +142,6 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_CzSimpleCal_Domain_Model
 		return $this->dateTimeObjectEnd;
 	}
 	
-	/**
-	 * set the pid of the record
-	 * 
-	 * @param $pid
-	 * @return null
-	 */
-	public function setPid($pid) {
-		$this->pid = $pid;
-	}
-	
-	/**
-	 * get the pid of the record
-	 * 
-	 * @return integer
-	 */
-	public function getPid() {
-		return $this->pid;
-	}
-	
 	public function setEvent($event) {
 		$this->event = $event;
 	}
@@ -265,7 +246,10 @@ class Tx_CzSimpleCal_Domain_Model_EventIndex extends Tx_CzSimpleCal_Domain_Model
 		$value = $this->generateRawSlug();
 		$value = Tx_CzSimpleCal_Utility_Inflector::urlize($value);
 		
-		$slug = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository')->makeSlugUnique($value, $this->uid);
+		$eventIndexRepository = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager')->
+			get('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository')
+		;
+		$slug = $eventIndexRepository->makeSlugUnique($value, $this->uid);
 		$this->setSlug($slug);
 	}
 	

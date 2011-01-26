@@ -34,30 +34,39 @@
 
 class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_CzSimpleCal_Controller_BaseExtendableController {
 	
+	/**
+	 * override this property so that no empty view will be created
+	 */
+	protected $defaultViewObjectName = 'Tx_CzSimpleCal_View_EventIndex';
+	
 	protected $controllerName = 'EventIndex';
 	
 	/**
 	 * @var Tx_CzSimpleCal_Domain_Repository_EventRepository
 	 */
 	protected $eventRepository;
-	
+
+	/**
+	 * inject an eventRepository
+	 * 
+	 * @param Tx_CzSimpleCal_Domain_Repository_EventRepository $eventRepository
+	 */
+	public function injectEventRepository(Tx_CzSimpleCal_Domain_Repository_EventRepository $eventRepository) {
+		$this->eventRepository = $eventRepository;
+	}
+		
 	/**
 	 * @var Tx_CzSimpleCal_Domain_Repository_EventIndexRepository
 	 */
 	protected $eventIndexRepository;
-
 	
 	/**
-	 * Initializes the current action
-	 *
-	 * @return void
+	 * inject an eventIndexRepository
+	 * 
+	 * @param Tx_CzSimpleCal_Domain_Repository_EventRepository $eventRepository
 	 */
-	protected function initializeAction() {
-		
-		$this->initializeSettings();
-		
-		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
-		$this->eventIndexRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository');
+	public function injectEventIndexRepository(Tx_CzSimpleCal_Domain_Repository_EventIndexRepository $eventIndexRepository) {
+		$this->eventIndexRepository = $eventIndexRepository;
 	}
 	
 	/**

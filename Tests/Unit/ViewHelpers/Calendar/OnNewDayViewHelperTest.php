@@ -1,5 +1,6 @@
 <?php 
 require_once(t3lib_extmgm::extPath('fluid') . 'Tests/Unit/ViewHelpers/ViewHelperBaseTestcase.php');
+require_once(t3lib_extmgm::extPath('cz_simple_cal') . 'Classes/ViewHelpers/Calendar/OnNewDayViewHelper.php');
  
 /**
  * testing the features of the Calendar_OnNewDayViewHelper
@@ -10,7 +11,6 @@ class Calendar_OnNewDayViewHelperTest extends Tx_Fluid_ViewHelpers_ViewHelperBas
 	
 	protected $viewHelper = null;
 	protected $viewHelperVariableContainer = null;
-	protected $viewHelperNode = null;
 	
 	
 	public function setUp() {
@@ -20,16 +20,11 @@ class Calendar_OnNewDayViewHelperTest extends Tx_Fluid_ViewHelpers_ViewHelperBas
 	}
 	
 	protected function initViewHelper() {
-		$this->viewHelper = new Tx_CzSimpleCal_ViewHelpers_Calendar_OnNewDayViewHelper();
+		$this->viewHelper = new Tx_CzSimpleCalTests_Mocks_ViewHelpers_Calendar_OnNewDayViewHelper();
+		
 		$this->viewHelperVariableContainer = new Tx_Fluid_Core_ViewHelper_ViewHelperVariableContainer();
-		$this->viewHelperNode = $this->getMock('Tx_Fluid_Core_Parser_SyntaxTree_ViewHelperNode', array(), array(), '', false);
-		$this->viewHelperNode->expects($this->any())
-        	->method('evaluateChildNodes')
-        	->will($this->returnValue('tag content'))
-        ;
 		
 		$this->viewHelper->setViewHelperVariableContainer($this->viewHelperVariableContainer);
-		$this->viewHelper->setViewHelperNode($this->viewHelperNode);
 	}
 	
 	
@@ -77,5 +72,10 @@ class Calendar_OnNewDayViewHelperTest extends Tx_Fluid_ViewHelpers_ViewHelperBas
 		
 		self::assertSame('tag content', $this->viewHelper->render($model, 'foobar'));
 	}
-	
+}
+
+class Tx_CzSimpleCalTests_Mocks_ViewHelpers_Calendar_OnNewDayViewHelper extends Tx_CzSimpleCal_ViewHelpers_Calendar_OnNewDayViewHelper {
+	protected function renderChildren() {
+		return 'tag content';
+	}
 }

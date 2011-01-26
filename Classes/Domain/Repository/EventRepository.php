@@ -52,7 +52,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 			return null;
 		}
 		
-		$object = current($result);
+		$object = $result->getFirst();
 		$this->identityMap->registerObject($object, $uid);
 		
 		return $object;
@@ -116,7 +116,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 			if(empty($result)) {
 				return $slug.'-1';
 			} else {
-				$number = intval(substr(current($result)->getSlug(), strlen($slug) + 1)) + 1;
+				$number = intval(substr($result->getFirst()->getSlug(), strlen($slug) + 1)) + 1;
 				return $slug.'-'.$number;
 			}
 		}

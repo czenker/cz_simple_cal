@@ -70,8 +70,8 @@ class Tx_CzSimpleCal_Domain_Repository_ExceptionRepository extends Tx_Extbase_Pe
 		// merge it return it
 		//TODO: check for duplicates
 		return array_merge(
-			$exceptions,
-			$exceptions2
+			$exceptions->toArray(),
+			$exceptions2->toArray()
 		);
 	}
 }

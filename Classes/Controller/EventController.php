@@ -34,22 +34,25 @@
 
 class Tx_CzSimpleCal_Controller_EventController extends Tx_CzSimpleCal_Controller_BaseExtendableController {
 	
+	/**
+	 * override this property so that no empty view will be created
+	 */
+	protected $defaultViewObjectName = 'Tx_CzSimpleCal_View_Event'; 
+	
 	protected $controllerName = 'Event';
 	
 	/**
 	 * @var Tx_CzSimpleCal_Domain_Repository_EventRepository
 	 */
 	protected $eventRepository;
-	
+
 	/**
-	 * Initializes the current action
-	 *
-	 * @return void
+	 * inject an eventRepository
+	 * 
+	 * @param Tx_CzSimpleCal_Domain_Repository_EventRepository $eventRepository
 	 */
-	protected function initializeAction() {
-		$this->initializeSettings();
-		
-		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
+	public function injectEventRepository(Tx_CzSimpleCal_Domain_Repository_EventRepository $eventRepository) {
+		$this->eventRepository = $eventRepository;
 	}
 	
 	/**

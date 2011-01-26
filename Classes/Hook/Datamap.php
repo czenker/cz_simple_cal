@@ -30,7 +30,8 @@ class Tx_CzSimpleCal_Hook_Datamap {
 			
 			if($status == 'new') {
 				// if: record is new
-				$indexer = t3lib_div::makeInstance('Tx_CzSimpleCal_Indexer_Event');
+				$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+				$indexer = $objectManager->get('Tx_CzSimpleCal_Indexer_Event');
 				
 				// get the uid of the new record
 				if(!is_numeric($id)) {
@@ -50,7 +51,8 @@ class Tx_CzSimpleCal_Hook_Datamap {
 			} else {
 				if($this->haveFieldsChanged(Tx_CzSimpleCal_Domain_Model_Event::getFieldsRequiringReindexing(), $fieldArray)) {
 					//if: record was updated and a value that requires re-indexing was changed
-					$indexer = t3lib_div::makeInstance('Tx_CzSimpleCal_Indexer_Event');
+					$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+					$indexer = $objectManager->get('Tx_CzSimpleCal_Indexer_Event');
 					$indexer->update($id);
 				}
 			}

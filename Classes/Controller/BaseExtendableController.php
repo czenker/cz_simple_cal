@@ -294,5 +294,15 @@ abstract class Tx_CzSimpleCal_Controller_BaseExtendableController extends Tx_Ext
 		}
 	}
 	
+	/**
+	 * Initializes the current action
+	 *
+	 * @return void
+	 */
+	protected function initializeAction() {
+		
+		$this->initializeSettings();
+	}
+	
 	
 }

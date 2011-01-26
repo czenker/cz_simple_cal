@@ -426,7 +426,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 			if(empty($result)) {
 				return $slug.'-1';
 			} else {
-				$number = intval(substr(current($result)->getSlug(), strlen($slug) + 1)) + 1;
+				$number = intval(substr($result->getFirst()->getSlug(), strlen($slug) + 1)) + 1;
 				return $slug.'-'.$number;
 			}
 		}

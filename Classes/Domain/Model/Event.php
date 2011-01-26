@@ -285,12 +285,21 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	
 	/**
 	 * Getter for exceptions
+	 * 
+	 * Extbase internal functionality can't be used here as 
+	 * the records need to be fetched from two different tables
 	 *
 	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_CzSimpleCal_Domain_Model_Exception> exception
 	 */
 	public function getExceptions() {
 		if(is_null($this->exceptions_)) {
-			$exceptionRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_ExceptionRepository');
+			/* @ugly: an object manager can't be fetched using dependency injection
+			 * in domain model objects
+			 */
+			
+			$exceptionRepository = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager')->
+				get('Tx_CzSimpleCal_Domain_Repository_ExceptionRepository')
+			;
 			
 			$this->exceptions_ = $exceptionRepository->findAllForEventId($this->uid);
 		}
@@ -333,15 +342,6 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 */
 	public function isOneDayEvent() {
 		return $this->endDate < 0 || $this->endDate === $this->startDate;
-	}
-	
-	/**
-	 * get the pid of this record
-	 * 
-	 * @return integer
-	 */
-	public function getPid() {
-		return $this->pid;
 	}
 	
 	/**
@@ -463,7 +463,10 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 		$value = $this->generateRawSlug();
 		$value = Tx_CzSimpleCal_Utility_Inflector::urlize($value);
 		
-		$slug = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository')->makeSlugUnique($value, $this->uid);
+		$eventRepository = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager')->
+			get('Tx_CzSimpleCal_Domain_Repository_EventRepository')
+		;
+		$slug = $eventRepository->makeSlugUnique($value, $this->uid);
 		$this->setSlug($slug);
 	}
 	
@@ -503,7 +506,10 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 */
 	public function getNextAppointments($limit = 3) {
 		if(is_null($this->nextAppointments) || $this->nextAppointmentsCount < $limit) {
-			$this->nextAppointments = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository')->
+			$eventIndexRepository = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager')->
+				get('Tx_CzSimpleCal_Domain_Repository_EventIndexRepository')
+			;
+			$this->nextAppointments = $eventIndexRepository->
 				findNextAppointmentsByEventUid($this->getUid(), $limit)
 			;
 			$this->nextAppointmentsCount = $limit;

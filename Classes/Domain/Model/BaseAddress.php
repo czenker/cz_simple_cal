@@ -40,26 +40,6 @@ class Tx_CzSimpleCal_Domain_Model_BaseAddress extends Tx_CzSimpleCal_Domain_Mode
 	protected $pid;
 	
 	/**
-	 * getter for pid
-	 *
-	 * @return integer
-	 */
-	public function getPid() {
-		return $this->pid;
-	}
-	
-	/**
-	 * setter for pid
-	 * 
-	 * @param integer $pid
-	 * @return Tx_CzSimpleCal_Domain_Model_Location
-	 */
-	public function setPid($pid) {
-		$this->pid = $pid;
-		return $this;
-	}
-	
-	/**
 	 * the property hidden
 	 *
 	 * @var boolean hidden
