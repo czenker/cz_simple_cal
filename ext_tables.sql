@@ -10,7 +10,7 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	
 	
 	title varchar(220),
-	start_day int(11) DEFAULT '',
+	start_day int(11) DEFAULT '0',
 	start_time int(11) DEFAULT '-1',
 	end_day int(11) DEFAULT '-1',
 	end_time int(11) DEFAULT '-1',
@@ -59,9 +59,9 @@ CREATE TABLE tx_czsimplecal_domain_model_eventindex (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 
-	start    int(11) NOT NULL DEFAULT '',
-	end      int(11) NOT NULL DEFAULT '',	
-	event    int(11) NOT NULL DEFAULT '',
+	start    int(11) NOT NULL DEFAULT '0',
+	end      int(11) NOT NULL DEFAULT '0',	
+	event    int(11) NOT NULL DEFAULT '0',
 	slug varchar(250) DEFAULT NULL,
 	
 	PRIMARY KEY (uid),
@@ -78,7 +78,7 @@ CREATE TABLE tx_czsimplecal_domain_model_exception (
 	
 	
 	title tinytext,
-	start_day int(11) DEFAULT '',
+	start_day int(11) DEFAULT '0',
 	start_time int(11) DEFAULT '-1',
 	end_day int(11) DEFAULT '-1',
 	end_time int(11) DEFAULT '-1',
