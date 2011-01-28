@@ -11,11 +11,20 @@
 	
 	<itemizedlist>
 		<listitem>
-			<para>Only compatible with <productname>Extbase</productname> 1.2 (shipped with <productname>TYPO3</productname> 4.4) right now.</para>
+			<para>Only compatible with <productname>Extbase</productname> 1.3 (shipped with <productname>TYPO3</productname> 4.5 LTS).</para>
+			<note>
+				<para>There is a version for TYPO3 4.4 and Extbase 1.2 in the github repository 
+				on the <literal>extbase-1.2</literal> branch. But this branch is deprecated. There might be some
+				bugfixes to that branch, but don't expect them or any new features.
+				</para>
+			</note>
+		</listitem>
+		<listitem>
+			<para>Updating problems due to the development in progress of extbase might occur.</para>
 			<para>
-				As the minor versions of <productname>Extbase</productname> usually introduce breaking changes, you won't be
-				able to run this extension with <productname>TYPO3</productname> 4.5. We try on fixing that soon, but we can't guarantee there are no breaking
-				changes in this extension, too.
+				As extbase is still under heavy development and this extension uses some methods that
+				are not marked as public API, there might be problems when updating your <productname>Extbase</productname>
+				installation. We hope to fix them as soon as possible, but you should be aware of that issue.
 			</para>
 		</listitem>
 	</itemizedlist>

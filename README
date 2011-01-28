@@ -7,8 +7,10 @@ Caution
 
    This extension in alpha state.
 
-   It was only tried with TYPO3 4.4 and the corresponding extbase version. Different versions
-   might work, but propably they do not.
+   The current version is only compatible with TYPO3 4.5 LTS and the corresponding version of
+   extbase (1.3).
+   There is a version for TYPO3 4.4 and extbase 1.2 on github in the extbase-1.2 branch. But
+   this is deprecated, so don't expect any bugfixes or even new features.
 
 What does it do?
 

@@ -12,8 +12,11 @@
 	<caution>
 		<para>This extension in alpha state.</para>
 		<para>
-			It was only tried with <productname>TYPO3</productname> 4.4 and the corresponding <productname>extbase</productname> version.
-			Different versions might work, but propably they do not.
+			The current version is only compatible with <productname>TYPO3</productname> 4.5 LTS
+			and the corresponding version of <productname>extbase</productname> (1.3). <sbr />
+			There is a version for <productname>TYPO3</productname> 4.4 and <productname>extbase</productname> 1.2 on
+			github in the <literal>extbase-1.2</literal> branch. But this is deprecated, so don't expect any bugfixes
+			or even new features.
 		</para>
 	</caution>
 	
