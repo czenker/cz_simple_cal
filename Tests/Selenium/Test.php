@@ -28,19 +28,13 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 		$this->assertElementNotPresent('//h5[. = "Deleted event"]', 'deleted event is not present');
 		
 		//default for startDate
-		$this->assertGreaterThan(strtotime('2010-01-01 00:00:00UTC'), strtotime($this->selenium->getAttribute('//div[@class="dtstart"]@title')), 'default for startDate');
+		$this->assertGreaterThan(strtotime('2010-01-01 00:00:00UTC'), $this->getDateOfFirstEvent(), 'default for startDate');
 		//default for endDate
-		$this->assertLessThan(strtotime('2010-01-07 23:59:59UTC'), strtotime($this->selenium->getAttribute('//div[@class="vevent"][last()]/div[@class="dtstart"]@title')), 'default for endDate');
+		$this->assertLessThan(strtotime('2010-01-07 23:59:59UTC'), $this->getDateOfLastEvent(), 'default for endDate');
 		//default for excludeOverlongEvents
 		$this->assertElementPresent('//h5[. = "overlong event"]', 'default for excludeOverlongEvents is false');
 		//default for includeStartedEvents
 		$this->assertElementNotPresent('//h5[. = "already started event"]', 'default for includeStartedEvents is false');
-		
-		
-		// day wrapper
-		$this->assertTextPresent('Fri, January 1, 2010', 'day wrapper uses english localization');
-		$this->assertEquals(4, $this->selenium->getXpathCount('//div[contains(@class, "vcalendar-list")]//h4'), 'exactly 4 day-wrapper headers are shown');
-		$this->assertTextNotPresent('Fri, January 8, 2010', 'day wrapper uses english localization');
 		
 		
 
@@ -74,7 +68,7 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 		
 		
 		
-		//check setting: filterCategories
+		//check setting: filter.categories
 		$this->openPageAlias('action-list-filtercategories');
 		$this->assertEquals(2, $this->selenium->getXpathCount('//*[contains(@class, "vevent")]'), 'testing setting filter.categories');
 		
@@ -90,7 +84,127 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 		$this->openPageAlias('action-list-includestartedevents');
 		$this->assertElementPresent('//h5[. = "already started event"]', 'testing setting includeStartedEvents');
 		
+		
+		
+		//check setting: getDate
+		$this->openPageAlias('action-list-getdate');
+		$this->assertSame('Fri, July 9, 2010', $this->selenium->getText('//div[contains(@class, "vcalendar-list")]//h4'), 'testing setting getDate (start at correct date)');
+		
+		
+		
+		//check setting: getPostAllowed
+		$this->openPageAlias('action-list-getpostallowed-off', '&tx_czsimplecal_pi1[getDate]=2010-07-01');
+		$firstDate = $this->getDateOfFirstEvent();
+		$minDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('midnight');
+		$maxDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('+1 week');
+		$this->assertGreaterThanOrEqual($minDate, $firstDate, 'if getPostAllowed is empty, no config is overridden (#1)');
+		$this->assertLessThanOrEqual($maxDate, $firstDate, 'if getPostAllowed is empty, no config is overridden (#2)');
+		
+		//override getDate
+		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[getDate]=2010-07-01');
+		$firstDate = $this->getDateOfFirstEvent();
+		$minDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('2010-07-01');
+		$maxDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('2010-07-08');
+		$this->assertGreaterThanOrEqual($minDate, $firstDate, 'getDate can be overridden if enabled (#1)');
+		$this->assertLessThanOrEqual($maxDate, $firstDate, 'getDate can be overridden if enabled (#2)');
+		
+		//override startDate
+		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[startDate]=2010-07-01');
+		$firstDate = $this->getDateOfFirstEvent();
+		$minDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('2010-07-01');
+		$maxDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('2010-07-08');
+		$this->assertGreaterThanOrEqual($minDate, $firstDate, 'startDate can be overridden if enabled (#1)');
+		$this->assertLessThanOrEqual($maxDate, $firstDate, 'startDate can be overridden if enabled (#2)');
+		
+		//override endDate
+		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[endDate]=+2 days');
+		$firstDate = $this->getDateOfLastEvent();
+		$minDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('now');
+		$maxDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('+2 days');
+		$this->assertGreaterThanOrEqual($minDate, $firstDate, 'endDate can be overridden if enabled (#1)');
+		$this->assertLessThanOrEqual($maxDate, $firstDate, 'endDate can be overridden if enabled (#2)');
+		
+		//override maxEvents
+		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[maxEvents]=2');
+		$this->assertEquals(2, $this->selenium->getXpathCount('//*[contains(@class, "vevent")]'), 'endDate can be overridden if enabled');
+		
+		//override orderBy
+		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[orderBy]=endDate&tx_czsimplecal_pi1[startDate]=2010-01-01 00:00:00&tx_czsimplecal_pi1[endDate]=2010-01-07 23:59:59');
+		$this->assertSame('overlong event', $this->selenium->getText('//div[@class="vevent"][last()]//h5'), 'orderBy can be overridden if enabled');
+		
+		//override order
+		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[order]=desc&tx_czsimplecal_pi1[startDate]=2010-01-01 00:00:00&tx_czsimplecal_pi1[endDate]=2010-01-07 23:59:59');
+		$this->assertSame('Wed, January 6, 2010', $this->selenium->getText('//div[contains(@class, "vcalendar-list")]//h4'), 'order can be overridden if enabled');
+				
+		//override excludeOverlongEvents
+		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[excludeOverlongEvents]=1&tx_czsimplecal_pi1[startDate]=2010-01-01 00:00:00&tx_czsimplecal_pi1[endDate]=2010-01-07 23:59:59');
+		$this->assertElementNotPresent('//h5[. = "overlong event"]', 'excludeOverlongEvents can be overridden if enabled');
+		
+		//override includeStartedEvents
+		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[includeStartedEvents]=1&tx_czsimplecal_pi1[startDate]=2010-01-01 00:00:00&tx_czsimplecal_pi1[endDate]=2010-01-07 23:59:59');
+		$this->assertElementPresent('//h5[. = "already started event"]', 'includeStartedEvents can be overridden if enabled');
+		
 	}
+	
+	
+	/**
+	 * test the day view
+	 */
+	public function testActionDay() {
+		$this->openPageAlias('action-day', '&tx_czsimplecal_pi1[getDate]=2010-01-01');
+		
+		$this->assertElementPresent('css=div.vcalendar-day', 'day-view is shown');
+		$this->assertElementPresent('//h2[. = "Events on January  1, 2010"]', 'heading is shown');
+		$this->assertEquals(1, $this->selenium->getXpathCount('//*[contains(@class, "vevent")]'), 'one event is shown');
+		
+		// no further tests as all other settings were tested in the list-action
+	}
+	
+	/**
+	 * test the week view
+	 */
+	public function testActionWeek() {
+		$this->openPageAlias('action-week');
+		
+		$this->assertElementPresent('css=div.vcalendar-list', 'week-view is shown');
+		
+		$firstDate = $this->getDateOfFirstEvent();
+		$minDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('-1 week');
+		$maxDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('+1 week');
+		
+		$this->assertGreaterThanOrEqual($minDate, $firstDate, 'first event is not older than one week');
+		$this->assertLessThanOrEqual($maxDate, $firstDate, 'first event is at max one week in the future');
+	}
+	
+	/**
+	 * test the next view
+	 */
+	public function testActionNext() {
+		$this->openPageAlias('action-next');
+		
+		$this->assertElementPresent('css=div.vcalendar-next', 'next-view is shown');
+		$this->assertEquals(1, $this->selenium->getXpathCount('//*[contains(@class, "vevent")]'), 'only one event is shown');
+		
+		$firstDate = $this->getDateOfFirstEvent();
+		$minDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('now');
+		$maxDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('+2 days');
+		
+		$this->assertGreaterThanOrEqual($minDate, $firstDate, 'event starts later than now');
+		$this->assertLessThanOrEqual($maxDate, $firstDate, 'event start before the next two days');
+		
+		// no further tests as all other settings were tested in the list-action
+	}
+	
+	public function testActionShow() {
+		$this->openPageAlias('action-show');
+		
+		$this->selenium->click('link=some event');
+		$this->selenium->waitForPageToLoad(10000);
+		
+		$this->assertElementPresent('css=div.vcalendar-event', 'show-view is shown');
+	}
+	
+	
 	
 	public function testActionMinimonth() {
 		
@@ -183,12 +297,19 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 		$this->assertEquals('1 event', $this->selenium->getAttribute('//td//a[. = "23"]/@title'), 'correct event count on saturday');
 		$this->assertElementNotPresent('link=24', 'sunday is not linked');
 		
-		
-		
-		
-		
-		
-		
+	}
+	
+	/**
+	 * get a timestamp of the first shown event
+	 * 
+	 * @param boolean $last if the last event should be returned, if false the first one is returned
+	 */
+	protected function getDateOfFirstEvent() {
+		return strtotime($this->selenium->getAttribute('//div[@class="dtstart"]@title'));
+	}
+	
+	protected function getDateOfLastEvent() {
+		return strtotime($this->selenium->getAttribute('//div[@class="vevent"][last()]/div[@class="dtstart"]@title'));
 	}
 	
 	
