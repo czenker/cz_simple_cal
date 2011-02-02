@@ -12,9 +12,6 @@
 		<p><f:translate key="location" />: {event.locationName}</p>
 	</f:if></f:else>
 </f:if>
-<f:if condition="{event.location}{event.locationName}">
-	
-</f:if>
 <f:if condition="{event.organizer}">
 	<f:then><p><f:translate key="organizer" />: <f:render partial="Organizer/organizer-for-event-inline.html" arguments="{settings: settings, organizer: event.organizer}" /></p></f:then>
 	<f:else><f:if condition="{event.organizerName}">
