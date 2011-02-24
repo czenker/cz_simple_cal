@@ -209,9 +209,4 @@ CREATE TABLE tx_czsimplecal_event_category_mm (
 	KEY parent (pid)
 );
 
-CREATE TABLE tt_address (
-	tx_cal_controller_isorganizer tinyint(4) DEFAULT '0' NOT NULL,
-	tx_cal_controller_islocation tinyint(4) DEFAULT '0' NOT NULL,
-);
-
 
