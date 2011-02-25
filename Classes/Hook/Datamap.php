@@ -25,6 +25,7 @@ class Tx_CzSimpleCal_Hook_Datamap {
 	 * @param t3lib_TCEmain $tce
 	 */
 	public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, $tce) {
+		$GLOBALS['LANG']->includeLLFile('EXT:cz_simple_cal/Resources/Private/Language/locallang_mod.xml');
 		if ($table == 'tx_czsimplecal_domain_model_event') {
 			//if: an event was changed
 			
@@ -47,6 +48,14 @@ class Tx_CzSimpleCal_Hook_Datamap {
 				// index events
 				$indexer->create($event);
 				
+				$message = t3lib_div::makeInstance(
+					't3lib_FlashMessage',
+					$GLOBALS['LANG']->getLL('flashmessages.tx_czsimplecal_domain_model_event.create'),
+					'',
+					t3lib_FlashMessage::OK
+				);
+				t3lib_FlashMessageQueue::addMessage($message);
+				
 				
 			} else {
 				if($this->haveFieldsChanged(Tx_CzSimpleCal_Domain_Model_Event::getFieldsRequiringReindexing(), $fieldArray)) {
@@ -54,6 +63,23 @@ class Tx_CzSimpleCal_Hook_Datamap {
 					$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
 					$indexer = $objectManager->get('Tx_CzSimpleCal_Indexer_Event');
 					$indexer->update($id);
+					
+					$message = t3lib_div::makeInstance(
+						't3lib_FlashMessage',
+						$GLOBALS['LANG']->getLL('flashmessages.tx_czsimplecal_domain_model_event.updateAndIndex'),
+						'',
+						t3lib_FlashMessage::OK
+					);
+					t3lib_FlashMessageQueue::addMessage($message);
+					
+				} else {
+					$message = t3lib_div::makeInstance(
+						't3lib_FlashMessage',
+						$GLOBALS['LANG']->getLL('flashmessages.tx_czsimplecal_domain_model_event.updateNoIndex'),
+						'',
+						t3lib_FlashMessage::INFO
+					);
+					t3lib_FlashMessageQueue::addMessage($message);
 				}
 			}
 		}

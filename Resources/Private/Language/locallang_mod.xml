@@ -8,6 +8,16 @@
         <languageKey index="default" type="array">
             <label index="mlang_tabs_tab">Events</label>
             <label index="mlang_labels_tabdescr">Index events</label>
+            <label index="flashmessages.tx_czsimplecal_domain_model_event.create">Event was created and indexed succesfully.</label>
+            <label index="flashmessages.tx_czsimplecal_domain_model_event.updateNoIndex">Changes were saved, but no reindexing seemed to be necessary.</label>
+            <label index="flashmessages.tx_czsimplecal_domain_model_event.updateAndIndex">Changes were saved and event was reindexed.</label>
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="mlang_tabs_tab">Events</label>
+            <label index="mlang_labels_tabdescr">Index events</label>
+            <label index="flashmessages.tx_czsimplecal_domain_model_event.create">Veranstaltung wurde angelegt und indiziert.</label>
+            <label index="flashmessages.tx_czsimplecal_domain_model_event.updateNoIndex">Änderungen gespeichert. Eine Neuindizierung scheint nicht notwendig.</label>
+            <label index="flashmessages.tx_czsimplecal_domain_model_event.updateAndIndex">Änderungen gespeichert. Veranstaltung wurde neu indiziert.</label>
         </languageKey>
     </data>
 </T3locallang>
