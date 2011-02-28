@@ -514,6 +514,33 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	}
 	
 	/**
+	 * the property lastIndexed
+	 *
+	 * @var DateTime lastIndexed
+	 */
+	protected $lastIndexed;
+	
+	/**
+	 * getter for lastIndexed
+	 *
+	 * @return DateTime
+	 */
+	public function getLastIndexed() {
+		return $this->lastIndexed;
+	}
+	
+	/**
+	 * setter for lastIndexed
+	 * 
+	 * @param DateTime $lastIndexed
+	 * @return Tx_CzSimpleCal_Domain_Model_Event
+	 */
+	public function setLastIndexed($lastIndexed) {
+		$this->lastIndexed = $lastIndexed;
+		return $this;
+	}
+	
+	/**
 	 * an array of cached next appointments
 	 * 
 	 * @var array

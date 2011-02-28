@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="chapter.scheduler"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:ns="http://docbook.org/ns/docbook"
+     xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+
+	<title>Scheduler</title>
+
+	<section xml:id="chapter.scheduler.basics">
+		<title>Understanding the index task</title>
+		
+		<para>
+			The purpose of the index task is to create an index of all events as described in the
+			<link linkend="chapter.concepts.eventindex">basic concepts</link>.
+		</para>
+		<para>
+			But you usually don't have to run the scheduler permanently to keep the index up to date.
+			The extension makes sure, that the index is up to date, when you create, edit, move or delete events.
+		</para>
+		<para>
+			Some of the cases where you actually need to update the index include:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Events where not added through <productname>TYPO3</productname>s native forms.
+				</para>
+				<para>
+					This might happen if you use any weired extension, that manipulates records on a
+					database level or if you even manipulate the records on the database yourself. 
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					You have recurring events and use
+					<link linkend="chapter.configuration.extconf"><literal>recurranceEnd</literal></link>
+					with a relative date format.
+				</para>
+				<para>
+					I would recommend this way as it keeps your database tables as small as possible and 
+					you probably don't want recurring events to repeat until ten years from now.
+					If you had limited <literal>recurranceEnd</literal> to <userinput>+1 year</userinput>
+					you should update your index every once in a while as the event index will only have
+					been created for one year from your last editing of the event. If you would not run the
+					scheduler, your event would "disappear" one year after.
+				</para>
+			</listitem>
+		</itemizedlist>
+		
+		<para>
+			So, to comprehend: You don't need to set up a scheduler task if you do not use recurring events
+			or only use them with <literal>recurrance until</literal> for a short time.
+		</para>
+	</section>
+	
+	<section xml:id="chapter.scheduler.configuration">
+		<title>index task configuration</title>
+		<variablelist>
+			<varlistentry>
+				<term>minimum age for reindexing</term>
+				<listitem>
+					<para>
+						An event will only be reindexed if it was indexed prior to the date given here.
+					</para>
+					<para>
+						This field is of the <link linkend="appendix.date"><literal>date</literal> type</link>.
+						So if you enter <userinput>-1 month</userinput> all the events will be re-indexed after one month.
+					</para>
+					<note>
+						<para>
+							Depending on how many events you have, the indexer might be to slow to index all events in 
+							one run. So your scheduler should run more often than the value in this property, if you 
+							can't ensure that your machine is capable of indexing all events at once.
+						</para>
+					</note>
+					<para>
+						If you leave this field empty the events that where indexed the longest time ago will be indexed.
+						The process will run until all events where indexed or the script stops due to missing memory
+						or time.
+					</para>
+					<note>
+						<para>
+							Needless to say it is not recommended to run this task every 5 minutes. But this comes
+							in handy if you need to reindex your events manually.
+						</para>
+					</note>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+	
+</chapter>

@@ -356,6 +356,16 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 				'type' => 'none', // just show the value - don't make it editable
 			)
 		),
+		'last_indexed' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.last_indexed',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 12,
+				'max' => 20,
+				'eval' => 'date',
+			)
+		),
 	),
 );
 

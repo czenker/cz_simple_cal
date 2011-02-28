@@ -26,7 +26,7 @@
 						or <literal>+2 years</literal> could be some.
 					</para>
 					<note>
-						<para>Don't forget to reindex your events when using a relative date. The index could be outdated else.</para>
+						<para>Don't forget to <link linkend="chapter.scheduler">reindex your events</link> when using a relative date. The index could be outdated else.</para>
 					</note>
 				</listitem>
 			</varlistentry>

@@ -11,6 +11,14 @@
             <label index="flashmessages.tx_czsimplecal_domain_model_event.create">Event was created and indexed succesfully.</label>
             <label index="flashmessages.tx_czsimplecal_domain_model_event.updateNoIndex">Changes were saved, but no reindexing seemed to be necessary.</label>
             <label index="flashmessages.tx_czsimplecal_domain_model_event.updateAndIndex">Changes were saved and event was reindexed.</label>
+            
+        	<label index="tx_czsimplecal_scheduler_index.label">Index calendar events</label>
+        	<label index="tx_czsimplecal_scheduler_index.description">Indexing all calendar events of czSimpleCal.</label>
+        	<label index="tx_czsimplecal_scheduler_index.minindexage.label">minimum age for reindexing</label>
+        	
+            <label index="tx_czsimplecal_scheduler_index.info_index_not_finished">Not all events could be indexed. The index could be as old as %s.</label>
+            <label index="tx_czsimplecal_scheduler_index.minindexage.nostring">The minimum index age is not a string</label>
+            <label index="tx_czsimplecal_scheduler_index.minindexage.parseerror">"%s" could not be parsed by strtotime()</label>            
         </languageKey>
         <languageKey index="de" type="array">
             <label index="mlang_tabs_tab">Events</label>

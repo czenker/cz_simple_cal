@@ -48,6 +48,8 @@
 			<label index="tx_czsimplecal_domain_model_event.categories">Categories</label>
 			<label index="tx_czsimplecal_domain_model_event.show_page_instead">Show this page instead</label>
 			<label index="tx_czsimplecal_domain_model_event.exceptions">Exceptions</label>
+			<label index="tx_czsimplecal_domain_model_event.slug">Slug</label>
+			<label index="tx_czsimplecal_domain_model_event.last_indexed">Last indexed</label>
 			
 			<label index="tx_czsimplecal_domain_model_event.tab_general">Event</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_resources">Resources</label>

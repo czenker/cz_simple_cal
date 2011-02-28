@@ -114,6 +114,9 @@ class Tx_CzSimpleCal_Indexer_Event {
 	 * @param Tx_CzSimpleCal_Domain_Model_Event $event
 	 */
 	protected function doCreate($event) {
+		$event->setLastIndexed(new DateTime());
+		$this->eventRepository->update($event);
+		
 		if(!$event->isEnabled()) {
 			return;
 		}
@@ -130,7 +133,7 @@ class Tx_CzSimpleCal_Indexer_Event {
 		}
 		
 		// store everything to database manually to allow correct unique hash creation when using scheduler
-		$this->persistenceManager->persistAll();
+//		$this->persistenceManager->persistAll();
 	}
 	
 	/**

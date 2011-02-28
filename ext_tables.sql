@@ -33,6 +33,7 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	show_page_instead varchar(255) DEFAULT '' NOT NULL,
 	exceptions int(11) unsigned DEFAULT '0' NOT NULL,
 	slug varchar(250) DEFAULT NULL,
+	last_indexed int(11) DEFAULT '0',
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

@@ -75,6 +75,43 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 	}
 	
 	/**
+	 * find records for the indexing task
+	 * with parameters suitable for the indexer
+	 * 
+	 * @param integer $limit
+	 * @param integer $maxAge UNIX timestamp
+	 */
+	public function findRecordsForReindexing($limit = null, $maxAge = null) {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->
+			setRespectStoragePage(false)->
+			setRespectEnableFields(false)->
+			setRespectSysLanguage(false)
+		;
+		if(!is_null($limit)) {
+			$query->
+				setLimit($limit)
+			;
+		}
+		if(is_null($maxAge)) {
+			// if: no maxAge is set, fetch the oldest events
+			$query->setOrderings(array(
+				'last_indexed' => Tx_Extbase_Persistence_Query::ORDER_ASCENDING
+			));
+		} else {
+			$query->matching(
+				$query->lessThan('last_indexed', $maxAge)
+			);
+			/* no sorting here:
+			 * - sorting would make the query slower
+			 * - multiple parallel scheduler tasks could do the same work as there is no locking
+			 *     with this "random" sorting, there is at least a chance this won't happen
+			 */ 
+		}
+		return $query->execute();
+	}
+	
+	/**
 	 * make a given slug unique
 	 * returns a unique slug
 	 * 
@@ -120,7 +157,33 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 				return $slug.'-'.$number;
 			}
 		}
+	}
+	
+	/**
+	 * get the UNIX timestamp of the indexing of the oldest event that needs indexing
+	 * 
+	 * @return integer UNIX timestamp
+	 */
+	public function getMaxIndexAge() {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->
+			setRespectStoragePage(false)->
+			setRespectEnableFields(false)->
+			setRespectSysLanguage(false)
+		;
+		$query->setOrderings(array(
+			'last_indexed' => Tx_Extbase_Persistence_Query::ORDER_ASCENDING
+		));
 		
+		$query->setLimit(1);
+		
+		$result = $query->execute();
+		
+		if($result->count() == 0) {
+			return null;
+		} else {
+			return $result->getFirst()->getLastIndexed()->format('U');
+		}
 	}
 	
 }

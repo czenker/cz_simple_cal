@@ -15,6 +15,7 @@ return array(
 	//needed for tests
 	'tx_czsimplecal_test_baseseleniumtestcase' => t3lib_extMgm::extPath('cz_simple_cal') . 'Tests/BaseSeleniumTestCase.php',
 
+
 	/**
 	 * 
 	 * quickfix. The pre-save hook of records could not find the repository
