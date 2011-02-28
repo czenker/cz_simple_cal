@@ -423,7 +423,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 			$query->setLimit(1);
 			$result = $query->execute();
 			
-			if(empty($result)) {
+			if($result->count() === 0) {
 				return $slug.'-1';
 			} else {
 				$number = intval(substr($result->getFirst()->getSlug(), strlen($slug) + 1)) + 1;
