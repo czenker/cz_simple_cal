@@ -103,6 +103,7 @@ plugin.tx_czsimplecal {
 			allowedActions = show
 			actions {
 				show {
+					defaultPid = {$plugin.tx_czsimplecal.pids.default}
 				}
 			}
 		}

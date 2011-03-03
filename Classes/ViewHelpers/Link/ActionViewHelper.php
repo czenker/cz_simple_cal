@@ -98,7 +98,10 @@ class Tx_CzSimpleCal_ViewHelpers_Link_ActionViewHelper extends Tx_Fluid_ViewHelp
 		
 		$settings = $this->templateVariableContainer->get('settings');
 		if(isset($settings[$controller]['actions'][$action]['defaultPid'])) {
-			return intval($settings[$controller]['actions'][$action]['defaultPid']);
+			return empty($settings[$controller]['actions'][$action]['defaultPid']) ? 
+				null:
+				intval($settings[$controller]['actions'][$action]['defaultPid'])
+			;
 		}
 	}
 }
