@@ -63,6 +63,8 @@
 			<label index="www">WWW</label>
 			<label index="title.gender.male">Mr.</label>
 			<label index="title.gender.female">Mrs.</label>
+			
+			<label index="action.EventIndex.next.title">Upcomming event</label>
 				
 		</languageKey>
 		
@@ -107,7 +109,7 @@
 			<label index="timespan.on">am</label>
 			
 			
-			<label index="time.end">end at</label>
+			<label index="time.end">Ende gegen</label>
 			
 			<label index="numEvents">[0]keine Veranstaltungen|[1] eine Veranstaltung|[2,+Inf] ###number### Veranstaltungen</label>
 			
@@ -124,6 +126,8 @@
 			<label index="www">Webseite</label>
 			<label index="title.gender.male">Herr</label>
 			<label index="title.gender.female">Frau</label>
+			
+			<label index="action.EventIndex.next.title">Nächste Veranstaltung</label>
 		</languageKey>
 		
 	</data>

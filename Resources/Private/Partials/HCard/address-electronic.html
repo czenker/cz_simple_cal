@@ -5,6 +5,6 @@
 <f:if condition="{address.mobile}"><span class="tel"><abbr class="type" title="cell"><f:translate key="mobile" /></abbr>: <span class="value">{address.mobile}</span></span><br/></f:if>
 <f:if condition="{address.fax}"><span class="tel"><abbr class="type" title="fax"><f:translate key="fax" /></abbr>: <span class="value">{address.fax}</span></span><br/></f:if>
 <f:if condition="{address.email}"><f:translate key="email" />: <f:link.email email="{address.email}" /><br/></f:if>
-<f:if condition="{address.www}"><f:translate key="www" />: <f:link.external class="www" uri="{address.www}" /></f:if>
+<f:if condition="{address.www}"><f:translate key="www" />: <f:link.external class="www" uri="{address.www}">{address.www}</f:link.external></f:if>
 </p>
 </f:if>

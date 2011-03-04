@@ -7,7 +7,6 @@
 
 <f:if condition="{event.isRecurrant}">
 	<f:then>
-		<p><em><f:render partial="Event/recurrance.html" arguments="{event:event, settings:settings}" /></em></p>
 		<f:if condition="{event.nextAppointments}">
 			<f:then>
 				<h6><f:translate key="nextAppointments" /></h6>
@@ -20,7 +19,7 @@
 		</f:if>
 	</f:then>
 	<f:else>
-		<p><em><f:render partial="Event/show/startdate.html" arguments="{event:event, settings:settings}" /></em></p>
+		<p><em><f:render partial="Event/show/startdate.html" arguments="{event:event.nextAppointment, settings:settings}" /></em></p>
 	</f:else>
 </f:if>
 
@@ -31,9 +30,7 @@
 		<p><f:translate key="location" />: {event.locationName}</p>
 	</f:if></f:else>
 </f:if>
-<f:if condition="{event.location}{event.locationName}">
-	
-</f:if>
+
 <f:if condition="{event.organizer}">
 	<f:then><p><f:translate key="organizer" />: <f:render partial="Organizer/organizer-for-event-inline.html" arguments="{settings: settings, organizer: event.organizer}" /></p></f:then>
 	<f:else><f:if condition="{event.organizerName}">
@@ -41,5 +38,5 @@
 	</f:if></f:else>
 </f:if>
 
-<f:link.action action="list"><f:translate key="msg.backToList"/></f:link.action>
+<f:link.action controller="EventIndex" action="list"><f:translate key="msg.backToList"/></f:link.action>
 </div>

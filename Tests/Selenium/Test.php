@@ -19,34 +19,34 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 		
 		$this->assertElementPresent('css=div.vcalendar-list', 'default view is list-view');
 		
-		$this->assertElementPresent('//h5[. = "Bongo Day"]', 'allday event is present');
-		$this->assertElementPresent('//h5[. = "Playing Golf"]', 'event with only start is present');
-		$this->assertElementPresent('//h5[. = "Going fishing"]', 'event with start and end on different days is present');
-		$this->assertElementPresent('//h5[. = "Jogging with friends"]', 'event with start and end on same day is present');
+		$this->assertElementPresent('link=Bongo Day', 'allday event is present');
+		$this->assertElementPresent('link=Playing Golf', 'event with only start is present');
+		$this->assertElementPresent('link=Going fishing', 'event with start and end on different days is present');
+		$this->assertElementPresent('link=Jogging with friends', 'event with start and end on same day is present');
 		
-		$this->assertElementNotPresent('//h5[. = "Hidden event"]', 'hidden event is not present');
-		$this->assertElementNotPresent('//h5[. = "Deleted event"]', 'deleted event is not present');
+		$this->assertElementNotPresent('link=Hidden event', 'hidden event is not present');
+		$this->assertElementNotPresent('link=Deleted event', 'deleted event is not present');
 		
 		//default for startDate
 		$this->assertGreaterThan(strtotime('2010-01-01 00:00:00UTC'), $this->getDateOfFirstEvent(), 'default for startDate');
 		//default for endDate
 		$this->assertLessThan(strtotime('2010-01-07 23:59:59UTC'), $this->getDateOfLastEvent(), 'default for endDate');
 		//default for excludeOverlongEvents
-		$this->assertElementPresent('//h5[. = "overlong event"]', 'default for excludeOverlongEvents is false');
+		$this->assertElementPresent('link=overlong event', 'default for excludeOverlongEvents is false');
 		//default for includeStartedEvents
-		$this->assertElementNotPresent('//h5[. = "already started event"]', 'default for includeStartedEvents is false');
+		$this->assertElementNotPresent('link=already started event', 'default for includeStartedEvents is false');
 		
 		
 
 		// check setting: startDate
 		$this->openPageAlias('action-list-startdate');
-		$this->assertElementNotPresent('//h5[. = "Going fishing"]', 'testing setting startDate');
+		$this->assertElementNotPresent('link=Going fishing', 'testing setting startDate');
 		
 		
 		
 		// check setting: endDate
 		$this->openPageAlias('action-list-enddate');
-		$this->assertElementNotPresent('//h5[. = "Playing Golf"]', 'testing setting endDate');
+		$this->assertElementNotPresent('link=Playing Golf', 'testing setting endDate');
 		
 		
 		
@@ -70,19 +70,19 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 		
 		//check setting: filter.categories
 		$this->openPageAlias('action-list-filtercategories');
-		$this->assertEquals(2, $this->selenium->getXpathCount('//*[contains(@class, "vevent")]'), 'testing setting filter.categories');
+		$this->assertEquals(2, $this->selenium->getXpathCount('//*[contains(@class, "vevent")]'), 'testing setting filterCategories');
 		
 		
 		
 		// check setting: excludeOverlongEvents
 		$this->openPageAlias('action-list-excludeoverlong');
-		$this->assertElementNotPresent('//h5[. = "overlong event"]', 'testing setting excludeOverlongEvents');
+		$this->assertElementNotPresent('link=overlong event', 'testing setting excludeOverlongEvents');
 		
 		
 		
 		// check setting: includeStartedEvents
 		$this->openPageAlias('action-list-includestartedevents');
-		$this->assertElementPresent('//h5[. = "already started event"]', 'testing setting includeStartedEvents');
+		$this->assertElementPresent('link=already started event', 'testing setting includeStartedEvents');
 		
 		
 		
@@ -117,10 +117,10 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 		$this->assertLessThanOrEqual($maxDate, $firstDate, 'startDate can be overridden if enabled (#2)');
 		
 		//override endDate
-		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[endDate]=+2 days');
+		$this->openPageAlias('action-list-getpostallowed', '&tx_czsimplecal_pi1[startDate]=2010-07-01&tx_czsimplecal_pi1[endDate]=2010-07-08');
 		$firstDate = $this->getDateOfLastEvent();
-		$minDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('now');
-		$maxDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('+2 days');
+		$minDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('2010-07-01');
+		$maxDate = Tx_CzSimpleCal_Utility_StrToTime::strtotime('2010-07-08');
 		$this->assertGreaterThanOrEqual($minDate, $firstDate, 'endDate can be overridden if enabled (#1)');
 		$this->assertLessThanOrEqual($maxDate, $firstDate, 'endDate can be overridden if enabled (#2)');
 		
@@ -196,12 +196,11 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 	}
 	
 	public function testActionShow() {
-		$this->openPageAlias('action-show');
+		$this->openPageAlias('action-list');
 		
-		$this->selenium->click('link=some event');
+		$this->selenium->click('css=a.url');
 		$this->selenium->waitForPageToLoad(10000);
-		
-		$this->assertElementPresent('css=div.vcalendar-event', 'show-view is shown');
+		$this->assertElementPresent('css=div.vcalendar-event', 'show-view is shown when clicking on an event in the list');
 	}
 	
 	
@@ -300,14 +299,62 @@ class Tx_CzSimpleCalTests_Selenium_Test extends Tx_CzSimpleCal_Test_BaseSelenium
 	}
 	
 	/**
+	 * do some tests on the default templates
+	 */
+	public function testDefaultTemplate() {
+		$this->openPageAlias('action-list');
+		
+		// check for the basic hcard format in list to be correct
+		$this->assertEquals('http://microformats.org/profile/hcalendar', $this->selenium->getAttribute('//link[@rel="profile"]/@href'), 'hCalendar profile is loaded in LIST view');
+		$this->assertElementPresent('//div[contains(@class, "vevent")]', 'at least one vevent marked as such is shown');
+		
+		$this->assertRegExp(
+			'/^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}[+\-]\d{4}$/',
+			$this->selenium->getAttribute('//div[contains(@class, "vevent")]//*[contains(@class, "dtstart")]/@title'),
+			'"dtstart" is a timestamp in an acceptable format'
+		);
+		
+		$this->assertElementPresent('//div[contains(@class, "vevent")]//*[contains(@class, "summary")]', 'a "summary" is present');
+		$this->assertNotEquals(
+			'',
+			$this->selenium->getText('//div[contains(@class, "vevent")]//*[contains(@class, "summary")]'),
+			'"summary" is not empty'
+		);
+		
+		$this->assertElementPresent('//div[contains(@class, "vevent")]//a[contains(@class, "url")]', 'an "url" is present');
+		
+		$this->selenium->click('//div[contains(@class, "vevent")]//a[contains(@class, "url")]');
+		$this->selenium->waitForPageToLoad(10000);
+		
+		$this->assertElementPresent('//div[contains(@class, "vcalendar-event")]', 'the opened view shows an event in the SHOW view');
+		
+		$this->assertEquals('http://microformats.org/profile/hcalendar', $this->selenium->getAttribute('//link[@rel="profile"]/@href'), 'hCalendar profile is loaded in SHOW view');
+		$this->assertElementPresent('//div[contains(@class, "vevent")]', 'one vevent marked as such is shown');
+		
+		$this->assertRegExp(
+			'/^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}[+\-]\d{4}$/',
+			$this->selenium->getAttribute('//div[contains(@class, "vevent")]//*[contains(@class, "dtstart")]/@title'),
+			'"dtstart" is a timestamp in an acceptable format in SHOW view'
+		);
+		
+		$this->assertElementPresent('//div[contains(@class, "vevent")]//*[contains(@class, "summary")]', 'a "summary" is present in SHOW view');
+		$this->assertNotEquals(
+			'',
+			$this->selenium->getText('//div[contains(@class, "vevent")]//*[contains(@class, "summary")]'),
+			'"summary" is not empty in SHOW view'
+		);
+	}
+	
+	/**
 	 * get a timestamp of the first shown event
-	 * 
-	 * @param boolean $last if the last event should be returned, if false the first one is returned
 	 */
 	protected function getDateOfFirstEvent() {
 		return strtotime($this->selenium->getAttribute('//div[@class="dtstart"]@title'));
 	}
 	
+	/**
+	 * get a timestamp of the last shown event
+	 */
 	protected function getDateOfLastEvent() {
 		return strtotime($this->selenium->getAttribute('//div[@class="vevent"][last()]/div[@class="dtstart"]@title'));
 	}

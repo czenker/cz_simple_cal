@@ -4,7 +4,6 @@
 	<f:then>
 	<f:alias map="{dayOfMonth: data.10, monthNumber:'{cal:format.dateTime(timestamp: data.10.date, format:\'%Y%m\')}'}">
 		<table>
-		
 			<thead>
 				<tr>
 					<td colspan="8">
@@ -45,8 +44,5 @@
 		
 		</f:alias>
 	</f:then>
-	<f:else>
-		<p><f:translate key="msg.noEvents" /></p>
-	</f:else>
 </f:if>
 </div>
