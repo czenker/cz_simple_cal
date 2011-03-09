@@ -71,7 +71,7 @@ class Tx_CzSimpleCalTests_Mocks_IsRecurringMock implements Tx_CzSimpleCal_Domain
 	 * @return Tx_CzSimpleCal_Tests_Mocks_IsRecurringMock
 	 */
 	public static function fromArray($data) {
-		$className = get_class($this);
+		$className = __CLASS__;
 		$obj = new $className();
 		
 		foreach($data as $name => $value) {

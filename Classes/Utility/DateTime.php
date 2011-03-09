@@ -12,7 +12,7 @@ class Tx_CzSimpleCal_Utility_DateTime extends DateTime {
 		
 		$time = t3lib_div::trimExplode('|', $time, true);
 		
-		$thisTime = Tx_CzSimpleCal_Utility_StrToTime::strftime(Tx_CzSimpleCal_Utility_StrToTime::strftime(array_shift($time)));
+		$thisTime = Tx_CzSimpleCal_Utility_StrToTime::strftime(array_shift($time));
 		
 		if(is_null($timezone)) {
 			parent::__construct($thisTime);

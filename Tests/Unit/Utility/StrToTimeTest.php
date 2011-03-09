@@ -58,19 +58,17 @@ class StrToTimeTest extends tx_phpunit_testcase
     
     /**
      * @dataProvider provider
-     * @return unknown_type
      */
     public function testModifications($modification, $assumed) {
     	
     	self::assertEquals(
     		$assumed,
-    		Tx_CzSimpleCal_Utility_StrToTime::strtotime($modification, $this->dateTime),
-    		'"'.$modification.'"'
+    		Tx_CzSimpleCal_Utility_StrToTime::strtotime($modification, $this->dateTime)
     	);
     }
     
     public function provider() {
-    	return array(
+    	$array = array(
     		array('+1 second', 1234567890 + 1),
     		array('-1 second', 1234567890 - 1),
     		array('+1 minute', 1234567890 + 60),
@@ -120,6 +118,12 @@ class StrToTimeTest extends tx_phpunit_testcase
     		// test for compound dates
     		array('first day of this month | monday this week', strtotime('2009-01-26 00:00:00GMT')),
     	);
+    	
+    	$labels = array();
+		foreach($array as $value) {
+			$labels[] = 'with data '.$value[0];
+		}
+		return array_combine($labels, $array);
     }
     
     public function testWeeksStartWithMonday() {

@@ -169,8 +169,8 @@ class Utility_DateTimeTest extends tx_phpunit_testcase {
 	public function provideDataForEnhancement() {
 		$array = array(
 //			array('first day this month', strtotime(strftime('%Y-%m-01 %H:%M:%S'))),
-			array('@1234567890|first day this month', strtotime('2009-02-01 23:31:30GMT')),
-			array('@1234567890|first day this month|monday this week', strtotime('2009-01-26 00:00:00GMT'))
+			array('@1234567890|first day of this month', strtotime('2009-02-01 23:31:30GMT')),
+			array('@1234567890|first day of this month|monday this week', strtotime('2009-01-26 00:00:00GMT'))
 		);
 		$labels = array();
 		foreach($array as $value) {
