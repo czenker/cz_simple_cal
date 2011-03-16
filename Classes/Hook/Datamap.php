@@ -60,6 +60,35 @@ class Tx_CzSimpleCal_Hook_Datamap {
 	}
 	
 	/**
+	 * treat the values before handling by t3lib_TCEmain
+	 * 
+	 * We replace empty values with our custom NULL values here for dates and times
+	 * 
+	 * @param array $fieldArray
+	 * @param string $table
+	 * @param integer $id
+	 * @param t3lib_TCEmain $tce
+	 */
+	public function processDatamap_preProcessFieldArray(&$fieldArray, $table, $id, $tce) {
+		if($table == 'tx_czsimplecal_domain_model_event' || $table == 'tx_czsimplecal_domain_model_exception') {
+			
+			t3lib_div::loadTCA($table);
+			foreach(array('start_time', 'end_date', 'end_time', 'recurrance_until') as $fieldName) {
+				if(array_key_exists($fieldName, $fieldArray)) {
+					/* 
+					 * this must be an empty string, not "0"!
+					 *  - empty strings are created by the clear field button introduced with TYPO3 4.5 and by deleting a value
+					 *  - "0" means midnight, so don't strip it
+					 */
+					if($fieldArray[$fieldName] === '') {
+						$fieldArray[$fieldName] = $_GLOBALS['TCA'][$table]['columns'][$fieldName]['config']['default'];
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * implement the hook processDatamap_postProcessFieldArray that gets invoked
 	 * right before a dataset is written to the database
 	 * 
