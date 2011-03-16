@@ -7,7 +7,10 @@
 		</div>
 	</f:else>
 	</f:if>
-	<h5 class="summary"><cal:link.action action="show" arguments="{event: event}" class="url">{event.title}</cal:link.action></h5>
+	<h5 class="summary"><f:if condition="{event.showPageInstead}">
+		<f:then><f:link.page pageUid="{event.showPageInstead}">{event.title}</f:link.page></f:then>
+		<f:else><cal:link.action action="show" arguments="{event: event}" class="url">{event.title}</cal:link.action></f:else>
+	</f:if></h5>
 	<f:if condition="{event.teaser}" >
 	<f:then>
 		<div class="description">{event.teaser}</div>
