@@ -341,7 +341,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * @return boolean
 	 */
 	public function isOneDayEvent() {
-		return $this->endDate < 0 || $this->endDate === $this->startDate;
+		return $this->endDay < 0 || $this->endDay === $this->startDay;
 	}
 	
 	/**
