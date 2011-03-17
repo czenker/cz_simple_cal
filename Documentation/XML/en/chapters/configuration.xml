@@ -272,12 +272,12 @@
 							</para>
 							<example>
 								<title>Usage of filters</title>
-								<programlisting>filter.category = 42</programlisting>
+								<programlisting>filter.categories.uid = 42</programlisting>
 								selects only events of the category with uid <literal>42</literal>.
-								<programlisting>filter.organizer = 4,2</programlisting>
+								<programlisting>filter.organizer.uid = 4,2</programlisting>
 								selects only events of the organizers with uids <literal>4</literal> and <literal>2</literal>.
-								<programlisting>filter.category = 4
-filter.location = 2</programlisting>
+								<programlisting>filter.categories.uid = 4
+filter.location.uid = 2</programlisting>
 								selects only events of the organizer with uid <literal>4</literal> at the location with 
 								uid <literal>2</literal>.
 							</example>
@@ -385,12 +385,12 @@ filter.location = 2</programlisting>
 							</para>
 							<example>
 								<title>Usage of filters</title>
-								<programlisting>filter.category = 42</programlisting>
+								<programlisting>filter.categories.uid = 42</programlisting>
 								selects only events of the category with uid <literal>42</literal>.
-								<programlisting>filter.organizer = 4,2</programlisting>
+								<programlisting>filter.organizer.uid = 4,2</programlisting>
 								selects only events of the organizers with uids <literal>4</literal> and <literal>2</literal>.
-								<programlisting>filter.category = 4
-filter.location = 2</programlisting>
+								<programlisting>filter.categories.uid = 4
+filter.location.uid = 2</programlisting>
 								selects only events of the organizer with uid <literal>4</literal> at the location with 
 								uid <literal>2</literal>.
 							</example>
