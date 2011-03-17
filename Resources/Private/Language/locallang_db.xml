@@ -14,6 +14,11 @@
 			<label index="tx_czsimplecal_domain_model_event.end_time">End Time</label>
 			<label index="tx_czsimplecal_domain_model_event.teaser">Teaser</label>
 			<label index="tx_czsimplecal_domain_model_event.description">Description</label>
+			<label index="tx_czsimplecal_domain_model_event.images">Images</label>
+			<label index="tx_czsimplecal_domain_model_event.images_caption">Captions for Images</label>
+			<label index="tx_czsimplecal_domain_model_event.images_alternative">Alternative Text for Images</label>
+			<label index="tx_czsimplecal_domain_model_event.files">Files</label>
+			<label index="tx_czsimplecal_domain_model_event.files_caption">Captions for Files</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_type">Recurrance</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_type.none">(none)</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_type.daily">daily</label>
@@ -45,6 +50,7 @@
 			<label index="tx_czsimplecal_domain_model_event.exceptions">Exceptions</label>
 			
 			<label index="tx_czsimplecal_domain_model_event.tab_general">Event</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_resources">Resources</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_recurrance">Recurrance</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_location">Location</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_organizer">Organizer</label>
@@ -77,6 +83,11 @@
 			<label index="tx_czsimplecal_domain_model_event.end_time">Zeit Ende</label>
 			<label index="tx_czsimplecal_domain_model_event.teaser">Kurzbeschreibung</label>
 			<label index="tx_czsimplecal_domain_model_event.description">Beschreibung</label>
+			<label index="tx_czsimplecal_domain_model_event.images">Bilder</label>
+			<label index="tx_czsimplecal_domain_model_event.images_caption">Beschriftung für Bilder</label>
+			<label index="tx_czsimplecal_domain_model_event.images_alternative">Textersatz für Bilder</label>
+			<label index="tx_czsimplecal_domain_model_event.files">Dateien</label>
+			<label index="tx_czsimplecal_domain_model_event.files_caption">Beschriftung der Dateien</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_type">Wiederholung</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_type.none">(keine)</label>
 			<label index="tx_czsimplecal_domain_model_event.recurrance_type.daily">täglich</label>
@@ -108,6 +119,7 @@
 			
 			<label index="tx_czsimplecal_domain_model_event.tab_general">Event</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_recurrance">Wiederholung</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_resources">Resourcen</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_location">Veranstaltungsort</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_organizer">Veranstalter</label>
 			

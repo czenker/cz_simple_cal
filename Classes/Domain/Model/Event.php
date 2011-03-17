@@ -132,8 +132,40 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 */
 	protected $deleted;
 
+	/**
+	 * the image files associated with this event
+	 * 
+	 * @var string
+	 */
+	protected $images;
 	
+	/**
+	 * alternative labels for images of this event
+	 * 
+	 * @var string
+	 */
+	protected $imagesAlternative;
 	
+	/**
+	 * captions for images of this event
+	 * 
+	 * @var string
+	 */
+	protected $imagesCaption;
+	
+	/**
+	 * files associated with this event
+	 * 
+	 * @var string
+	 */
+	protected $files;
+	
+	/**
+	 * captions for files of this event
+	 * 
+	 * @var string
+	 */
+	protected $filesCaption;
 	
 	
 	/**
@@ -253,10 +285,10 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	/**
 	 * getter for the first category
 	 *
-	 * @return type
+	 * @return Tx_CzSimpleCal_Domain_Model_Category
 	 */
 	public function getCategory() {
-		if(!$this->categories) {
+		if(is_null($this->categories) || $this->categories->count() === 0) {
 			return null;
 		}
 		$this->categories->rewind();
@@ -557,6 +589,58 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 		$this->showPageInstead = $showPageInstead;
 		return $this;
 	}
+	
+	/**
+	 * an array used internally to cache the images as an array
+	 * 
+	 * @var array
+	 */
+	protected $_cache_images = null;
+	
+	/**
+	 * get all images as an array
+	 * 
+	 * @return array<Tx_CzEwlSponsor_Domain_Model_File>
+	 */
+	public function getImages() {
+		if(is_null($this->_cache_images)) {
+			t3lib_div::loadTCA('tx_czsimplecal_domain_model_event');
+			$this->_cache_images = Tx_CzSimpleCal_Utility_FileArrayBuilder::build(
+				$this->images,
+				$GLOBALS['TCA']['tx_czsimplecal_domain_model_event']['columns']['images']['config']['uploadfolder'],
+				$this->imagesAlternative,
+				$this->imagesCaption
+			);
+		}
+		return $this->_cache_images;
+	}
+	
+	/**
+	 * an array used internally to cache the files as an array
+	 * 
+	 * @var array
+	 */
+	protected $_cache_files = null;
+	
+	/**
+	 * get all files as an array
+	 * 
+	 * @return array<Tx_CzEwlSponsor_Domain_Model_File>
+	 */
+	public function getFiles() {
+		if(is_null($this->_cache_files)) {
+			t3lib_div::loadTCA('tx_czsimplecal_domain_model_event');
+			$this->_cache_files = Tx_CzSimpleCal_Utility_FileArrayBuilder::build(
+				$this->files,
+				$GLOBALS['TCA']['tx_czsimplecal_domain_model_event']['columns']['files']['config']['uploadfolder'],
+				'',
+				$this->filesCaption
+			);
+		}
+		return $this->_cache_files;
+	}
+	
+	
 	
 	
 }

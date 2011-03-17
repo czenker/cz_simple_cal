@@ -614,8 +614,16 @@ class Tx_CzSimpleCal_Domain_Model_BaseAddress extends Tx_CzSimpleCal_Domain_Mode
 	protected $image;
 	
 	/**
+	 * an array used internally to cache the images as an array
+	 * 
+	 * @var array
+	 */
+	protected $_cache_images = null;
+	
+	/**
 	 * getter for image
 	 *
+	 * @deprecated
 	 * @return string
 	 */
 	public function getImage() {
@@ -623,8 +631,25 @@ class Tx_CzSimpleCal_Domain_Model_BaseAddress extends Tx_CzSimpleCal_Domain_Mode
 	}
 	
 	/**
+	 * get all images as an array
+	 * 
+	 * @return array<Tx_CzEwlSponsor_Domain_Model_File>
+	 */
+	public function getImages() {
+		if(is_null($this->_cache_images)) {
+			t3lib_div::loadTCA('tt_address');
+			$this->_cache_images = Tx_CzSimpleCal_Utility_FileArrayBuilder::build(
+				$this->image,
+				$GLOBALS['TCA']['tt_address']['columns']['image']['config']['uploadfolder']
+			);
+		}
+		return $this->_cache_images;
+	}
+	
+	/**
 	 * setter for image
 	 * 
+	 * @deprecated not a very clever mechanism to set images. This method should be replaced by a setImagesMethod, that handles array input
 	 * @param string $image
 	 * @return Tx_CzSimpleCal_Domain_Model_Location
 	 */

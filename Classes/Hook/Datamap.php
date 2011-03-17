@@ -81,7 +81,7 @@ class Tx_CzSimpleCal_Hook_Datamap {
 					 *  - "0" means midnight, so don't strip it
 					 */
 					if($fieldArray[$fieldName] === '') {
-						$fieldArray[$fieldName] = $_GLOBALS['TCA'][$table]['columns'][$fieldName]['config']['default'];
+						$fieldArray[$fieldName] = $GLOBALS['TCA'][$table]['columns'][$fieldName]['config']['default'];
 					}
 				}
 			}
