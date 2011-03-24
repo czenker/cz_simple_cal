@@ -25,7 +25,7 @@
 			<label index="nextAppointments">next Appointments</label>
 			
 			<label index="msg.noEvents">No events have been found.</label>
-			<label index="msg.backToList">back to the list view</label>
+			<label index="msg.backToList">to the list view</label>
 			
 			
 			<label index="format.monthAndYear">%B %Y</label>
@@ -88,7 +88,7 @@
 			<label index="nextAppointments">nächste Termine</label>
 			
 			<label index="msg.noEvents">Es wurden keine passenden Veranstaltungen gefunden.</label>
-			<label index="msg.backToList">zurück zur Übersicht</label>
+			<label index="msg.backToList">zur Übersicht</label>
 			
 			<label index="format.monthAndYear">%B %Y</label>
 			<label index="format.dayWrapper">%a, %e. %B %Y</label>
