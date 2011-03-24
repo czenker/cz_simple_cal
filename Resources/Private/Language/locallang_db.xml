@@ -69,6 +69,7 @@
 			
 			<label index="tx_czsimplecal_domain_model_category">Category</label>
 			<label index="tx_czsimplecal_domain_model_category.title">Title</label>
+			<label index="tx_czsimplecal_domain_model_category.show_page_instead">Show this page instead</label>
 			
 			<label index="tt_address.is_organizer">is calendar organizer</label>
 			<label index="tt_address.is_location">is calendar location</label>

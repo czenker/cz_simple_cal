@@ -170,6 +170,7 @@ CREATE TABLE tx_czsimplecal_domain_model_category (
 	
 	
 	title tinytext,
+	show_page_instead varchar(255) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

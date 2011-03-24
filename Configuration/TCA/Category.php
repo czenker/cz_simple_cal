@@ -4,10 +4,10 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $TCA['tx_czsimplecal_domain_model_category'] = array(
 	'ctrl' => $TCA['tx_czsimplecal_domain_model_category']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'title'
+		'showRecordFieldList' => 'title,show_page_instead'
 	),
 	'types' => array(
-		'1' => array('showitem' => 'title')
+		'1' => array('showitem' => 'title,show_page_instead')
 	),
 	'palettes' => array(
 		'1' => array('showitem' => '')
@@ -65,6 +65,28 @@ $TCA['tx_czsimplecal_domain_model_category'] = array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim'
+			)
+		),
+		'show_page_instead' => array(
+			'exclude' => 0,
+			'label' => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_category.show_page_instead',
+			'config' => array(
+				'eval' => 'trim',
+				'max' => 256,
+				'size' => 25,
+				'softref' => 'typolink',
+				'type' => 'input',
+		
+				'wizards' => array(
+					'_PADDING' => 2,
+					'link' => array(
+						'icon' => 'link_popup.gif',
+						'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1',
+						'script' => 'browse_links.php?mode=wizard',
+						'title' => 'LLL:EXT:cms/locallang_ttc.xml:header_link_formlabel',
+						'type' => 'popup',
+					),
+				),
 			)
 		),
 	),

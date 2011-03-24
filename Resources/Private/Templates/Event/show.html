@@ -24,6 +24,10 @@
 </f:if>
 
 <div class="description"><f:format.html>{event.description}</f:format.html></div>
+
+<f:if condition="{event.category.showPageInstead}">
+	<p class="align-right"><f:link.page pageUid="{event.category.showPageInstead}"><f:format.printf arguments="{0:event.category.title}"><f:translate key="msg.toCategory" /></f:format.printf></f:link.page></p>
+</f:if>
 <f:if condition="{event.location}">
 	<f:then><p><f:translate key="location" />: <f:render partial="Location/location-for-event-inline.html" arguments="{settings: settings, location: event.location}" /></p></f:then>
 	<f:else><f:if condition="{event.locationName}">
