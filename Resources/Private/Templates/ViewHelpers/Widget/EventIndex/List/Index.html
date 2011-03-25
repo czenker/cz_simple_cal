@@ -1,0 +1,31 @@
+{namespace cal=Tx_CzSimpleCal_ViewHelpers}
+<cal:useMicroformat format="hcalendar" />
+<f:if condition="{events}">
+	<f:then>
+		<ul class="contentlist">
+		<f:for each="{events}" as="event">
+			<li class="vevent contentlist-item" id="{event.hash}">
+				<f:if condition="{event.isAlldayEvent}">
+					<f:then>
+						<div class="minilist-item-head">
+							<span class="prehead"><cal:format.dateTime format="%d. %B" timestamp="{event.start}"/></span>
+						</div>
+					</f:then>
+					<f:else>
+						<div class="dtstart minilist-item-head" title="{cal:format.dateTime(format: '%Y-%m-%dT%H:%M%z', timestamp: event.start)}">
+							<span class="prehead"><cal:format.dateTime format="%d. %B, %H:%M" timestamp="{event.start}"/></span>
+						</div>
+					</f:else>
+				</f:if>
+				<f:if condition="{event.showPageInstead}">
+					<f:then><f:link.page pageUid="{event.showPageInstead}" class="url">{event.title}</f:link.page></f:then>
+					<f:else><cal:link.action controller="Event" action="show" arguments="{event: event.event.uid}" class="url">{event.title}</cal:link.action></f:else>
+				</f:if>
+			</li>
+		</f:for>
+		</ul>
+	</f:then>
+	<f:else>
+		<p><f:translate key="msg.noEvents" /></p>
+	</f:else>
+</f:if>
