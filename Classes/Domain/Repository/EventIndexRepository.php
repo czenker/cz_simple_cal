@@ -362,7 +362,7 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 				$value = intval($value);
 			}
 		}
-		return empty($filter) ? null : $filter;
+		return empty($filter['value']) ? null : $filter;
 	}
 	
 	/**
