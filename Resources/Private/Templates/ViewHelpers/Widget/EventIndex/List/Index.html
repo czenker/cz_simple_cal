@@ -19,7 +19,7 @@
 				</f:if>
 				<f:if condition="{event.showPageInstead}">
 					<f:then><f:link.page pageUid="{event.showPageInstead}" class="url">{event.title}</f:link.page></f:then>
-					<f:else><cal:link.action controller="Event" action="show" arguments="{event: event.event.uid}" class="url">{event.title}</cal:link.action></f:else>
+					<f:else><cal:link.action controller="Event" action="show" pluginName="pi1" arguments="{event: event.event.uid}" class="url">{event.title}</cal:link.action></f:else>
 				</f:if>
 			</li>
 		</f:for>

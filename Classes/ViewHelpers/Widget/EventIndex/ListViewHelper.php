@@ -49,9 +49,9 @@ class Tx_CzSimpleCal_ViewHelpers_Widget_EventIndex_ListViewHelper extends Tx_Flu
 	public function initializeArguments() {
 		$this->registerArgument('startDate', 'mixed', 'startDate', false, null);
 		$this->registerArgument('endDate', 'mixed', 'endDate', false, null);
-		$this->registerArgument('maxEvents', 'integer', 'maxEvents', false, null);
-		$this->registerArgument('order', 'string', 'order', false, null);
-		$this->registerArgument('orderBy', 'string', 'orderBy', false, null);
+		$this->registerArgument('maxEvents', 'integer', 'maxEvents', false, 3);
+		$this->registerArgument('order', 'string', 'order', false, 'asc');
+		$this->registerArgument('orderBy', 'string', 'orderBy', false, 'startDate');
 		$this->registerArgument('includeStartedEvents', 'integer', 'includeStartedEvents', false, null);
 		$this->registerArgument('excludeOverlongEvents', 'integer', 'excludeOverlongEvents', false, null);
 		$this->registerArgument('filter', 'array', 'filter', false, null);

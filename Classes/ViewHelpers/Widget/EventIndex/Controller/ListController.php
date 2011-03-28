@@ -31,45 +31,53 @@ class Tx_CzSimpleCal_ViewHelpers_Widget_EventIndex_Controller_ListController ext
 	}
 	
 	/**
-	 * a list of fields that should be used for the actionSettings
-	 * 
-	 * @var array
-	 */
-	protected static $actionSettingsFields = array(
-		'startDate',
-		'endDate',
-		'maxEvents',
-		'order',
-		'orderBy',		
-		'includeStartedEvents',
-		'excludeOverlongEvents',
-		'filter',
-	);
-	
-	/**
 	 * the action settings to use for fetching the events
 	 * 
 	 * @var array
 	 */
-	protected $actionSettings = null;
+	protected $actionSettings = array();
 	
 	/**
 	 * @return void
 	 */
 	public function initializeAction() {
-		
-		$this->actionSettings = array();
-		foreach(self::$actionSettingsFields as $argumentName) {
-			if(isset($this->widgetConfiguration[$argumentName]) && !empty($this->widgetConfiguration[$argumentName])) {
+		foreach(array('maxEvents', 'order', 'orderBy', 'includeStartedEvents', 'excludeOverlongEvents', 'filter') as $argumentName) {
+			if($this->widgetConfiguration->offsetExists($argumentName)) {
 				$this->actionSettings[$argumentName] = $this->widgetConfiguration[$argumentName];
 			}
 		}
+		foreach(array('startDate', 'endDate') as $argumentName) {
+			if($this->widgetConfiguration->offsetExists($argumentName)) {
+				$this->actionSettings[$argumentName] = $this->normalizeArgumentToTimestamp($this->widgetConfiguration[$argumentName]);
+			}
+		}
 	}
-
+	
+	/**
+	 * normalizes anything that describes a time
+	 * and sets it to be a timestamp
+	 * 
+	 * @param mixed $value
+	 * @return void
+	 */
+	protected function normalizeArgumentToTimestamp($value) {
+		if(empty($value)) {
+			return;
+		} elseif(is_numeric($value)) {
+			return t3lib_div::intInRange($this->argumentName, 0);
+		} elseif(is_string($value)) {
+			return Tx_CzSimpleCal_Utility_StrToTime::strtotime($value);
+		} elseif($value instanceof DateTime) {
+			return intval($value->format('U'));
+		}
+		return;
+	}
+	
 	/**
 	 * @return void
 	 */
 	public function indexAction() {
+		var_dump($this->actionSettings['filter']);
 		$this->view->assign(
 			'events',
 			$this->eventIndexRepository->findAllWithSettings($this->actionSettings)
