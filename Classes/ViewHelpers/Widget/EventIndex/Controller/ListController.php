@@ -77,7 +77,6 @@ class Tx_CzSimpleCal_ViewHelpers_Widget_EventIndex_Controller_ListController ext
 	 * @return void
 	 */
 	public function indexAction() {
-		var_dump($this->actionSettings['filter']);
 		$this->view->assign(
 			'events',
 			$this->eventIndexRepository->findAllWithSettings($this->actionSettings)

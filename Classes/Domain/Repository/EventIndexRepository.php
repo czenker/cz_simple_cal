@@ -167,8 +167,12 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 		// filterCategories
 		if(isset($settings['filter'])) {
 			foreach($settings['filter'] as $name => $filter) {
-				if(is_array($filter)) {
-					$temp_constraint = $query->in('event.'.$name, $filter);
+				if(is_array($filter['value'])) {
+					$temp_constraint = $query->in('event.'.$name, $filter['value']);
+					
+					if(isset($filter['negate']) && $filter['negate']) {
+						$temp_constraint = $query->logicalNot($temp_constraint);
+					}
 					
 					if(isset($constraint)) {
 						$constraint = $query->logicalAnd($constraint, $temp_constraint);
@@ -325,23 +329,40 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 	}
 	
 	/**
-	 * sanitizing the a value for the "filter" setting.
+	 * sanitizing the value for the "filter" setting.
 	 * If multiple values are given return an array
 	 * 
 	 * @param $filter
 	 */
 	protected static function sanitizeFilter($filter) {
-		if(!is_array($filter)) {
-			$filter = t3lib_div::trimExplode(',', $filter, true);
-		}
 		$out = array();
 		
-		foreach($filter as $value) {
+		if(!is_array($filter)) {
+			$filter = array(
+				'value' => t3lib_div::trimExplode(',', $filter, true) 
+			);
+		} elseif(!empty($filter['value']) && !is_array($filter['value'])) {
+			$filter['value'] = t3lib_div::trimExplode(',', $filter['value'], true);
+		} elseif(!empty($filter['_typoScriptNodeValue']) && !is_array($filter['_typoScriptNodeValue'])) {
+			/* this field is set if something like
+			 *     filter {
+			 *         foo = bar
+			 *         foo.negate = 1
+			 *     }
+			 * was set in the frontend
+			 * 
+			 * @see Tx_Extbase_Utility_TypoScript
+			 */
+			$filter['value'] = t3lib_div::trimExplode(',', $filter['_typoScriptNodeValue'], true);
+			unset($filter['_typoScriptNodeValue']);
+		}
+		
+		foreach($filter['value'] as &$value) {
 			if(is_numeric($value)) {
-				$out[] = intval($value);
+				$value = intval($value);
 			}
 		}
-		return empty($out) ? null : $out;
+		return empty($filter) ? null : $filter;
 	}
 	
 	/**
@@ -379,10 +400,10 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 	/**
 	 * check if a given value is a filter
 	 * 
-	 * @param unknown_type $filter
+	 * @param mixed $filter
 	 */
 	protected function isFilter($filter) {
-		return !is_array($filter);
+		return !is_array($filter) || array_key_exists('negate', $filter) || array_key_exists('value', $filter);
 	}
 	
 	/**

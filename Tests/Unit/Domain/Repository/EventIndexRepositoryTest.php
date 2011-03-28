@@ -106,6 +106,92 @@ class Domain_Repository_EventIndexTest extends tx_phpunit_testcase {
 			htmlspecialchars(print_r($value[2], true))
 		);
 	}
+	
+	/**
+	 * just a very simple basic test
+	 */
+	public function testCleanSettingsFieldsForFiltersBasic() {
+		$ret = $this->repository->cleanSettings(array('filter' => array('foo' => 'bar')));
+		
+		$this->assertSame(array(
+			'foo' => array('value' => array('bar'))
+		), $ret['filter']);
+	}
+	
+	/**
+	 * test that numbers given are converted to integers
+	 */
+	public function testCleanSettingsFieldsForFiltersCheckNumbersAreConvertedToIntegers() {
+		$ret = $this->repository->cleanSettings(array('filter' => array('foo' => '42')));
+		
+		$this->assertSame(array(
+			'foo' => array('value' => array(42))
+		), $ret['filter']);
+	}
+	
+	/**
+	 * test that multiple given values are converted into an array
+	 */
+	public function testCleanSettingsFieldsForFiltersCheckMultipleValuesAreConvertedToAnArray() {
+		$ret = $this->repository->cleanSettings(array('filter' => array('foo' => 'bar,baz,42')));
+		
+		$this->assertSame(array(
+			'foo' => array('value' => array('bar', 'baz', 42))
+		), $ret['filter']);
+	}
+	
+	/**
+	 * test that selecting the fields to filter recursive over multiple tables
+	 */
+	public function testCleanSettingsFieldsForFiltersCheckNestingOfFields() {
+		$ret = $this->repository->cleanSettings(array('filter' => array(
+			'foo' => array(
+				'baz' => 'bar',
+				'bar' => array(
+					'superfoo' => 'someothervalue',
+					'foo' => array(
+						'value' => 'foobar'
+					),
+				),
+			),
+		)));
+		$this->assertArrayHasKey('foo.baz', $ret['filter'], 'one level down');
+		$this->assertArrayHasKey('foo.bar.superfoo', $ret['filter'], 'two levels down');
+		$this->assertArrayNotHasKey('foo.bar.foo.value', $ret['filter'], 'keywords are not converted');
+	}
+	
+	
+	public function testCleanSettingsFieldsForFiltersCheckAdditionalInstructions() {
+		$ret = $this->repository->cleanSettings(array('filter' => array(
+			'foo' => array(
+				'value' => 'bar',
+				'negate' => '1',
+			),
+		)));
+		
+		$this->assertSame(array(
+			'foo' => array('value' => array('bar'), 'negate' => '1')
+		), $ret['filter']);
+		
+	}
+	
+	public function testCleanSettingsFieldsForFiltersCheckValuesFromTyposcript() {
+		$config = Tx_Extbase_Utility_TypoScript::convertTypoScriptArrayToPlainArray(array(
+			'foo' => 'bar',
+			'foo.' => array(
+				'negate' => '1',
+			)
+		));
+		
+		$ret = $this->repository->cleanSettings(array('filter' => $config));
+		
+		$this->assertSame(array(
+			'foo' => array('negate' => '1', 'value' => array('bar'))
+		), $ret['filter']);
+	}
+	
+	
+	
 }
 
 require_once(t3lib_extMgm::extPath('cz_simple_cal').'/Classes/Domain/Repository/EventIndexRepository.php');
