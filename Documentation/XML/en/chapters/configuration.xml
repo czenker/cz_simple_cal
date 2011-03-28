@@ -281,6 +281,29 @@ filter.location.uid = 2</programlisting>
 								selects only events of the organizer with uid <literal>4</literal> at the location with 
 								uid <literal>2</literal>.
 							</example>
+							<para>
+								You can also exclude the listed values from a filter by using the <literal>negate</literal>
+								property, like so:
+							</para>
+							<example>
+								<title>Advanced usage of filters</title>
+								<programlisting>filter.categories.uid = 42
+filter.categories.uid.negate = 1</programlisting>
+								selects all events, that have a category, but not <literal>42</literal>.
+							</example>
+							<caution>
+								<para>
+									Note, that for technical limitations, extbase is just able to select events, that
+									actually have a category in the above example. If you have events, that are not
+									assigned to any category, they won't show up neither! 
+								</para>
+							</caution>
+							<para>This example is interchangeable with the above one:</para>
+							<example>
+								<title>Advanced usage of filters II</title>
+								<programlisting>filter.categories.uid.value = 42
+filter.categories.uid.negate = 1</programlisting>
+							</example>
 						</listitem>
 					</varlistentry>
 					<varlistentry>

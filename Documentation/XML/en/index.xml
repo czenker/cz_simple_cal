@@ -48,5 +48,6 @@
   
   <xi:include href="appendices/date.xml" />
   <xi:include href="appendices/viewHelpers.xml" />
+  <xi:include href="appendices/widgetViewHelpers.xml" />
 
 </book>

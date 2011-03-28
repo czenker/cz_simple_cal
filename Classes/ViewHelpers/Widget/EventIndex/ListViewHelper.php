@@ -21,7 +21,21 @@
  *                                                                        */
 
 /**
+ * This view helper allows you to embed a list of events into a different action
+ * 
+ * The arguments are exacly the same as in EventIndex's action "list". So you
+ * can transfer all the flexibility you have there to this Widget. For ease of use 
+ * all basic properties where transformed into attributes of the ViewHelper.
+ * 
+ * <example>
+ *   <code>
+ *     <cal:widget.eventIndex.list startDate="now" maxEvents="3" />
+ *   </code>
+ *   
+ *   will show you the next 3 events from now on.
+ * </example>
  *
+ * @author Christian Zenker <christian.zenker@599media.de>
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
 class Tx_CzSimpleCal_ViewHelpers_Widget_EventIndex_ListViewHelper extends Tx_Fluid_Core_Widget_AbstractWidgetViewHelper {

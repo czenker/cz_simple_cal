@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xml:id="appendix.widgets"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:ns="http://docbook.org/ns/docbook"
+     xmlns:mathml="http://www.w3.org/1998/Math/MathML">
+
+	<title>Widgets</title>
+	
+	<section xml:id="appendix.widgets.whatis">
+		<title>What are Widgets?</title>
+		
+		<para>
+			Widgets where first introduced in <productname>Fluid</productname> 1.3. Widgets are defined as 
+			<quote>special ViewHelpers that encapsulate complex functionality and consist of their own <emphasis>controller</emphasis> and <emphasis>view</emphasis> part</quote>.
+		</para>
+		<para>
+			Non-Programming speeking, Widgets are more complex ViewHelpers with a seperate template, or Partials with 
+			some programming logic.
+		</para>
+		
+		<note>
+			<para>
+				
+			</para>
+		</note>
+	</section>
+	
+	<section>
+		<title><classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Widget_&#x200B;EventIndex_&#x200B;ListViewHelper</classname></title>
+		<para>This view helper allows you to embed a list of events into a different action.</para>
+		<para>
+			The arguments are exacly the same as in EventIndex's action "list". So you
+ 			can transfer all the flexibility you have there to this Widget. For ease of use 
+			all basic properties where transformed into attributes of the ViewHelper.
+		</para>
+		<para>
+			See <link linkend="chapter.configuration.typoscript.EventIndex.list"><literal>list</literal> action</link> for
+			the common attributes.
+		</para>
+		<note>
+			<para>
+				You can override the templatePath via TypoScript:
+				<programlisting>plugin.tx_czsimplecal.view.widget.[widgetName].templateRootPath = path/and/file.html</programlisting>
+			</para>
+		</note>
+		
+		<variablelist>
+			<varlistentry>
+				<term>templateFilePath<sbr/>(type: <literal>string</literal>)</term>
+				<listitem>
+					<para>The template file to use in order to render the list.</para>
+					<note><para>
+						Due to restrictions in <productname>Fluid</productname>, this works differently
+						in case you have overriden the Widget's <literal>templateRootPath</literal>. <sbr />
+						If you have <emphasis>NOT</emphasis> set the Widget's templateRootPath, you will have
+						to enter the full absolute path to the template.<sbr />
+						If you have set the Widget's templateRootPath, the entered path will be considered to
+						be relative to the path you set there.
+					</para></note>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		
+
+ 		<example>
+ 			<title>
+ 				Using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Widget_&#x200B;EventIndex_&#x200B;ListViewHelper</classname>
+ 			</title>
+ 			<para>
+ 				<programlisting><![CDATA[<cal:widget.eventIndex.list startDate="now" maxEvents="3" />]]></programlisting>
+ 				will show you the next 3 events from now on.
+ 			</para>
+ 		</example>
+ 		
+ 		<example>
+ 			<title>
+ 				Using <classname>Tx_CzSimpleCal_&#x200B;ViewHelpers_&#x200B;Widget_&#x200B;EventIndex_&#x200B;ListViewHelper</classname> with filters
+ 			</title>
+ 			<para>
+ 				<programlisting><![CDATA[<cal:widget.eventIndex.list filter="{location: event.location.uid, uid: {value: event.uid, negate: 1}}" />]]></programlisting>
+ 				will only show events from the location of the current event, but not the event itself.
+ 			</para>
+ 		</example>
+	</section>
+	
+</appendix>
