@@ -55,6 +55,9 @@ class Tx_CzSimpleCal_ViewHelpers_Widget_EventIndex_ListViewHelper extends Tx_Flu
 		$this->registerArgument('includeStartedEvents', 'integer', 'includeStartedEvents', false, null);
 		$this->registerArgument('excludeOverlongEvents', 'integer', 'excludeOverlongEvents', false, null);
 		$this->registerArgument('filter', 'array', 'filter', false, null);
+		
+		
+		$this->registerArgument('templateFilePath', 'string', 'template file path', false, null);
 	}
 	
 	/**

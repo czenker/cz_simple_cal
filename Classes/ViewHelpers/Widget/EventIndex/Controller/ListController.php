@@ -102,7 +102,15 @@ class Tx_CzSimpleCal_ViewHelpers_Widget_EventIndex_Controller_ListController ext
 		if (isset($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath'])
 				&& strlen($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']) > 0
 				&& method_exists($view, 'setTemplateRootPath')) {
-			$view->setTemplateRootPath(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']));
+			
+			if($this->widgetConfiguration->hasArgument('templateFilePath')) {
+				$view->setTemplatePathAndFilename(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']).$this->widgetConfiguration['templateFilePath']);
+			} else {
+				$view->setTemplateRootPath(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']));
+			}
+			
+		} elseif($this->widgetConfiguration->hasArgument('templateFilePath')) {
+			$view->setTemplatePathAndFilename($this->widgetConfiguration['templateFilePath']);
 		}
 	}
 }
