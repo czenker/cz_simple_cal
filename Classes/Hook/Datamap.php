@@ -7,9 +7,14 @@ class Tx_CzSimpleCal_Hook_Datamap {
 	 */
 	protected $eventRepository;
 	
+	/**
+	 * the extbase framework is not initialized in the constructor anymore
+	 * because initializing the framework is costy
+	 * and this class is *always* instanciated when *any* record
+	 * is created or updated
+	 */
 	public function __construct() {
-		t3lib_div::makeInstance('Tx_Extbase_Dispatcher');
-		$this->eventRepository = t3lib_div::makeInstance('Tx_CzSimpleCal_Domain_Repository_EventRepository');
+		/* don't do any extbasy stuff here! */
 	}
 	
 	/**
@@ -43,7 +48,7 @@ class Tx_CzSimpleCal_Hook_Datamap {
 				
 				$event = $this->fetchEventObject($id);
 				$event->generateSlug();
-				$this->eventRepository->update($event);
+				$this->getEventRepository()->update($event);
 				
 				// index events
 				$indexer->create($event);
@@ -155,11 +160,28 @@ class Tx_CzSimpleCal_Hook_Datamap {
 	 * @return Tx_CzSimpleCal_Domain_Model_Event
 	 */
 	protected function fetchEventObject($id) {
-		$event = $this->eventRepository->findOneByUidEverywhere($id);
+		$event = $this->getEventRepository()->findOneByUidEverywhere($id);
 		if(empty($event)) {
 			throw new InvalidArgumentException(sprintf('An event with uid %d could not be found.', $id));
 		}
 		return $event;
+	}
+	
+	
+	/**
+	 * get the event repository
+	 * 
+	 * this wrapper is needed so we just initialize the extbase framework if it is needed
+	 * 
+	 * @see __construct()
+	 * @return Tx_CzSimpleCal_Domain_Repository_EventRepository
+	 */
+	protected function getEventRepository() {
+		if(is_null($this->getEventRepository())) {
+			$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+			$this->eventRepository = $objectManager->get('Tx_CzSimpleCal_Domain_Repository_EventRepository');
+		}
+		return $this->eventRepository;
 	}
 	
 }
