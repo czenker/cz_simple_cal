@@ -341,8 +341,6 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 			$filter = array(
 				'value' => t3lib_div::trimExplode(',', $filter, true) 
 			);
-		} elseif(!empty($filter['value']) && !is_array($filter['value'])) {
-			$filter['value'] = t3lib_div::trimExplode(',', $filter['value'], true);
 		} elseif(!empty($filter['_typoScriptNodeValue']) && !is_array($filter['_typoScriptNodeValue'])) {
 			/* this field is set if something like
 			 *     filter {
@@ -351,10 +349,15 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 			 *     }
 			 * was set in the frontend
 			 * 
+			 * This is processed prior to the value field, so 
+			 * that a flexform is able to override it.
+			 * 
 			 * @see Tx_Extbase_Utility_TypoScript
 			 */
 			$filter['value'] = t3lib_div::trimExplode(',', $filter['_typoScriptNodeValue'], true);
 			unset($filter['_typoScriptNodeValue']);
+		} elseif(!empty($filter['value']) && !is_array($filter['value'])) {
+			$filter['value'] = t3lib_div::trimExplode(',', $filter['value'], true);
 		}
 		
 		foreach($filter['value'] as &$value) {

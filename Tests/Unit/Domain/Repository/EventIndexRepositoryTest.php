@@ -190,6 +190,28 @@ class Domain_Repository_EventIndexTest extends tx_phpunit_testcase {
 		), $ret['filter']);
 	}
 	
+	/**
+	 * @see http://forge.typo3.org/issues/14093
+	 */
+	public function testCleanSettingsFieldsForFiltersCheckFlexformOverridesDefault() {
+		$config = Tx_Extbase_Utility_TypoScript::convertTypoScriptArrayToPlainArray(array(
+			'foo' => '1,2,3',
+			'foo.' => array(
+				'value' => '42',
+				'negate' => '1',
+			)
+		));
+		
+		$ret = $this->repository->cleanSettings(array('filter' => $config));
+		
+		$this->assertSame(
+			array(1, 2, 3),
+			$ret['filter']['foo']['value'],
+			'values where correctly overriden'
+		);
+		$this->assertArrayNotHasKey('_typoScriptNodeValue', $ret['filter']['foo'], '_typoScriptNodeValue was unset');
+	}
+	
 	
 	
 }
