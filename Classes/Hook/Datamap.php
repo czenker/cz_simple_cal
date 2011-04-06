@@ -177,7 +177,7 @@ class Tx_CzSimpleCal_Hook_Datamap {
 	 * @return Tx_CzSimpleCal_Domain_Repository_EventRepository
 	 */
 	protected function getEventRepository() {
-		if(is_null($this->getEventRepository())) {
+		if(is_null($this->eventRepository)) {
 			$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
 			$this->eventRepository = $objectManager->get('Tx_CzSimpleCal_Domain_Repository_EventRepository');
 		}
