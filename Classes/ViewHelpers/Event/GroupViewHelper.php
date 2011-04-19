@@ -32,10 +32,13 @@ class Tx_CzSimpleCal_ViewHelpers_Event_GroupViewHelper extends Tx_Fluid_Core_Vie
 	 * @return string
 	 */
 	public function render($events, $as, $by = 'day') {
+		$by = strtolower($by);
 		if($by === 'day') {
 			$events = $this->groupByTime($events, 'midnight');
 		} elseif($by === 'month') {
 			$events = $this->groupByTime($events, 'first day of this month midnight');
+		} elseif($by === 'year') {
+			$events = $this->groupByTime($events, 'january 1st midnight');
 		}
 		
 		$this->templateVariableContainer->add($as, $events);
@@ -58,12 +61,12 @@ class Tx_CzSimpleCal_ViewHelpers_Event_GroupViewHelper extends Tx_Fluid_Core_Vie
 			$key = Tx_CzSimpleCal_Utility_StrToTime::strtotime($string, $event->getStart());
 			if(!array_key_exists($key, $result)) {
 				$result[$key] = array(
-					'key' => $key,
-					'value' => array(),
+					'info' => $key,
+					'events' => array(),
 				);
 			}
 			
-			$result[$key]['value'][] = $event;
+			$result[$key]['events'][] = $event;
 		}
 		return $result;
 	}
