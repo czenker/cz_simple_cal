@@ -75,6 +75,13 @@
 			
 			<label index="tt_address.is_organizer">is calendar organizer</label>
 			<label index="tt_address.is_location">is calendar location</label>
+			
+			<label index="tx_czsimplecal_domain_model_address">Address</label>
+			<label index="tx_czsimplecal_domain_model_address.name">Name</label>
+			<label index="tx_czsimplecal_domain_model_address.address">Address</label>
+			<label index="tx_czsimplecal_domain_model_address.zip">Zip</label>
+			<label index="tx_czsimplecal_domain_model_address.city">City</label>
+			<label index="tx_czsimplecal_domain_model_address.country">Country</label>
 		</languageKey>
 		
 		<languageKey index="de" type="array">

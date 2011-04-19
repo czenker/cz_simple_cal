@@ -1,0 +1,16 @@
+plugin.tx_czsimplecal {
+
+	persistence.classes {
+		Tx_CzSimpleCal_Domain_Model_Organizer {
+	        mapping {
+	            tableName = tx_czsimplecal_domain_model_address
+	        }
+	    }
+	    
+	    Tx_CzSimpleCal_Domain_Model_Location {
+	        mapping {
+	            tableName = tx_czsimplecal_domain_model_address
+	        }
+	    }
+	}
+}

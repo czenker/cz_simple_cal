@@ -27,6 +27,7 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 
 // default typoscript
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/main', 'Simple calendar using Extbase');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/customaddress', 'Use custom address extension');
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/ics', 'ICS configuration');
 
 // init flexform for plugin
@@ -125,6 +126,27 @@ $TCA['tx_czsimplecal_domain_model_category'] = array (
 			),
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Category.php',
 		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_czsimplecal_domain_model_category.gif'
+	)
+);
+
+$TCA['tx_czsimplecal_domain_model_address'] = array (
+	'ctrl' => array (
+		'title'             => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_address',
+		'label' 			=> 'name',
+		'tstamp' 			=> 'tstamp',
+		'crdate' 			=> 'crdate',
+		'versioningWS' 		=> 2,
+		'versioning_followPages'	=> TRUE,
+		'origUid' 			=> 't3_origuid',
+		'languageField' 	=> 'sys_language_uid',
+		'transOrigPointerField' 	=> 'l18n_parent',
+		'transOrigDiffSourceField' 	=> 'l18n_diffsource',
+		'delete' 			=> 'deleted',
+		'enablecolumns' 	=> array(
+			'disabled' => 'hidden'
+			),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Address.php',
+		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_czsimplecal_domain_model_address.gif'
 	)
 );
 

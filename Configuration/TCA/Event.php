@@ -283,6 +283,18 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 				'default' => '-1'
 			)
 		),
+		'location' => array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.location',
+			'config' => Array (
+				'type' => 'group',
+				'internal_type' => 'db',
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+				'allowed' => t3lib_extMgm::isLoaded('tt_address') ? 'tt_address' : 'tx_czsimplecal_domain_model_address',
+			)
+		),
 		'location_name' => array(
 			'exclude' => 1,
 			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.location_name',
@@ -290,6 +302,18 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim'
+			)
+		),
+		'organizer' => array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.organizer',
+			'config' => array (
+				'type' => 'group',
+				'internal_type' => 'db',
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+				'allowed' => t3lib_extMgm::isLoaded('tt_address') ? 'tt_address' : 'tx_czsimplecal_domain_model_address',
 			)
 		),
 		'organizer_name' => array(
@@ -368,33 +392,5 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 		),
 	),
 );
-
-if(t3lib_extMgm::isLoaded('tt_address')) {
-	
-	$TCA['tx_czsimplecal_domain_model_event']['columns']['location'] = array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.location',
-		'config' => Array (
-			'type' => 'group',
-			'internal_type' => 'db',
-			'size' => 1,
-			'minitems' => 0,
-			'maxitems' => 1,
-			'allowed' => 'tt_address',
-		)
-	);
-	$TCA['tx_czsimplecal_domain_model_event']['columns']['organizer'] = Array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.organizer',
-		'config' => Array (
-			'type' => 'group',
-			'internal_type' => 'db',
-			'size' => 1,
-			'minitems' => 0,
-			'maxitems' => 1,
-			'allowed' => 'tt_address',
-		)
-	);
-}
 
 ?>
