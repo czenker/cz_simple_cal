@@ -23,7 +23,7 @@ ics {
 	}
 	config {
 		disableAllHeaderCode = 1
-		additionalHeaders = Content-type:text/calendar
+		additionalHeaders = Content-type:text/calendar | Content-Disposition:inline;filename="calendar.ics" 
 		xhtml_cleaning = 0
 		admPanel = 0
 		debug = 0
