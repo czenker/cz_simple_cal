@@ -118,9 +118,16 @@ class Tx_CzSimpleCal_Controller_EventIndexController extends Tx_CzSimpleCal_Cont
 	/**
 	 * display a single event
 	 * 
+	 * @param integer $event
 	 * @return null
 	 */
-	public function showAction(Tx_CzSimpleCal_Domain_Model_EventIndex $event) {
+	public function showAction($event) {
+		
+		/* don't let Extbase fetch the event
+		 * as you won't be able to extend the model
+		 * via an extension
+		 */
+		$event = $this->eventIndexRepository->findByUid($event);
 		
 		if(empty($event)) {
 			$this->throwStatus(404, 'Not found', 'The requested event could not be found.');
