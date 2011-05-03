@@ -685,6 +685,38 @@ class Tx_CzSimpleCal_Domain_Model_BaseAddress extends Tx_CzSimpleCal_Domain_Mode
 		return $this;
 	}
 	
+/**
+	 * the property sorting
+	 * 
+	 * Note:
+	 * This is a non-standard property on the 
+	 * tt_address record, but the naming is quite
+	 * common in TYPO3.
+	 *
+	 * @var integer sorting
+	 */
+	protected $sorting;
+	
+	/**
+	 * getter for sorting
+	 *
+	 * @return integer
+	 */
+	public function getSorting() {
+		return $this->sorting;
+	}
+	
+	/**
+	 * setter for sorting
+	 * 
+	 * @param integer $sorting
+	 * @return Tx_CzSimpleCal_Domain_Model_Location
+	 */
+	public function setSorting($sorting) {
+		$this->sorting = $sorting;
+		return $this;
+	}
+	
 	public function __toString() {
 		return $this->getName();
 	}
