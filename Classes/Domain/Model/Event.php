@@ -83,6 +83,30 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 */
 	protected $locationName;
 	
+	
+	/**
+	 * @var string
+	 */
+	protected $locationAddress;
+	
+	/**
+	 * @var string locationZip
+	 */
+	protected $locationZip;
+	
+	
+	/**
+	 * @var string locationCity
+	 */
+	protected $locationCity;
+	
+	
+	/**
+	 * @var string locationCountry
+	 */
+	protected $locationCountry;
+	
+	
 	/**
 	 * the organizer of the event
 	 * 
@@ -96,6 +120,29 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * @var string
 	 */
 	protected $organizerName;
+	
+	/**
+	 * @var string organizerAddress
+	 */
+	protected $organizerAddress;
+	
+	
+	/**
+	 * @var string organizerZip
+	 */
+	protected $organizerZip;
+	
+	
+	/**
+	 * @var string organizerCity
+	 */
+	protected $organizerCity;
+	
+	
+	/**
+	 * @var string organizerCountry
+	 */
+	protected $organizerCountry;
 	
 	/**
 	 * the organizer of the event
@@ -245,6 +292,89 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	}
 	
 	/**
+	 * Setter for locationAddress
+	 *
+	 * @param string $locationAddress the address of the location this event takes place in
+	 * @return void
+	 */
+	public function setLocationAddress($locationAddress) {
+		$this->locationAddress = $locationAddress;
+	}
+
+	/**
+	 * Getter for locationAddress
+	 *
+	 * @return string the address of the location this event takes place in
+	 */
+	public function getLocationAddress() {
+		return $this->locationAddress;
+	}
+	
+	
+	/**
+	 * Setter for locationZip
+	 *
+	 * @param string $locationZip 
+	 * @return void
+	 */
+	public function setLocationZip($locationZip) {
+		$this->locationZip = $locationZip;
+	}
+	
+	/**
+	 * Getter for locationZip
+	 *
+	 * @return string $locationZip
+	 */
+	public function getLocationZip() {
+		return $this->locationZip;
+	}
+	
+	
+	/**
+	 * Setter for locationCity
+	 *
+	 * @param string $locationCity 
+	 * @return void
+	 */
+	public function setLocationCity($locationCity) {
+		$this->locationCity = $locationCity;
+	}
+	
+	/**
+	 * Getter for locationCity
+	 *
+	 * @return string $locationCity
+	 */
+	public function getLocationCity() {
+		return $this->locationCity;
+	}
+	
+	
+	/**
+	 * Setter for locationCountry
+	 *
+	 * @param string $locationCountry 
+	 * @return void
+	 */
+	public function setLocationCountry($locationCountry) {
+		$this->locationCountry = $locationCountry;
+	}
+	
+	/**
+	 * Getter for locationCountry
+	 *
+	 * @return string $locationCountry
+	 */
+	public function getLocationCountry() {
+		return $this->locationCountry;
+	}
+	
+	
+
+		
+	
+	/**
 	 * Setter for organizerName
 	 *
 	 * @param string $organizerName the name of the institution or person the event is organized by
@@ -253,6 +383,87 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	public function setOrganizerName($organizerName) {
 		$this->organizerName = $organizerName;
 	}
+	
+	
+	/**
+	 * Setter for organizerAddress
+	 *
+	 * @param string $organizerAddress 
+	 * @return void
+	 */
+	public function setOrganizerAddress($organizerAddress) {
+		$this->organizerAddress = $organizerAddress;
+	}
+	
+	/**
+	 * Getter for organizerAddress
+	 *
+	 * @return string $organizerAddress
+	 */
+	public function getOrganizerAddress() {
+		return $this->organizerAddress;
+	}
+	
+	
+	/**
+	 * Setter for organizerZip
+	 *
+	 * @param string $organizerZip 
+	 * @return void
+	 */
+	public function setOrganizerZip($organizerZip) {
+		$this->organizerZip = $organizerZip;
+	}
+	
+	/**
+	 * Getter for organizerZip
+	 *
+	 * @return string $organizerZip
+	 */
+	public function getOrganizerZip() {
+		return $this->organizerZip;
+	}
+	
+	
+	/**
+	 * Setter for organizerCity
+	 *
+	 * @param string $organizerCity 
+	 * @return void
+	 */
+	public function setOrganizerCity($organizerCity) {
+		$this->organizerCity = $organizerCity;
+	}
+	
+	/**
+	 * Getter for organizerCity
+	 *
+	 * @return string $organizerCity
+	 */
+	public function getOrganizerCity() {
+		return $this->organizerCity;
+	}
+	
+	
+	/**
+	 * Setter for organizerCountry
+	 *
+	 * @param string $organizerCountry 
+	 * @return void
+	 */
+	public function setOrganizerCountry($organizerCountry) {
+		$this->organizerCountry = $organizerCountry;
+	}
+	
+	/**
+	 * Getter for organizerCountry
+	 *
+	 * @return string $organizerCountry
+	 */
+	public function getOrganizerCountry() {
+		return $this->organizerCountry;
+	}
+	
 
 	/**
 	 * Getter for organizerName
