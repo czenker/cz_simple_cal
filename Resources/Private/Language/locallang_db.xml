@@ -48,6 +48,8 @@
 			<label index="tx_czsimplecal_domain_model_event.categories">Categories</label>
 			<label index="tx_czsimplecal_domain_model_event.show_page_instead">Show this page instead</label>
 			<label index="tx_czsimplecal_domain_model_event.exceptions">Exceptions</label>
+			<label index="tx_czsimplecal_domain_model_event.twitter_hashtags">Twitter Hashtags</label>
+			<label index="tx_czsimplecal_domain_model_event.flickr_tags">Flickr Tags</label>
 			<label index="tx_czsimplecal_domain_model_event.slug">Slug</label>
 			<label index="tx_czsimplecal_domain_model_event.last_indexed">Last indexed</label>
 			
@@ -56,6 +58,7 @@
 			<label index="tx_czsimplecal_domain_model_event.tab_recurrance">Recurrance</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_location">Location</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_organizer">Organizer</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_socialmedia">Social Media</label>
 			
 			<label index="tx_czsimplecal_domain_model_exception">Exception</label>
 			<label index="tx_czsimplecal_domain_model_exception.title">Title</label>
@@ -126,12 +129,15 @@
 			<label index="tx_czsimplecal_domain_model_event.organizer">Veranstalter</label>
 			<label index="tx_czsimplecal_domain_model_event.categories">Kategorien</label>
 			<label index="tx_czsimplecal_domain_model_event.exceptions">Ausnahmen</label>
+			<label index="tx_czsimplecal_domain_model_event.twitter_hashtags">Twitter Hashtags</label>
+			<label index="tx_czsimplecal_domain_model_event.flickr_tags">Flickr Tags</label>
 			
 			<label index="tx_czsimplecal_domain_model_event.tab_general">Event</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_recurrance">Wiederholung</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_resources">Resourcen</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_location">Veranstaltungsort</label>
 			<label index="tx_czsimplecal_domain_model_event.tab_organizer">Veranstalter</label>
+			<label index="tx_czsimplecal_domain_model_event.tab_socialmedia">Social Media</label>
 			
 			<label index="tx_czsimplecal_domain_model_exception">Ausnahme</label>
 			<label index="tx_czsimplecal_domain_model_exception.title">Titel</label>

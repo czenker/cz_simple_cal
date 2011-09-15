@@ -668,6 +668,103 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	}
 	
 	
+	/**
+	 * @var string
+	 */
+	protected $twitterHashtags = null;
+	
+	/**
+	 * a cached array of twitter hashtags
+	 * @var array
+	 */
+	protected $twitterHashtags_ = null;
+	
+	/**
+	 * @var string
+	 */
+	protected $flickrTags = null;
+	
+	/**
+	 * a cached array of flickr hashtags
+	 * @var array
+	 */
+	protected $flickrTags_ = null;
+	
+	/**
+	 * get an array of twitter hashtags used for this event
+	 * 
+	 * @return array
+	 */
+	public function getTwitterHashtags() {
+		if(is_null($this->twitterHashtags_)) {
+			$this->buildTwitterHashtags();
+		}
+		return $this->twitterHashtags_;
+	}
+	
+	/**
+	 * get the first (and therefore "main") twitter hashtag
+	 * 
+	 * @return string|false
+	 */
+	public function getTwitterHashtag() {
+		if(is_null($this->twitterHashtags_)) {
+			$this->buildTwitterHashtags();
+		}
+		
+		return reset($this->twitterHashtags_);
+	}
+
+	/**
+	 * build the array of twitter hashtags
+	 * 
+	 * @return null
+	 */
+	protected function buildTwitterHashtags() {
+		$this->twitterHashtags_ = t3lib_div::trimExplode(',', $this->twitterHashtags, true);
+		
+		// make sure each tag starts with a hash ("#")
+		foreach($this->twitterHashtags_ as &$hashtag) {
+			if(strncmp($hashtag, '#', 1) !== 0) {
+				$hashtag = '#'.$hashtag;
+			}
+		}
+	}
+	
+	/**
+	 * get an array of flickr tags
+	 * 
+	 * @return array
+	 */
+	public function getFlickrTags() {
+		if(is_null($this->flickrTags_)) {
+			$this->buildFlickrTags();
+		}
+		return $this->flickrTags_;
+	}
+	
+	/**
+	 * get the first (an therefore "main") flickr tag
+	 * 
+	 * @return string|false
+	 */
+	public function getFlickrTag() {
+		if(is_null($this->flickrTags_)) {
+			$this->buildFlickrTags();
+		}
+		
+		return reset($this->flickrTags_);
+	}
+
+	/**
+	 * build the array of flickr tags
+	 * @return null
+	 */
+	protected function buildFlickrTags() {
+		$this->flickrTags_ = t3lib_div::trimExplode(',', $this->flickrTags, true);
+	}
+	
+	
 	
 	
 }

@@ -17,6 +17,8 @@
 			<label index="location_name.description">the name of the location this event takes place in</label>
 			<label index="organizer_name.description">the name of the institution or person the event is organized by</label>
 			<label index="category.description">the categories this event belongs to</label>
+			<label index="twitter_hashtags.description">comma seperated values</label>
+			<label index="flickr_tags.description">comma seperated values</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="title.description">Ein Titel für dieses Event</label>
@@ -29,6 +31,8 @@
 			<label index="location_name.description">Der Name des Veranstaltungsortes dieses Events</label>
 			<label index="organizer_name.description">Der Name der Person oder Organisation, die das Event organisiert</label>
 			<label index="category.description">Die Kategorien, in die das Event gehört</label>
+			<label index="twitter_hashtags.description">Tags durch Kommas getrennt</label>
+			<label index="flickr_tags.description">Tags durch Kommas getrennt</label>
 		</languageKey>
     </data>
 </T3locallang>
