@@ -7,7 +7,7 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 		'showRecordFieldList' => 'title,start_day,start_time,end_day,end_time,teaser,description,slug,recurrance_type,recurrance_subtype,recurrance_until,location_name,location,organizer_name,organizer,categories,show_page_instead,exceptions,flickr_tags,twitter_hashtags'
 	),
 	'types' => array(
-		'1' => array('showitem' => '--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_general,title,start_day,start_time,end_day,end_time,categories,show_page_instead,teaser,description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css],--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_resources,images;;2,files;;3,slug,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_recurrance,recurrance_type,recurrance_subtype,recurrance_until,exceptions,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_location,location_name,location,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_organizer,organizer_name,organizer,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_socialmedia,twitter_hashtags,flickr_tags')
+		'1' => array('showitem' => '--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_general,title,start_day,start_time,end_day,end_time,categories,show_page_instead,teaser,description;;;richtext:rte_transform[flag=rte_enabled|mode=ts_css],--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_resources,images;;2,files;;3,slug,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_recurrance,recurrance_type,recurrance_subtype,recurrance_until,exceptions,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_location,location_name,location_address,location_zip,location_city,location_country,location,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_organizer,organizer_name,organizer_address,organizer_zip,organizer_city,organizer_country,organizer,--div--;LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.tab_socialmedia,twitter_hashtags,flickr_tags')
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -301,7 +301,42 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 			'config'  => array(
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'trim'
+				'eval' => 'trim',
+				'max' => 255,
+			)
+		),
+		'location_address' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.location_address',
+			'config'  => array(
+				'type' => 'text',
+			)
+		),
+		'location_zip' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.location_zip',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 4,
+				'eval' => 'trim',
+				'max' => 10,
+			)
+		),
+		'location_city' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.location_city',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim',
+				'max' => 255,
+			)
+		),
+		'location_country' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.location_country',
+			'config'  => array(
+				'type' => 'select',
 			)
 		),
 		'organizer' => array (
@@ -322,7 +357,42 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 			'config'  => array(
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'trim'
+				'eval' => 'trim',
+				'max' => 255,
+			)
+		),
+		'organizer_address' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.organizer_address',
+			'config'  => array(
+				'type' => 'text',
+			)
+		),
+		'organizer_zip' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.organizer_zip',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 4,
+				'eval' => 'trim',
+				'max' => 10,
+			)
+		),
+		'organizer_city' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.organizer_city',
+			'config'  => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim',
+				'max' => 255,
+			)
+		),
+		'organizer_country' => array(
+			'exclude' => 1,
+			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.organizer_country',
+			'config'  => array(
+				'type' => 'select',
 			)
 		),
 		'categories' => array(
