@@ -98,16 +98,31 @@ $TCA['tx_czsimplecal_domain_model_address'] = array(
 				'eval' => 'trim',
 			)
 		),
-		'country' => array(
-			'exclude' => 0,
-			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_address.country',
-			'config'  => array(
-				'type' => 'input',
-				'size' => 30,
-				'max'  => 255,
-				'eval' => 'trim',
-			)
-		),
 	),
 );
+
+if(t3lib_extMgm::isLoaded('static_info_tables')) {
+
+	$TCA['tx_czsimplecal_domain_model_address']['columns']['country'] = array(
+		'exclude' => 1,
+		'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_address.country',
+		'config'  => array(
+			'type' => 'select',
+			'items' => array (
+				array('',0),
+			),
+			'itemsProcFunc' => 'tx_staticinfotables_div->selectItemsTCA',
+			'itemsProcFunc_config' => array (
+				'table' => 'static_countries',
+				'indexField' => 'cn_iso_3',
+				'prependHotlist' => 1,
+			),
+			'size' => 1,
+			'minitems' => 0,
+			'maxitems' => 1,
+		)
+	);
+}
+
+
 ?>
