@@ -317,9 +317,9 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.location_zip',
 			'config'  => array(
 				'type' => 'input',
-				'size' => 4,
+				'size' => 7,
 				'eval' => 'trim',
-				'max' => 10,
+				'max' => 12,
 			)
 		),
 		'location_city' => array(
@@ -336,7 +336,10 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 			'exclude' => 1,
 			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.location_country',
 			'config'  => array(
-				'type' => 'select',
+				'type' => 'input',
+				'size' => 30,
+				'max'  => 255,
+				'eval' => 'trim',
 			)
 		),
 		'organizer' => array (
@@ -373,9 +376,9 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.organizer_zip',
 			'config'  => array(
 				'type' => 'input',
-				'size' => 4,
+				'size' => 7,
 				'eval' => 'trim',
-				'max' => 10,
+				'max' => 12,
 			)
 		),
 		'organizer_city' => array(
@@ -392,7 +395,10 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 			'exclude' => 1,
 			'label'   => 'LLL:EXT:cz_simple_cal/Resources/Private/Language/locallang_db.xml:tx_czsimplecal_domain_model_event.organizer_country',
 			'config'  => array(
-				'type' => 'select',
+				'type' => 'input',
+				'size' => 30,
+				'max'  => 255,
+				'eval' => 'trim',
 			)
 		),
 		'categories' => array(
