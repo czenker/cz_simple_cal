@@ -106,6 +106,11 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 */
 	protected $locationCountry;
 	
+	/**
+	 * a dummy address if no other record was given
+	 * @var Tx_CzSimpleCal_Domain_Model_AddressDummy
+	 */
+	protected $locationDummy = null;
 	
 	/**
 	 * the organizer of the event
@@ -143,6 +148,13 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * @var string organizerCountry
 	 */
 	protected $organizerCountry;
+	
+	
+	/**
+	 * a dummy address if no other record was given
+	 * @var Tx_CzSimpleCal_Domain_Model_AddressDummy
+	 */
+	protected $organizerDummy = null;
 	
 	/**
 	 * the organizer of the event
@@ -611,7 +623,29 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * @return Tx_CzSimpleCal_Domain_Model_Organizer
 	 */
 	public function getOrganizer() {
-		return $this->organizer;
+		if($this->organizer) {
+			return $this->organizer;
+		}
+		if(is_null($this->organizerDummy)) {
+			$this->buildOrganizerDummy();
+		}
+		return $this->organizerDummy;
+	}
+	
+	/**
+	 * build the organizerDummy
+	 * @return null
+	 */
+	protected function buildOrganizerDummy() {
+		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		$this->organizerDummy = $objectManager->get('Tx_CzSimpleCal_Domain_Model_AddressDummy');
+		
+		$this->organizerDummy->setName($this->organizerName);
+		$this->organizerDummy->setAddress($this->organizerAddress);
+		$this->organizerDummy->setZip($this->organizerZip);
+		$this->organizerDummy->setCity($this->organizerCity);
+		$this->organizerDummy->setCountry($this->organizerCountry);
+		
 	}
 	
 	/**
@@ -631,7 +665,29 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * @return Tx_CzSimpleCal_Domain_Model_Location
 	 */
 	public function getLocation() {
-		return $this->location;
+		if($this->location) {
+			return $this->location;
+		}
+		if(is_null($this->locationDummy)) {
+			$this->buildLocationDummy();
+		}
+		return $this->locationDummy;
+	}
+	
+	/**
+	 * build the location
+	 * @return null
+	 */
+	protected function buildLocationDummy() {
+		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		$this->locationDummy = $objectManager->get('Tx_CzSimpleCal_Domain_Model_AddressDummy');
+		
+		$this->locationDummy->setName($this->locationName);
+		$this->locationDummy->setAddress($this->locationAddress);
+		$this->locationDummy->setZip($this->locationZip);
+		$this->locationDummy->setCity($this->locationCity);
+		$this->locationDummy->setCountry($this->locationCountry);
+		
 	}
 	
 	/**
