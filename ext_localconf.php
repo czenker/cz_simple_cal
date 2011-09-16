@@ -20,7 +20,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 		'EventAdministration' => 'list,new,create,edit,update,delete',
 	),
 	array(
-		'EventAdministration' => 'new,create,edit,update,delete',
+		'EventAdministration' => 'list,new,create,edit,update,delete',
 	)
 );
 

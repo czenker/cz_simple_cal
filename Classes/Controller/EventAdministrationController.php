@@ -98,9 +98,10 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      *
      * @param Tx_CzSimpleCal_Domain_Model_Event $event
      * @return void
-     * @dontValidate $event
+     * @dontvalidate $event
      */
     public function editAction(Tx_CzSimpleCal_Domain_Model_Event $event) {
+    	$this->abortOnInvalidUser($event);
         $this->view->assign('event', $event);
     }
 
@@ -109,8 +110,10 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      *
      * @param Tx_CzSimpleCal_Domain_Model_Event $event
      * @return void
+     * @dontvalidate $event
      */
     public function updateAction(Tx_CzSimpleCal_Domain_Model_Event $event) {
+    	$this->abortOnInvalidUser($event);
         // TODO access protection
 //        $this->blogRepository->update($blog);
 //        $this->addFlashMessage('updated');
@@ -122,13 +125,25 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      *
      * @param Tx_CzSimpleCal_Domain_Model_Event $event The event to delete
      * @return void
-     * @dontvalidate $newEvent
+     * @dontvalidate $event
      */
     public function deleteAction(Tx_CzSimpleCal_Domain_Model_Event $event) {
-        // TODO access protection
-//        $this->blogRepository->remove($blog);
+    	$this->abortOnInvalidUser($event);
+    	
+        $this->eventRepository->remove($event);
 //        $this->addFlashMessage('deleted', t3lib_FlashMessage::INFO);
-//        $this->redirect('index');
+        $this->redirect('list');
+    }
+    
+    /**
+     * abort the action if the user is invalid
+     * 
+     * @param Tx_CzSimpleCal_Domain_Model_Event $event The event
+     */
+    protected function abortOnInvalidUser($event) {
+    	if(!$event->getCruserFe() || ($event->getCruserFe() != $this->getFrontendUserId())) {
+    		$this->throwStatus(403, 'You are not allowed to do this.');
+    	}
     }
     
     /**
