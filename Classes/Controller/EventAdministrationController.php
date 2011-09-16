@@ -88,9 +88,14 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     	$newEvent->setCruserFe($this->getFrontendUserId());
     	$this->view->assign('newEvent', $newEvent);
     	
-    	$this->eventRepository->add($newEvent);
+    	$errors = $this->validateEvent($newEvent);
     	
-		$this->redirect('list');
+    	if($errors) {
+    		$this->view->assign('errors', $errors);
+    	} else {
+    		$this->eventRepository->add($newEvent);
+			$this->redirect('list');
+    	}
     }
 
     /**
@@ -114,6 +119,17 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      */
     public function updateAction(Tx_CzSimpleCal_Domain_Model_Event $event) {
     	$this->abortOnInvalidUser($event);
+    	
+    	$errors = $this->validateEvent($event);
+    	
+    	if($errors) {
+    		$this->view->assign('errors', $errors);
+    	} else {
+    		$this->eventRepository->update($event);
+			$this->redirect('list');
+    	}
+    	
+    	$this->redirect('list');
         // TODO access protection
 //        $this->blogRepository->update($blog);
 //        $this->addFlashMessage('updated');
@@ -176,24 +192,11 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * in the past.
      * 
      * @param Tx_CzSimpleCal_Domain_Model_Event $event
+     * @return bool|array
      */
     protected function validateEvent($event) {
-    	
-    	// check: event is not in the past
-    	if($event->getDateTimeObjectStart()->format('U') + 24 * 60 * 60 < time()) {
-    		throw new InvalidArgumentException('start date must not be in the past');
-    	}  
-    	
-    	// check: end date is after start date
-    	if($event->getDateTimeObjectStart()->format('U') > $event->getDateTimeObjectEnd()->format('U')) {
-    		throw new InvalidArgumentException('end date has to be after start date');
-    	}
-    	
-    	if($event->getDescription()) {
-    		if(strlen($event->getDescription()) > strlen(strip_tags($event->getDescription()))) {
-    			throw new InvalidArgumentException('we don\'t like markup here');
-    		}
-    	}
+    	//TODO
+    	return false;
     }
 
 }
