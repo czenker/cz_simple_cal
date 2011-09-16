@@ -7,6 +7,12 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'Simple calendar using Extbase'
 );
 
+Tx_Extbase_Utility_Extension::registerPlugin(
+	$_EXTKEY,
+	'Pi2',
+	'Calendar event submission for users'
+);
+
 //if(TYPO3_MODE === 'BE') {
 //	Tx_Extbase_Utility_Extension::registerModule(
 //		$_EXTKEY,

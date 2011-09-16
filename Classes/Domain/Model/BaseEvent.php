@@ -36,7 +36,6 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	/**
 	 * the day that event starts
 	 * @var integer
-	 * @validate NotEmpty
 	 */
 	protected $startDay;
 	
@@ -62,6 +61,7 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * the timezone of the user who created that event
 	 * 
 	 * @var string
+	 * @validate StringLength(maximum=20)
 	 */
 	protected $timezone;
 
@@ -69,6 +69,7 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * the type of recurrance 
 	 * 
 	 * @var string
+	 * @validate StringLength(maximum=30)
 	 */
 	protected $recurranceType;
 	
@@ -82,6 +83,7 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	/**
 	 * recurrance until this date
 	 * @var integer
+	 * @validate StringLength(maximum=30)
 	 */
 	protected $recurranceUntil;	
 

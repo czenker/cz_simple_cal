@@ -61,48 +61,55 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	/**
 	 * The title of this event
 	 * @var string
-	 * @validate NotEmpty
+	 * @validate NotEmpty, StringLength(minimum=3,maximum=255)
 	 */
 	protected $title;
 
 	/**
 	 * a short teaser for this event
 	 * @var string
+	 * @validate String
 	 */
 	protected $teaser;
 	
 	/**
 	 * a long description for this event
 	 * @var string
+	 * @validate String
 	 */
 	protected $description;
 
 	/**
 	 * the name of the location this event takes place in
 	 * @var string
+	 * @validate StringLength(maximum=255)
 	 */
 	protected $locationName;
 	
 	
 	/**
 	 * @var string
+	 * @validate StringLength(maximum=255)
 	 */
 	protected $locationAddress;
 	
 	/**
 	 * @var string locationZip
+	 * @validate StringLength(maximum=12)
 	 */
 	protected $locationZip;
 	
 	
 	/**
 	 * @var string locationCity
+	 * @validate StringLength(maximum=255)
 	 */
 	protected $locationCity;
 	
 	
 	/**
 	 * @var string locationCountry
+	 * @validate StringLength(maximum=3)
 	 */
 	protected $locationCountry;
 	
@@ -123,29 +130,34 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	/**
 	 * the name of the institution or person the event is organized by
 	 * @var string
+	 * @validate StringLength(maximum=255)
 	 */
 	protected $organizerName;
 	
 	/**
 	 * @var string organizerAddress
+	 * @validate String
 	 */
 	protected $organizerAddress;
 	
 	
 	/**
 	 * @var string organizerZip
+	 * @validate StringLength(maximum=12)
 	 */
 	protected $organizerZip;
 	
 	
 	/**
 	 * @var string organizerCity
+	 * @validate StringLength(maximum=255)
 	 */
 	protected $organizerCity;
 	
 	
 	/**
 	 * @var string organizerCountry
+	 * @validate StringLength(maximum=3)
 	 */
 	protected $organizerCountry;
 	
