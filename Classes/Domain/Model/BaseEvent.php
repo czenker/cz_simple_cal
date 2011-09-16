@@ -71,7 +71,7 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * @var string
 	 * @validate StringLength(maximum=30)
 	 */
-	protected $recurranceType;
+	protected $recurranceType = 'none';
 	
 	/**
 	 * the subtype of recurrance 

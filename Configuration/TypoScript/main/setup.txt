@@ -1,4 +1,4 @@
-plugin.tx_czsimplecal {
+plugin.tx_czsimplecal_pi1 {
 
 	#@description: the pid the records are stored in
 	persistence.storagePid = {$plugin.tx_czsimplecal.pidList}

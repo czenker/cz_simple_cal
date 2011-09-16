@@ -30,5 +30,14 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class Tx_CzSimpleCal_Domain_Repository_CategoryRepository extends Tx_Extbase_Persistence_Repository {
+	
+	public function findAllByUids($uids) {
+		$query = $this->createQuery();
+		
+		$query->matching($query->in('uid', $uids));
+		
+		return $query->execute();
+	}
+	
 }
 ?>

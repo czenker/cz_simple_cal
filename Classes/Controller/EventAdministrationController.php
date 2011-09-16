@@ -210,7 +210,19 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * @param Tx_CzSimpleCal_Domain_Model_Event $event
      */
     public function setDefaults($event) {
-    	$event->setRecurranceType('none');
+    	if(isset($this->settings['overrides']['categories'])) {
+    		$categories = $this->getObjectManager()->
+    			get('Tx_CzSimpleCal_Domain_Repository_CategoryRepository')->
+    			findAllByUids(t3lib_div::trimExplode(',', $this->settings['overrides']['categories']))
+    		;
+    		if(is_null($event->getCategories())) {
+    			$event->setCategories($this->getObjectManager()->get('Tx_Extbase_Persistence_ObjectStorage'));
+    		}
+    		
+    		foreach($categories as $category) {
+    			$event->getCategories()->attach($category);
+    		}
+    	}
     }
     
     /**
