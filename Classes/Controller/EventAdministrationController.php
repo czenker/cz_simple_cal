@@ -88,11 +88,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     	$newEvent->setCruserFe($this->getFrontendUserId());
     	$this->view->assign('newEvent', $newEvent);
     	
-    	$errors = $this->validateEvent($newEvent);
-    	
-    	if($errors) {
-    		$this->view->assign('errors', $errors);
-    	} else {
+    	if($this->isEventValid($newEvent)) {
     		$this->eventRepository->add($newEvent);
 			$this->redirect('list');
     	}
@@ -120,16 +116,12 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     public function updateAction(Tx_CzSimpleCal_Domain_Model_Event $event) {
     	$this->abortOnInvalidUser($event);
     	
-    	$errors = $this->validateEvent($event);
     	
-    	if($errors) {
-    		$this->view->assign('errors', $errors);
-    	} else {
+    	if($this->isEventValid($event)) {
     		$this->eventRepository->update($event);
 			$this->redirect('list');
     	}
     	
-    	$this->redirect('list');
         // TODO access protection
 //        $this->blogRepository->update($blog);
 //        $this->addFlashMessage('updated');
@@ -185,7 +177,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * 
      * Considerations
      * ===============
-     * Extabse Validation for models and properties is not suitable for most of the validations needed
+     * Extbase Validation for models and properties is not suitable for most of the validations needed
      * as the validation would *always* be checked - even if just displaying.
      * So if we don't want a frontend user to enter an event in the past and did it
      * using extbase's built-in validation, we would not be able to show *any* event 
@@ -194,7 +186,16 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * @param Tx_CzSimpleCal_Domain_Model_Event $event
      * @return bool|array
      */
-    protected function validateEvent($event) {
+    protected function isEventValid($event) {
+    	$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		$validator = $objectManager->get('Tx_CzSimpleCal_Domain_Validator_UserEventValidator');
+		
+		if($validator->isValid($event)) {
+			return true;
+		} else {
+			$this->request->setErrors($validator->getErrors());
+		}
+    	
     	//TODO
     	return false;
     }
