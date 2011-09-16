@@ -66,9 +66,11 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      *
      * @param Tx_CzSimpleCal_Domain_Model_Event $newEvent 
      * @return void
-     * @dontValidate $newEvent
+     * @dontvalidate $newEvent
      */
     public function newAction(Tx_CzSimpleCal_Domain_Model_Event $newEvent = NULL) {
+    	$this->setDefaults($newEvent);
+    	$this->setFrontendUser($newEvent);
         $this->view->assign('event', $newEvent);
     }
 
@@ -77,8 +79,12 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      *
      * @param Tx_CzSimpleCal_Domain_Model_Event $newEvent
      * @return void
+     * @dontvalidate $newEvent
      */
     public function createAction(Tx_CzSimpleCal_Domain_Model_Event $newEvent) {
+    	$this->setDefaults($newEvent);
+    	$this->setFrontendUser($newEvent);
+    	$this->view->assign('newEvent', $newEvent);
     	
 //    	$this->eventRepository->add($newEvent);
     	//
@@ -119,6 +125,60 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 //        $this->blogRepository->remove($blog);
 //        $this->addFlashMessage('deleted', t3lib_FlashMessage::INFO);
 //        $this->redirect('index');
+    }
+    
+    /**
+     * set defaults on an object
+     * 
+     * @param Tx_CzSimpleCal_Domain_Model_Event $event
+     */
+    public function setDefaults($event) {
+    	//TODO	
+    }
+    
+    /**
+     * set the frontend User
+     * 
+     * @param Tx_CzSimpleCal_Domain_Model_Event $event
+     */
+    public function setFrontendUser($event) {
+    	if($event instanceof Tx_CzSimpleCal_Domain_Model_Event) {
+	    	$fe_user = $GLOBALS['TSFE']->fe_user->user['uid'];
+	    	$event->setCruserFe($fe_user);
+    	}
+    }
+    
+    
+    /** 
+     * validate the event
+     * 
+     * Considerations
+     * ===============
+     * Extabse Validation for models and properties is not suitable for most of the validations needed
+     * as the validation would *always* be checked - even if just displaying.
+     * So if we don't want a frontend user to enter an event in the past and did it
+     * using extbase's built-in validation, we would not be able to show *any* event 
+     * in the past.
+     * 
+     * @param Tx_CzSimpleCal_Domain_Model_Event $event
+     */
+    protected function validateEvent($event) {
+    	
+    	// check: event is not in the past
+    	if($event->getDateTimeObjectStart()->format('U') + 24 * 60 * 60 < time()) {
+    		throw new InvalidArgumentException('start date must not be in the past');
+    	}  
+    	
+    	// check: end date is after start date
+    	if($event->getDateTimeObjectStart()->format('U') > $event->getDateTimeObjectEnd()->format('U')) {
+    		throw new InvalidArgumentException('end date has to be after start date');
+    	}
+    	
+    	if($event->getDescription()) {
+    		if(strlen($event->getDescription()) > strlen(strip_tags($event->getDescription()))) {
+    			throw new InvalidArgumentException('we don\'t like markup here');
+    		}
+    	}
     }
 
 }
