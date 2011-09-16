@@ -31,6 +31,9 @@ class Tx_CzSimpleCal_Domain_Validator_UserEventValidator extends Tx_Extbase_Vali
 		if($value->getEndTime()) {
 			$this->addPropertyValidator('endTime', $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
 		}
+		if($value->getDescription()) {
+			$this->addPropertyValidator('description', $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_NoTagsValidator'));
+		}
 		
 		return parent::isValid($value);
 	}
