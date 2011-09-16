@@ -69,6 +69,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * @dontvalidate $newEvent
      */
     public function newAction(Tx_CzSimpleCal_Domain_Model_Event $newEvent = NULL) {
+    	$this->abortOnMissingUser();
     	if($newEvent) {
     		$this->setDefaults($newEvent);
     		$newEvent->setCruserFe($this->getFrontendUserId());
@@ -84,6 +85,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * @dontvalidate $newEvent
      */
     public function createAction(Tx_CzSimpleCal_Domain_Model_Event $newEvent) {
+    	$this->abortOnMissingUser();
     	$this->setDefaults($newEvent);
     	$newEvent->setCruserFe($this->getFrontendUserId());
     	$this->view->assign('newEvent', $newEvent);
@@ -115,6 +117,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      */
     public function updateAction(Tx_CzSimpleCal_Domain_Model_Event $event) {
     	$this->abortOnInvalidUser($event);
+    	$this->view->assign('event', $event);
     	
     	
     	if($this->isEventValid($event)) {
@@ -149,8 +152,17 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * @param Tx_CzSimpleCal_Domain_Model_Event $event The event
      */
     protected function abortOnInvalidUser($event) {
-    	if(!$event->getCruserFe() || ($event->getCruserFe() != $this->getFrontendUserId())) {
+    	if(!$event->getCruserFe() || $this->getFrontendUserId() == null || ($event->getCruserFe() != $this->getFrontendUserId())) {
     		$this->throwStatus(403, 'You are not allowed to do this.');
+    	}
+    }
+    
+	/**
+     * abort the action if no user is logged in
+     */
+    protected function abortOnMissingUser() {
+    	if($this->getFrontendUserId() <= 0) {
+    		$this->throwStatus(403, 'Please log in.');
     	}
     }
     
