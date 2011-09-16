@@ -51,12 +51,35 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 		$this->eventRepository = $eventRepository;
 	}
 
+	/**
+	 * @var Tx_Extbase_Object_ObjectManager
+	 */
+	protected $objectManager;
+	
+	/**
+	 * get an instance of the objectManager
+	 * 
+	 * Note:
+	 * =====
+	 * injecting the container using dependency injection
+	 * causes an error.
+	 * 
+	 * @return Tx_Extbase_Object_ObjectManager
+	 */
+	public function getObjectManager() {
+		if(is_null($this->objectManager)) {
+			$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		}
+		return $this->objectManager;
+	}
+
 	
 	/** 
 	 * list all events by the logged in user
+	 * 
+	 * 
 	 */
 	public function listAction() {
-		//TODO: user filtering
 		$this->view->assign('events', $this->eventRepository->findAllByUserId($this->getFrontendUserId()));
 	}
 	
@@ -92,7 +115,14 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     	
     	if($this->isEventValid($newEvent)) {
     		$this->eventRepository->add($newEvent);
-			$this->redirect('list');
+    		
+    		// persist event as the indexer needs an uid
+    		$this->objectManager->get('Tx_Extbase_Persistence_Manager')->persistAll();
+    		// create index for event
+    		$this->getObjectManager()->get('Tx_CzSimpleCal_Indexer_Event')->create($newEvent);
+    		
+			
+    		$this->redirect('list');
     	}
     }
 
@@ -122,6 +152,11 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     	
     	if($this->isEventValid($event)) {
     		$this->eventRepository->update($event);
+    		
+    		// update index for event
+    		$this->getObjectManager()->get('Tx_CzSimpleCal_Indexer_Event')->update($event);
+    		
+    		
 			$this->redirect('list');
     	}
     	
@@ -140,6 +175,9 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      */
     public function deleteAction(Tx_CzSimpleCal_Domain_Model_Event $event) {
     	$this->abortOnInvalidUser($event);
+    	
+    	// delete index for event
+    	$this->getObjectManager()->get('Tx_CzSimpleCal_Indexer_Event')->delete($event);
     	
         $this->eventRepository->remove($event);
 //        $this->addFlashMessage('deleted', t3lib_FlashMessage::INFO);
@@ -172,7 +210,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * @param Tx_CzSimpleCal_Domain_Model_Event $event
      */
     public function setDefaults($event) {
-    	//TODO	
+    	$event->setRecurranceType('none');
     }
     
     /**
@@ -199,8 +237,8 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * @return bool|array
      */
     protected function isEventValid($event) {
-    	$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-		$validator = $objectManager->get('Tx_CzSimpleCal_Domain_Validator_UserEventValidator');
+    	
+		$validator = $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_UserEventValidator');
 		
 		if($validator->isValid($event)) {
 			return true;
