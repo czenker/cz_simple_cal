@@ -57,7 +57,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 	 */
 	public function listAction() {
 		//TODO: user filtering
-		$this->view->assign('events', $this->eventRepository->findAll());
+		$this->view->assign('events', $this->eventRepository->findAllByUserId($this->getFrontendUserId()));
 	}
 	
 	
@@ -69,8 +69,10 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * @dontvalidate $newEvent
      */
     public function newAction(Tx_CzSimpleCal_Domain_Model_Event $newEvent = NULL) {
-    	$this->setDefaults($newEvent);
-    	$this->setFrontendUser($newEvent);
+    	if($newEvent) {
+    		$this->setDefaults($newEvent);
+    		$newEvent->setCruserFe($this->getFrontendUserId());
+    	}
         $this->view->assign('event', $newEvent);
     }
 
@@ -83,11 +85,12 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      */
     public function createAction(Tx_CzSimpleCal_Domain_Model_Event $newEvent) {
     	$this->setDefaults($newEvent);
-    	$this->setFrontendUser($newEvent);
+    	$newEvent->setCruserFe($this->getFrontendUserId());
     	$this->view->assign('newEvent', $newEvent);
     	
-//    	$this->eventRepository->add($newEvent);
-    	//
+    	$this->eventRepository->add($newEvent);
+    	
+		$this->redirect('list');
     }
 
     /**
@@ -119,6 +122,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      *
      * @param Tx_CzSimpleCal_Domain_Model_Event $event The event to delete
      * @return void
+     * @dontvalidate $newEvent
      */
     public function deleteAction(Tx_CzSimpleCal_Domain_Model_Event $event) {
         // TODO access protection
@@ -137,15 +141,11 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     }
     
     /**
-     * set the frontend User
-     * 
-     * @param Tx_CzSimpleCal_Domain_Model_Event $event
+     * get the frontend User id
      */
-    public function setFrontendUser($event) {
-    	if($event instanceof Tx_CzSimpleCal_Domain_Model_Event) {
-	    	$fe_user = $GLOBALS['TSFE']->fe_user->user['uid'];
-	    	$event->setCruserFe($fe_user);
-    	}
+    public function getFrontendUserId() {
+	    $fe_user = $GLOBALS['TSFE']->fe_user->user['uid'];
+	    return $fe_user ? $fe_user : false;
     }
     
     

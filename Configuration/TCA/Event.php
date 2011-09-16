@@ -466,6 +466,12 @@ $TCA['tx_czsimplecal_domain_model_event'] = array(
 				'eval' => 'date',
 			)
 		),
+		'cruser_fe' => array(
+			'exclude' => 1,
+			'config' => array(
+				'type' => 'none',
+			),
+		),
 	),
 );
 

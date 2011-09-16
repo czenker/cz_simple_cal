@@ -186,5 +186,25 @@ class Tx_CzSimpleCal_Domain_Repository_EventRepository extends Tx_Extbase_Persis
 		}
 	}
 	
+	/**
+	 * find all events by a given user id
+	 * @param string $userId
+	 */
+	public function findAllByUserId($userId) {
+		if(!$userId) {
+			return null;
+		}
+		
+		$query = $this->createQuery();
+		
+		$query->matching($query->equals('cruser_fe', $userId));
+		
+		$query->setOrderings(array(
+			'start_day' => Tx_Extbase_Persistence_Query::ORDER_DESCENDING
+		));
+				
+		return $query->execute();
+	}
+	
 }
 ?>
