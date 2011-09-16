@@ -228,6 +228,13 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	
 	
 	/**
+	 * @var int cruserFe
+	 */
+	protected $cruserFe;
+	
+	
+	
+	/**
 	 * Setter for title
 	 *
 	 * @param string $title The title of this event
@@ -1031,7 +1038,25 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 		$this->flickrTags_ = t3lib_div::trimExplode(',', $this->flickrTags, true);
 	}
 	
+
+	/**
+	 * Setter for cruserFe
+	 *
+	 * @param int $cruserFe 
+	 * @return void
+	 */
+	public function setCruserFe($cruserFe) {
+		$this->cruserFe = $cruserFe;
+	}
 	
+	/**
+	 * Getter for cruserFe
+	 *
+	 * @return int $cruserFe
+	 */
+	public function getCruserFe() {
+		return $this->cruserFe;
+	}
 	
 	
 }
