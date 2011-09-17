@@ -15,24 +15,24 @@ CREATE TABLE tx_czsimplecal_domain_model_event (
 	end_day int(11) DEFAULT '-1',
 	end_time int(11) DEFAULT '-1',
 	timezone varchar(20) DEFAULT 'GMT',
-	teaser tinytext,
-	description tinytext,
-	images tinytext,
-	images_caption tinytext,
-	images_alternative tinytext,
-	files tinytext,
-	files_caption tinytext,
+	teaser text,
+	description text,
+	images text,
+	images_caption text,
+	images_alternative text,
+	files text,
+	files_caption text,
 	recurrance_type varchar(30) DEFAULT 'none',
 	recurrance_subtype varchar(30) DEFAULT '',
 	recurrance_until int(11) DEFAULT '-1',
 	location_name varchar(255) DEFAULT '',
-	location_address tinytext,
+	location_address text,
 	location_city varchar(255) DEFAULT '',
 	location_zip varchar(10) DEFAULT '',
 	location_country varchar(3) DEFAULT '',
 	location int(11) DEFAULT '0',
 	organizer_name varchar(255) DEFAULT '',
-	organizer_address tinytext,
+	organizer_address text,
 	organizer_city varchar(255) DEFAULT '',
 	organizer_zip varchar(10) DEFAULT '',
 	organizer_country varchar(3) DEFAULT '',
@@ -96,7 +96,7 @@ CREATE TABLE tx_czsimplecal_domain_model_exception (
 	pid int(11) DEFAULT '0' NOT NULL,
 	
 	
-	title tinytext,
+	title text,
 	start_day int(11) DEFAULT '0',
 	start_time int(11) DEFAULT '-1',
 	end_day int(11) DEFAULT '-1',
@@ -121,7 +121,7 @@ CREATE TABLE tx_czsimplecal_domain_model_exceptiongroup (
 	pid int(11) DEFAULT '0' NOT NULL,
 	
 	
-	title tinytext,
+	title text,
 	exceptions int(11) unsigned DEFAULT '0' NOT NULL,
 	
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
@@ -182,7 +182,7 @@ CREATE TABLE tx_czsimplecal_domain_model_category (
 	pid int(11) DEFAULT '0' NOT NULL,
 	
 	
-	title tinytext,
+	title text,
 	show_page_instead varchar(255) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
@@ -216,7 +216,7 @@ CREATE TABLE tx_czsimplecal_domain_model_address (
 	pid int(11) DEFAULT '0' NOT NULL,
 	
 	name varchar(255) DEFAULT '' NOT NULL,
-	address tinytext,
+	address text,
 	zip varchar(10) DEFAULT '' NOT NULL,
 	city varchar(255) DEFAULT '' NOT NULL,
 	country varchar(3) DEFAULT '' NOT NULL,
