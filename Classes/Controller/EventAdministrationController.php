@@ -121,7 +121,11 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     		// create index for event
     		$this->getObjectManager()->get('Tx_CzSimpleCal_Indexer_Event')->create($newEvent);
     		
-			
+    		$this->flashMessageContainer->add(
+    			sprintf('The event "%s" was created.', $newEvent->getTitle()),
+    			'',
+    			t3lib_FlashMessage::OK
+    		);
     		$this->redirect('list');
     	}
     }
@@ -156,13 +160,16 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     		// update index for event
     		$this->getObjectManager()->get('Tx_CzSimpleCal_Indexer_Event')->update($event);
     		
-    		
+    		$this->flashMessageContainer->add(
+    			sprintf('The event "%s" was updated.', $event->getTitle()),
+    			'',
+    			t3lib_FlashMessage::OK
+    		);
 			$this->redirect('list');
     	}
     	
         // TODO access protection
 //        $this->blogRepository->update($blog);
-//        $this->addFlashMessage('updated');
 //        $this->redirect('index');
     }
 
@@ -180,7 +187,11 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     	$this->getObjectManager()->get('Tx_CzSimpleCal_Indexer_Event')->delete($event);
     	
         $this->eventRepository->remove($event);
-//        $this->addFlashMessage('deleted', t3lib_FlashMessage::INFO);
+		$this->flashMessageContainer->add(
+    		sprintf('The event "%s" was deleted.', $event->getTitle()),
+    		'',
+    		t3lib_FlashMessage::OK
+    	);
         $this->redirect('list');
     }
     
