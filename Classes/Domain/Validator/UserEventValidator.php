@@ -13,32 +13,75 @@ class Tx_CzSimpleCal_Domain_Validator_UserEventValidator extends Tx_Extbase_Vali
 	 * @return bool
 	 */
 	public function isValid($value) {
-//		$this->addPropertyValidator('title', $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_NotEmptyValidator'));
+		
+		// title
 		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_StringLengthValidator');
 		$validator->setOptions(array('minimum' => 3, 'maximum' => 255));
 		$this->addPropertyValidator('title', $validator);
 		
+		// startDay
 		$this->addPropertyValidator('startDay', $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
 		
-		if($value->getStartTime()) {
-			$this->addPropertyValidator('startTime', $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
-		}
+		// startTime
+		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
+		$validator->addValidator($this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
+		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$this->addPropertyValidator('startTime', $validator);
 		
-		if($value->getEndDay()) {
-			$this->addPropertyValidator('endDay', $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
-		}
+		// endDay
+		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
+		$validator->addValidator($this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
+		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$this->addPropertyValidator('endDay', $validator);
 		
-		if($value->getEndTime()) {
-			$this->addPropertyValidator('endTime', $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
-		}
-		if($value->getDescription()) {
-			$this->addPropertyValidator('description', $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_NoTagsValidator'));
-		}
+		// endTime
+		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
+		$validator->addValidator($this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
+		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$this->addPropertyValidator('endTime', $validator);
+		
+		// description
+		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
+		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_NoTagsValidator'));
+		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$this->addPropertyValidator('description', $validator);
+		
+		// locationName
+		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
+		$stringValidator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_StringLengthValidator');
+		$stringValidator->setOptions(array('minimum' => 3, 'maximum' => 255));
+		$validator->addValidator($stringValidator);
+		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$this->addPropertyValidator('locationName', $validator);
+		
+		// locationAddress
+		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
+		$stringValidator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_StringLengthValidator');
+		$stringValidator->setOptions(array('minimum' => 3, 'maximum' => 255));
+		$validator->addValidator($stringValidator);
+		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$this->addPropertyValidator('locationAddress', $validator);
+		
+		// locationCity
+		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
+		$stringValidator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_StringLengthValidator');
+		$stringValidator->setOptions(array('minimum' => 3, 'maximum' => 255));
+		$validator->addValidator($stringValidator);
+		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$this->addPropertyValidator('locationCity', $validator);
+		
+		// showPageInstead
+		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
+		$stringValidator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_StringLengthValidator');
+		$stringValidator->setOptions(array('minimum' => 10, 'maximum' => 255));
+		$validator->addValidator($stringValidator);
+		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$this->addPropertyValidator('showPageInstead', $validator);
 		
 		return parent::isValid($value);
 	}
 	
-		
+			
 	protected $objectManager = null;
 	
 	/**
