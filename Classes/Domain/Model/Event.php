@@ -899,6 +899,9 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * @return Tx_CzSimpleCal_Domain_Model_Event
 	 */
 	public function setShowPageInstead($showPageInstead) {
+		if(!empty($showPageInstead) && !is_numeric($showPageInstead) && strpos($showPageInstead, '://') === false) {
+			$showPageInstead = 'http://'.$showPageInstead;
+		}
 		$this->showPageInstead = $showPageInstead;
 		return $this;
 	}
@@ -981,7 +984,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * 
 	 * @return array
 	 */
-	public function getTwitterHashtags() {
+	public function getTwitterHashtagsArray() {
 		if(is_null($this->twitterHashtags_)) {
 			$this->buildTwitterHashtags();
 		}
@@ -989,16 +992,17 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	}
 	
 	/**
-	 * get the first (and therefore "main") twitter hashtag
+	 * get the twitterHashtags as string
 	 * 
-	 * @return string|false
+	 * @return string
 	 */
-	public function getTwitterHashtag() {
-		if(is_null($this->twitterHashtags_)) {
-			$this->buildTwitterHashtags();
-		}
-		
-		return reset($this->twitterHashtags_);
+	public function getTwitterHashtags() {
+		return $this->twitterHashtags;
+	}
+	
+	public function setTwitterHashtags($twitterHashtags) {
+		$this->twitterHashtags = $twitterHashtags;
+		$this->twitterHashtags_ = null;
 	}
 
 	/**
@@ -1022,7 +1026,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * 
 	 * @return array
 	 */
-	public function getFlickrTags() {
+	public function getFlickrTagsArray() {
 		if(is_null($this->flickrTags_)) {
 			$this->buildFlickrTags();
 		}
@@ -1030,16 +1034,18 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	}
 	
 	/**
-	 * get the first (an therefore "main") flickr tag
+	 * get the flickr tags as string
 	 * 
 	 * @return string|false
 	 */
-	public function getFlickrTag() {
-		if(is_null($this->flickrTags_)) {
-			$this->buildFlickrTags();
-		}
-		
-		return reset($this->flickrTags_);
+	public function getFlickrTags() {
+		return $this->flickrTags;
+	}
+	
+	
+	public function setFlickrTags($flickrTags) {
+		$this->flickrTags = $flickrTags;
+		$this->flickrTags_ = null;
 	}
 
 	/**

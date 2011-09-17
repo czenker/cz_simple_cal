@@ -93,11 +93,40 @@ class Tx_CzSimpleCal_Domain_Validator_UserEventValidator extends Tx_Extbase_Vali
 		
 		// showPageInstead
 		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
-		$stringValidator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_StringLengthValidator');
-		$stringValidator->setOptions(array('minimum' => 10, 'maximum' => 255));
-		$validator->addValidator($stringValidator);
+		$andValidator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_ConjunctionValidator');
+			$stringValidator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_StringLengthValidator');
+			$stringValidator->setOptions(array('minimum' => 10, 'maximum' => 255));
+			$andValidator->addValidator($stringValidator);
+			$urlValidator = $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_UrlValidator');
+			$urlValidator->setOptions(array(
+				'object' => $value,
+				'propertyName' => 'showPageInstead'
+			));
+			$andValidator->addValidator($urlValidator);
+		$validator->addValidator($andValidator);
 		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
 		$this->addPropertyValidator('showPageInstead', $validator);
+		
+		// twitterHashtags
+		$validator = $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_TwitterHashtagValidator');
+		$validator->setOptions(array(
+			'object' => $value,
+			'propertyName' => 'twitterHashtags',
+
+			'required' => false,
+		));
+		$this->addPropertyValidator('twitterHashtags', $validator);
+		
+		
+		// flickrTags
+		$validator = $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_FlickrTagValidator');
+		$validator->setOptions(array(
+			'object' => $value,
+			'propertyName' => 'flickrTags',
+
+			'required' => false,
+		));
+		$this->addPropertyValidator('flickrTags', $validator);
 		
 		$isValid = parent::isValid($value);
 		
@@ -107,8 +136,8 @@ class Tx_CzSimpleCal_Domain_Validator_UserEventValidator extends Tx_Extbase_Vali
 			$isValid = false;
 		}
 		
-		// prevent descriptions from having tags
-		$value->setDescription(nl2br(htmlspecialchars($value->getDescription())));
+		// prevent descriptions from having tags (will be parsed with parsefunc_RTE
+		$value->setDescription(htmlspecialchars($value->getDescription(), null, null, false));
 		
 		return $isValid;
 	}
