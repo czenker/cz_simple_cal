@@ -20,24 +20,45 @@ class Tx_CzSimpleCal_Domain_Validator_UserEventValidator extends Tx_Extbase_Vali
 		$this->addPropertyValidator('title', $validator);
 		
 		// startDay
-		$this->addPropertyValidator('startDay', $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
+		$validator = $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_DateValidator');
+		$validator->setOptions(array(
+			'object' => $value,
+			'propertyName' => 'startDay',
+		
+			'required' => true,
+			'minimum' => Tx_CzSimpleCal_Utility_StrToTime::strtotime('midnight')
+		));
+		$this->addPropertyValidator('startDay', $validator);
 		
 		// startTime
-		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
-		$validator->addValidator($this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
-		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$validator = $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_TimeValidator');
+		$validator->setOptions(array(
+			'object' => $value,
+			'propertyName' => 'startTime',
+		
+			'required' => false
+		));
 		$this->addPropertyValidator('startTime', $validator);
 		
 		// endDay
-		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
-		$validator->addValidator($this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
-		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$validator = $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_DateValidator');
+		$validator->setOptions(array(
+			'object' => $value,
+			'propertyName' => 'endDay',
+		
+			'required' => false,
+			'minimum' => Tx_CzSimpleCal_Utility_StrToTime::strtotime('midnight')
+		));
 		$this->addPropertyValidator('endDay', $validator);
 		
 		// endTime
-		$validator = $this->getObjectManager()->get('Tx_Extbase_Validation_Validator_DisjunctionValidator');
-		$validator->addValidator($this->getObjectManager()->get('Tx_Extbase_Validation_Validator_IntegerValidator'));
-		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
+		$validator = $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_TimeValidator');
+		$validator->setOptions(array(
+			'object' => $value,
+			'propertyName' => 'endTime',
+		
+			'required' => false
+		));
 		$this->addPropertyValidator('endTime', $validator);
 		
 		// description
@@ -78,7 +99,18 @@ class Tx_CzSimpleCal_Domain_Validator_UserEventValidator extends Tx_Extbase_Vali
 		$validator->addValidator($this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_EmptyValidator'));
 		$this->addPropertyValidator('showPageInstead', $validator);
 		
-		return parent::isValid($value);
+		$isValid = parent::isValid($value);
+		
+		// check: event does not end before it starts
+		if($value->getDateTimeObjectStart()->getTimestamp() > $value->getDateTimeObjectEnd()->getTimestamp()) {
+			$this->addError('This event is not allowed to start before it ends.', 1316261470);
+			$isValid = false;
+		}
+		
+		// prevent descriptions from having tags
+		$value->setDescription(nl2br(htmlspecialchars($value->getDescription())));
+		
+		return $isValid;
 	}
 	
 			

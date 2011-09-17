@@ -62,7 +62,7 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 	 * * allows chaining of different phrases by using the pipe-symbol ("|")
 	 * 
 	 * @param string $time
-	 * @param integer $now
+	 * @param integer|false $now
 	 */
 	public static function strtotime($time, $now = null) {
 		if(is_null($now)) {
@@ -73,6 +73,9 @@ class Tx_CzSimpleCal_Utility_StrToTime {
 				
 		foreach(t3lib_div::trimExplode('|', $time, true) as $time) {
 			$now = strtotime(self::strftime($time, $now), $now);
+			if($now === false) {
+				return false;
+			}
 		}
 		
 		return $now;

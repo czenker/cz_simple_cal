@@ -118,7 +118,7 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * @return integer the day that event starts
 	 */
 	public function getStartDay() {
-		return $this->startDay;
+		return is_numeric($this->startDay) ? strftime('%Y-%m-%d', $this->startDay) : $this->startDay;
 	}
 	
 	/**
@@ -128,7 +128,11 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * @return void
 	 */
 	public function setStartTime($startTime) {
-		$this->startTime = $startTime;
+		$this->startTime = 
+			(empty($startTime) && $startTime !== 0) || $startTime < 0 ? 
+			-1 : 
+			$startTime
+		;
 	}
 
 	/**
@@ -137,7 +141,10 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * @return integer the time this event starts (leave blank for an allday event)
 	 */
 	public function getStartTime() {
-		return $this->startTime;
+		return is_numeric($this->startTime) ? 
+			($this->startTime < 0 ? null : sprintf('%02d:%02d', floor($this->startTime / 3600), floor($this->startTime % 3600 / 60))):
+			$this->startTime
+		;
 	}
 	
 	/**
@@ -159,7 +166,11 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * @return void
 	 */
 	public function setEndDay($endDay) {
-		$this->endDay = $endDay;
+		
+		$this->endDay = (empty($endDay) && $endDay !== 0) || $endDay < 0 ? 
+			-1 : 
+			$endDay
+		;
 	}
 
 	/**
@@ -168,7 +179,10 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * @return integer the day this event ends (leave blank for an event on one day)
 	 */
 	public function getEndDay() {
-		return $this->endDay;
+		return is_numeric($this->endDay) ? 
+			($this->endDay < 0 ? null : strftime('%Y-%m-%d', $this->endDay)):
+			$this->endDay
+		;
 	}
 	
 	/**
@@ -178,7 +192,10 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * @return void
 	 */
 	public function setEndTime($endTime) {
-		$this->endTime = $endTime;
+		$this->endTime = (empty($endTime) && $endTime !== 0) || $endTime < 0 ? 
+			-1 : 
+			$endTime
+		;
 	}
 
 	/**
@@ -187,7 +204,10 @@ abstract class Tx_CzSimpleCal_Domain_Model_BaseEvent extends Tx_CzSimpleCal_Doma
 	 * @return integer the time this event ends
 	 */
 	public function getEndTime() {
-		return $this->endTime;
+		return is_numeric($this->endTime) ? 
+			($this->endTime < 0 ? null : sprintf('%02d:%02d', floor($this->endTime / 3600), floor($this->endTime % 3600 / 60))):
+			$this->endTime
+		;
 	}
 	
 	/**
