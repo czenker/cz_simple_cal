@@ -91,8 +91,10 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 				$step = '+1 week';
 			} elseif($settings['groupBy'] === 'month') {
 				$step = '+1 month';
-			} else {
+			} elseif($settings['groupBy'] === 'year') {
 				$step = '+1 year';
+			} else {
+				$step = null;
 			}
 			
 			$startDate = new Tx_CzSimpleCal_Utility_DateTime('@'.$settings['startDate']);
@@ -100,8 +102,12 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 			
 			$endDate = $settings['endDate'];
 			while ($startDate->getTimestamp() < $endDate) {
-				$tempEndDate = clone $startDate;
-				$tempEndDate->modify($step.' -1 second');
+				if($step === null) {
+					$tempEndDate = null;
+				} else {
+					$tempEndDate = clone $startDate;
+					$tempEndDate->modify($step.' -1 second');
+				}
 				
 				$output[] = array(
 					'date' => $startDate->format('c'),
@@ -109,13 +115,17 @@ class Tx_CzSimpleCal_Domain_Repository_EventIndexRepository extends Tx_Extbase_P
 						$settings,
 						array(
 							'startDate' => $startDate->format('U'),
-							'endDate' => $tempEndDate->format('U'),
+							'endDate' => $tempEndDate ? $tempEndDate->format('U') : null,
 							'groupBy' => null 
 						)
 					))
 				);
 				
-				$startDate->modify($step);
+				if($step === null) {
+					break;
+				} else {
+					$startDate->modify($step);
+				}
 			}
 			
 			return $output;
