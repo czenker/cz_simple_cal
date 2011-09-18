@@ -221,6 +221,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * @param Tx_CzSimpleCal_Domain_Model_Event $event
      */
     public function setDefaults($event) {
+    	$event->setTimezone(date('e'));
     	if(isset($this->settings['overrides']['categories'])) {
     		$categories = $this->getObjectManager()->
     			get('Tx_CzSimpleCal_Domain_Repository_CategoryRepository')->
