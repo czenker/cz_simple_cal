@@ -126,6 +126,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     			'',
     			t3lib_FlashMessage::OK
     		);
+    		$this->clearCache();
     		$this->redirect('list');
     	}
     }
@@ -165,6 +166,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     			'',
     			t3lib_FlashMessage::OK
     		);
+    		$this->clearCache();
 			$this->redirect('list');
     	}
     	
@@ -192,6 +194,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     		'',
     		t3lib_FlashMessage::OK
     	);
+    	$this->clearCache();
         $this->redirect('list');
     }
     
@@ -252,7 +255,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      * Considerations
      * ===============
      * Extbase Validation for models and properties is not suitable for most of the validations needed
-     * as the validation would *always* be checked - even if just displaying.
+     * as the validation would *always* be checked for the object - even if just displaying.
      * So if we don't want a frontend user to enter an event in the past and did it
      * using extbase's built-in validation, we would not be able to show *any* event 
      * in the past.
@@ -269,10 +272,47 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 		} else {
 			$this->request->setErrors($validator->getErrors());
 		}
-    	
-    	//TODO
+		
     	return false;
     }
-
+    
+    /**
+     * clear the cache of the pages configured by the extension.
+     * 
+     */
+    protected function clearCache() {
+    	if(!$this->settings['clearCachePages']) {
+    		return false;
+    	}
+    	
+    	$pids = $this->settings['clearCachePages'];
+    	$pids = t3lib_div::trimExplode(',', $pids, true);
+    	
+    	if(empty($pids)) {
+    		return;
+    	}
+    	
+    	// init TCEmain object
+    	$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+    	if(!$tce->BE_USER) {
+    		/* that's a little ugly here:
+    		 * We need some BE_USER as the cleanCache event will be logged to syslog.
+    		 * We could use an empty "t3lib_beUserAuth", but this would flood the 
+    		 * syslog with entries of cleared caches.
+    		 * 
+    		 * So we use this dummy class "Tx_CzSimpleCal_Utility_Null" that just
+    		 * ignores everything. 
+    		 */
+    		$tce->BE_USER = t3lib_div::makeInstance('Tx_CzSimpleCal_Utility_Null');
+    	}
+    	foreach($pids as $pid) {
+    		$pid = intval($pid);
+    		if($pid > 0) {
+    			$tce->clear_cacheCmd($pid);
+    		}
+    	}
+    	
+    	return;
+    }
 }
 ?>
