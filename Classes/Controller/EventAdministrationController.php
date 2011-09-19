@@ -127,6 +127,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     			t3lib_FlashMessage::OK
     		);
     		$this->clearCache();
+    		$this->logEventLifecycle($newEvent, 1);
     		$this->redirect('list');
     	}
     }
@@ -167,6 +168,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     			t3lib_FlashMessage::OK
     		);
     		$this->clearCache();
+    		$this->logEventLifecycle($event, 2);
 			$this->redirect('list');
     	}
     	
@@ -195,6 +197,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     		t3lib_FlashMessage::OK
     	);
     	$this->clearCache();
+    	$this->logEventLifecycle($event, 3);
         $this->redirect('list');
     }
     
@@ -313,6 +316,38 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     	}
     	
     	return;
+    }
+    
+    /**
+     * log if an event was created/updated/deleted to make this transparent in the backend
+     * 
+     * @param Tx_CzSimpleCal_Domain_Model_Event $event
+     * @param string $action the action (one of 1->'new', 2->'updated', 3->'delete')
+     */
+    protected function logEventLifecycle($event, $action) {
+    	$user = t3lib_div::makeInstance('t3lib_userAuthGroup');
+    	$actions = array(
+    		1 => 'added', 
+    		2 => 'edited', 
+    		3 => 'deleted',
+    	);
+    	$user->writelog(
+    		1, // type: log as TCEmain event
+    		$action, // action
+    		0, // error level
+    		0, // details_nr
+    		'fe_user "%s" (%s) '.$actions[$action].' the event "%s" (%s).', // details
+    		array(
+    			$GLOBALS['TSFE']->fe_user->user['username'], //
+    			$GLOBALS['TSFE']->fe_user->user['uid'],
+    			$event->getTitle(),
+    			$event->getUid(),
+    		), // data
+    		'tx_czsimplecal_domain_model_event', //table
+    		$event->getUid(), // uid
+    		null, //---obsolete---
+    		$event->getPid() // pid
+    	);
     }
 }
 ?>
