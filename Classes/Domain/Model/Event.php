@@ -873,7 +873,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 */
 	public function getNextAppointment() {
 		$appointments = $this->getNextAppointments(1);
-		return empty($appointments) ? null : current($appointments);
+		return empty($appointments) ? null : $appointments->getFirst();
 	}
 	
 	/**
