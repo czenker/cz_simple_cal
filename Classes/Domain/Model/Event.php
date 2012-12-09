@@ -32,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_BaseEvent {
-	
+
 	/**
 	 * an array of fields that if changed require a reindexing of all the events
 	 * 
@@ -244,8 +244,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 */
 	protected $cruserFe;
 	
-	
-	
+
 	/**
 	 * Setter for title
 	 *
@@ -536,7 +535,7 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 		$this->categories->rewind();
 		return $this->categories->current();
 	}
-	
+
 	/**
 	 * Adds a Category
 	 *
@@ -544,6 +543,10 @@ class Tx_CzSimpleCal_Domain_Model_Event extends Tx_CzSimpleCal_Domain_Model_Base
 	 * @return void
 	 */
 	public function addCategory(Tx_CzSimpleCal_Domain_Model_Category $category) {
+		if(!is_object($this->categories)) {
+			$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+			$this->categories = $objectManager->get('Tx_Extbase_Persistence_ObjectStorage');
+		}
 		$this->categories->attach($category);
 	}
 	

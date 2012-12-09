@@ -111,9 +111,8 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 	public function newAction(Tx_CzSimpleCal_Domain_Model_Event $fromEvent = NULL)
 	{
 		$this->abortOnMissingUser();
-		$event = NULL;
+		$event = new Tx_CzSimpleCal_Domain_Model_Event();
 		if ($fromEvent) {
-			$event = new Tx_CzSimpleCal_Domain_Model_Event();
 			foreach (array(
 				'categories',
 				'description',
@@ -142,7 +141,12 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 				$event->setCruserFe($this->getFrontendUserId());
 			}
 		}
+		$categories = $this->getCategories();
+		if(!$event->getCategory() && $categories->count() > 0) {
+			$event->addCategory($categories->getFirst());
+		}
 
+		$this->view->assign('cats', $categories);
 		$this->view->assign('newEvent', $event);
 	}
 
@@ -195,7 +199,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 	/**
 	 * Updates an existing event
 	 *
-	 * @param Tx_CzSimpleCal_Domain_Model_Event $event
+	 * @param $event Tx_CzSimpleCal_Domain_Model_Event
 	 * @return void
 	 * @dontvalidate $event
 	 */
@@ -277,18 +281,18 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 	public function setDefaults($event)
 	{
 		$event->setTimezone(date('e'));
-		if (isset($this->settings['overrides']['categories'])) {
-			$categories = $this->getObjectManager()->
-				get('Tx_CzSimpleCal_Domain_Repository_CategoryRepository')->
-				findAllByUids(t3lib_div::trimExplode(',', $this->settings['overrides']['categories']));
-			if (is_null($event->getCategories())) {
-				$event->setCategories($this->getObjectManager()->get('Tx_Extbase_Persistence_ObjectStorage'));
-			}
-
-			foreach ($categories as $category) {
-				$event->getCategories()->attach($category);
-			}
-		}
+//		if (isset($this->settings['overrides']['categories'])) {
+//			$categories = $this->getObjectManager()->
+//				get('Tx_CzSimpleCal_Domain_Repository_CategoryRepository')->
+//				findAllByUids(t3lib_div::trimExplode(',', $this->settings['overrides']['categories']));
+//			if (is_null($event->getCategories())) {
+//				$event->setCategories($this->getObjectManager()->get('Tx_Extbase_Persistence_ObjectStorage'));
+//			}
+//
+//			foreach ($categories as $category) {
+//				$event->getCategories()->attach($category);
+//			}
+//		}
 	}
 
 	/**
@@ -320,13 +324,22 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 
 		$validator = $this->getObjectManager()->get('Tx_CzSimpleCal_Domain_Validator_UserEventValidator');
 
-		if ($validator->isValid($event)) {
-			return true;
-		} else {
+		if (!$validator->isValid($event)) {
 			$this->request->setErrors($validator->getErrors());
+			return false;
 		}
 
-		return false;
+		$cats = array();
+        foreach(t3lib_div::intExplode(',', $this->settings['feEditableCategories']) as $id){
+            $cats[] = intval($id);
+        }
+        foreach($event->getCategories() as $cat){
+            if(!in_array($cat->getUid(), $cats))  {
+	            return false;
+            };
+        }
+
+		return true;
 	}
 
 	/**
@@ -399,6 +412,18 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 			$event->getUid(), // uid
 			null, //---obsolete---
 			$event->getPid() // pid
+		);
+	}
+
+	/**
+	 * Gets the allowed Categories
+	 *
+	 * @return array of Tx_CzSimpleCal_Domain_Model_Category
+	 **/
+	protected function getCategories()
+	{
+		return $this->categoryRepository->findAllByUids(
+			t3lib_div::intExplode(',', $this->settings['feEditableCategories'])
 		);
 	}
 }
