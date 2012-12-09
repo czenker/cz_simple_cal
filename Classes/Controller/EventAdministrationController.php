@@ -51,6 +51,20 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 		$this->eventRepository = $eventRepository;
 	}
 
+    /**
+     * @var Tx_CzSimpleCal_Domain_Repository_CategoryRepository
+     */
+    protected $categoryRepository;
+
+    /**
+     * inject an categoryRepository
+     * 
+     * @param Tx_CzSimpleCal_Domain_Repository_CategoryRepository $categoryRepository
+     */
+    public function injectCategoryRepository(Tx_CzSimpleCal_Domain_Repository_CategoryRepository $categoryRepository) {
+        $this->categoryRepository = $categoryRepository;
+    }
+
 	/**
 	 * @var Tx_Extbase_Object_ObjectManager
 	 */
@@ -97,6 +111,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     		$this->setDefaults($newEvent);
     		$newEvent->setCruserFe($this->getFrontendUserId());
     	}
+        $this->view->assign('cats', $this->getCategories());
         $this->view->assign('event', $newEvent);
     }
 
@@ -141,6 +156,7 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
      */
     public function editAction(Tx_CzSimpleCal_Domain_Model_Event $event) {
     	$this->abortOnInvalidUser($event);
+        $this->view->assign('cats', $this->getCategories());
         $this->view->assign('event', $event);
     }
 
@@ -275,6 +291,15 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 		} else {
 			$this->request->setErrors($validator->getErrors());
 		}
+
+        $cats = array();
+        foreach(explode(',', $this->settings['feEditableCategories']) as $id){
+            $cats[] = intval($id);
+        }
+        foreach($event->getCategories() as $cat){
+            if(!in_array($cat->getUid(), $cats)) throw new Exception('Category '.$cat->getTitle().' not Allowed!');
+        }
+
 		
     	return false;
     }
@@ -348,6 +373,20 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
     		null, //---obsolete---
     		$event->getPid() // pid
     	);
+    }
+
+    /**
+     * Gets the allowed Categories
+     *
+     * @return array of Tx_CzSimpleCal_Domain_Model_Category
+    **/
+    private function getCategories() {
+        $cats = array();
+        foreach(explode(',', $this->settings['feEditableCategories']) as $id){
+            $cats[] = intval($id);
+        }
+        $cats = $this->categoryRepository->findByUid($cats);
+        return $cats;
     }
 }
 ?>
