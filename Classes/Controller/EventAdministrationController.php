@@ -193,6 +193,9 @@ class Tx_CzSimpleCal_Controller_EventAdministrationController extends Tx_Extbase
 	public function editAction(Tx_CzSimpleCal_Domain_Model_Event $event)
 	{
 		$this->abortOnInvalidUser($event);
+		$categories = $this->getCategories();
+
+		$this->view->assign('cats', $categories);
 		$this->view->assign('event', $event);
 	}
 
