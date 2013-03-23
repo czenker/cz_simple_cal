@@ -6,17 +6,18 @@ ics {
 		
 		settings {
 			
-			allowedViews = list
-			
-			EventIndex.actions {
-				list > 
-				list {
-					startDate  = today
-					endDate    = today +6 months
+			EventIndex {
+				allowedActions = list
+				actions {
+					list >
+					list {
+						startDate  = today
+						endDate    = today +6 months
 
-					maxEvents = 9999
-					orderBy   = start
-					order     = ASC 
+						maxEvents = 9999
+						orderBy   = start
+						order     = ASC
+					}
 				}
 			}
 		}
